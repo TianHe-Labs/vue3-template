@@ -1,17 +1,3 @@
-// axios
-interface AxiosResData {
-  state: number
-  meta?: Recordable
-  payload?: any
-  msg?: string
-}
-
-// user
-interface AuthForm {
-  username: string
-  password: string
-}
-
 // status colors
 declare type StatusColor =
   | 'default'

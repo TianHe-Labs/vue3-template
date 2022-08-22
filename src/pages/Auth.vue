@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { FormInst, FormRules, useMessage } from 'naive-ui'
-import { useUserAuth } from '@/store/modules/useUserAuth'
+import { useStore } from '@/store'
 import { useAppMeta } from '@/lib/providers'
 
 import Footer from '@/layouts/components/Footer.vue'
@@ -9,7 +9,7 @@ const { appName, appDesc } = useAppMeta()
 
 const authFormRef = ref<Nullable<FormInst>>()
 
-const authFormData = reactive<AuthForm>({
+const authFormData = reactive<AuthFormData>({
   username: '',
   password: '',
 })
@@ -39,7 +39,7 @@ const authFormState = reactive({
 const messageCtx = useMessage()
 const route = useRoute()
 const router = useRouter()
-const { signIn } = useUserAuth()
+const { auth } = useStore()
 
 const handlers = {
   authLogin() {
@@ -50,13 +50,10 @@ const handlers = {
         authFormState.btnLoading = true
         authFormState.btnText = '登 录 中 ...'
         try {
-          const { state } = await signIn(authFormData)
-          if (state && state === 800) {
+          if (await auth.signIn(authFormData)) {
             messageCtx.success('认证成功，正在跳转！')
             const toPath = route.query?.redirect?.toString() || '/'
-            setTimeout(() => {
-              router.push({ path: toPath })
-            }, 500)
+            router.push({ path: toPath })
           }
         } catch (err) {
           if (axios.isAxiosError(err)) {

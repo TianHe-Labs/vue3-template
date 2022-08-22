@@ -5,15 +5,14 @@ import {
   useSearchCondition,
   useSearchResult,
 } from '@/lib/providers'
-import { useUserAuth } from '@/store/modules'
-// import { emitAppEvent } from '@/lib/plugins'
+import { useStore } from '@/store'
 
 const { appName, appDesc } = useAppMeta()
-const { signOut } = useUserAuth()
 
 const { queryKeyword } = useSearchCondition()
-
 const { onInputEnterKeyup } = useSearchResult()
+
+const { auth } = useStore()
 
 const userOptions = [
   {
@@ -29,7 +28,7 @@ const handlers = {
   handleSelect(key: string) {
     switch (key) {
       case 'logout':
-        signOut()
+        auth.signOut()
         router.push({ name: 'Auth' })
         message.success('已注销登录！')
         break

@@ -37,12 +37,9 @@
     "@typescript-eslint/no-explicit-any": "off",
     "prettier/prettier": [
       "error",
+      {},
       {
-        "tabWidth": 2,
-        "semi": false,
-        "singleQuote": true,
-        "endOfLine": "auto",
-        "printWidth": 80
+        "usePrettierrc": true
       }
     ]
   },

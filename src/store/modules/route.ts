@@ -1,6 +1,6 @@
 import type { RouteRecordRaw, RouteLocation } from 'vue-router'
 import { constRoutes, asyncRoutes } from '@/router/routes'
-import router from '@/router'
+import { router } from '@/router'
 
 // 检查路由所需权限
 function hasPermission(
@@ -49,7 +49,7 @@ function filterMenuRoutes(accessRoutes: RouteRecordRaw[]): RouteLocation[] {
   })
 }
 
-export const useDynamicRoute = defineStore('dynamicRoute', () => {
+export default defineStore('dynamicRoute', () => {
   const accessRoutes = shallowRef<RouteRecordRaw[]>(constRoutes)
   const isGeneratedRoutes = ref<boolean>(false) //  flag，标识是否已经生成动态路由
 
