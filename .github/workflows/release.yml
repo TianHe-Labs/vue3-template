@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build Vue3/Vite2 App and Deploy to Aliyun
+name: Build Vue3/Vite2 App and Deploy to Aliyun OSS
 
 # Controls when the workflow will run
 on:
@@ -69,28 +69,44 @@ jobs:
       - name: Build vue3.x app
         run: pnpm run build
 
-      # SSH deploy to aliyun
-      - name: SSH deploy to aliyun
-        # You may pin to the exact commit or the version.
-        # uses: kostya-ten/ssh-server-deploy@e0deb814bc458a68b61f6597a865d096e33eb586
-        uses: kostya-ten/ssh-server-deploy@v4
+      # Deploy to ali-oss
+      - name: Deploy to ali-oss
+        uses: Menci/upload-to-oss@beta-v3
         with:
-          # Host
-          host: ${{ secrets.REMOTE_HOST }}
-          # Port
-          port: 22
-          # Username
-          username: ${{ secrets.REMOTE_USER }}
-          # Password
-          # password: # optional
-          # Private key
-          private_key: ${{ secrets.PRIVATE_KEY }}
-          # Before script
-          before_script: |
-            if [ ! -d /var/www/cybersquattingmonitoring ];then mkdir /var/www/cybersquattingmonitoring;elif [[ -n $(ls /var/www/cybersquattingmonitoring) ]];then rm -r /var/www/cybersquattingmonitoring/*;fi
-          # After script
-          after_script: nginx -s reload
-          # After script
-          scp_source: ./dist/*
-          # After script
-          scp_target: /var/www/cybersquattingmonitoring/
+          # Use Access Key
+          access-key-id: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          # Or use STS Token
+          # security-token: ${{ secrets.ALIYUN_SECURITY_TOKEN }}
+
+          bucket: tianhe-apps
+          endpoint: oss-cn-qingdao.aliyuncs.com
+
+          # Upload the built website files in "dist" directory to remote "my-website/" prefix
+          local-path: dist
+          remote-path: xxxx
+
+          # Include HTML files only
+          #include-regex: \.html$
+          # Exclude some files
+          #excluce-regex: dont-upload-this\.html$
+
+          # Set some headers (JS function or just in JSON)
+          headers: |
+            filename => (
+              {
+                "Cache-Control": `public, max-age=${filename.endsWith(".html") ? 60 : 604800}`
+              }
+            )
+
+          # Upload ALL other files before uploading HTML files
+          delay-html-file-upload: true
+
+          # Prevent deleting missing remote files compared to local (defaults to `false`)
+          no-delete-remote-files: true
+
+          # Retry 5 times on failure of each OSS operation
+          retry: 5
+
+          # Use increment or not
+          increment: true

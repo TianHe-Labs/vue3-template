@@ -8,7 +8,7 @@ import { createProxy, createPlugins } from './build/vite'
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd())
   const metaEnv = envWrapper(env)
-  const { VITE_APP_PORT, VITE_APP_PROXY } = metaEnv
+  const { VITE_APP_PORT, VITE_APP_BASE, VITE_APP_PROXY } = metaEnv
   const isBuild = command === 'build'
   return {
     server: {
@@ -28,6 +28,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     //   include: ['vue', 'vue-router'/* , '@vueuse/core' */],
     //   exclude: [],
     // },
+    base: VITE_APP_BASE || '/',
     build: {
       target: 'esnext',
       // reportCompressedSize: false,

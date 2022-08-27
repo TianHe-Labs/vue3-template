@@ -1,0 +1,96 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build Vue3/Vite2 App and Deploy to Aliyun
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Install Node.js
+      - name: Install Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          # cache: 'npm' # use pnpm instead of npm
+
+      # Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      # Cache
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      # Cache
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # Install dependencies with pnpm
+      - name: Install dependencies
+        run: pnpm install
+
+      # Build with pnpm
+      - name: Build vue3.x app
+        run: pnpm run build
+
+      # SSH deploy to aliyun
+      - name: SSH deploy to aliyun
+        # You may pin to the exact commit or the version.
+        # uses: kostya-ten/ssh-server-deploy@e0deb814bc458a68b61f6597a865d096e33eb586
+        uses: kostya-ten/ssh-server-deploy@v4
+        with:
+          # Host
+          host: ${{ secrets.REMOTE_HOST }}
+          # Port
+          port: 22
+          # Username
+          username: ${{ secrets.REMOTE_USER }}
+          # Password
+          # password: # optional
+          # Private key
+          private_key: ${{ secrets.PRIVATE_KEY }}
+          # Before script
+          before_script: |
+            if [ ! -d /var/www/xxxx ];then mkdir /var/www/xxxx;elif [[ -n $(ls /var/www/xxxx) ]];then rm -r /var/www/xxxx/*;fi
+          # After script
+          after_script: nginx -s reload
+          # After script
+          scp_source: ./dist/*
+          # After script
+          scp_target: /var/www/xxxx/
