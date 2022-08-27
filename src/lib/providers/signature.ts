@@ -1,4 +1,6 @@
 import Client from 'ali-oss'
+import { useMessage } from 'naive-ui'
+import { isEmpty } from 'lodash-es'
 
 interface SignShotCtx {
   signSTSURI: (unsignedURI: string) => Promise<string>
@@ -6,53 +8,86 @@ interface SignShotCtx {
 
 const snapshotSymbol = Symbol()
 
+const serializer = {
+  read: (v: any) => {
+    try {
+      const parsed = JSON.parse(v)
+
+      if (isEmpty(parsed)) return null
+
+      const { Expiration, ...otherArgs } = parsed
+      const now = new Date().getTime()
+      // 判断有没有过期
+      const endTime = new Date(Expiration).getTime()
+      const delta = now - endTime
+
+      if (delta >= 0) {
+        sessionStorage.removeItem('OssAccessToken')
+        return null
+      }
+
+      return {
+        Expiration,
+        ...otherArgs,
+      }
+    } catch (err) {
+      return null
+    }
+  },
+  write: (v: any) => JSON.stringify(v),
+}
+
 export function provideSignature(): SignShotCtx {
-  const accessKeyId = useStorage('accessKeyId', '')
-  const accessKeySecret = useStorage('accessKeySecret', '')
-  const stsToken = useStorage('stsToken', '')
+  const ossAccessToken = useStorage<OssAccessToken>(
+    'OssAccessToken',
+    null,
+    sessionStorage,
+    {
+      serializer,
+    }
+  )
 
   const store = shallowRef<Client>()
+
+  const messageCtx = useMessage()
 
   const handlers = {
     async fetchSTSToken() {
       try {
-        const { /* status, */ data } = await axios.get<STSData>('/oss/sts')
-        // console.log(data)
-        const { AccessKeyId, AccessKeySecret, SecurityToken } = data
-        accessKeyId.value = AccessKeyId
-        accessKeySecret.value = AccessKeySecret
-        stsToken.value = SecurityToken
+        const { /* status, */ data } = await axios.get<OssAccessToken>(
+          '/oss/sts'
+        )
+        ossAccessToken.value = data
       } catch (err) {
-        // pass
-      }
-      return {
-        accessKeyId: accessKeyId.value,
-        accessKeySecret: accessKeySecret.value,
-        stsToken: stsToken.value,
+        if (axios.isAxiosError(err)) {
+          if ((err.response?.data as AxiosResData)?.state) {
+            const { state, msg } = err.response?.data as AxiosResData
+            messageCtx.error(`[${state}]${msg}`)
+          } else {
+            messageCtx.error(`[${err.response?.status}]${err.message}`)
+          }
+        } else {
+          messageCtx.error('[908]STS服务异常，请联系管理员！')
+        }
       }
     },
     resetSTSToken() {
-      accessKeyId.value = null
-      accessKeySecret.value = null
-      stsToken.value = null
+      ossAccessToken.value = null
     },
-    async createClient() {
-      if (!accessKeyId.value || !accessKeySecret.value || !stsToken.value) {
-        await handlers.fetchSTSToken()
-      }
+    createClient() {
       store.value = new Client({
-        accessKeyId: accessKeyId.value,
-        accessKeySecret: accessKeySecret.value,
-        stsToken: stsToken.value,
+        accessKeyId: ossAccessToken.value.AccessKeyId,
+        accessKeySecret: ossAccessToken.value.AccessKeySecret,
+        stsToken: ossAccessToken.value.SecurityToken,
         region: 'oss-cn-beijing',
         bucket: 'baihe-beijing',
-        refreshSTSToken: handlers.fetchSTSToken,
       })
     },
     async signSTSURI(unsignedURI: string) {
-      // ali-oss v6.x 不支持 tree-shaking
-      // ali-oss-sdk v7.x.beta 已支持 tree-shaking
-      // https://www.npmjs.com/package/ali-oss-sdk
+      if (!ossAccessToken.value) {
+        await handlers.fetchSTSToken()
+        handlers.createClient()
+      }
 
       if (!store.value) {
         await handlers.createClient()

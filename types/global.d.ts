@@ -18,3 +18,11 @@ interface AuthFormData {
   username: string
   password: string
 }
+
+// sts
+interface OssAccessToken {
+  AccessKeyId: string
+  AccessKeySecret: string
+  SecurityToken: string
+  Expiration: string
+}

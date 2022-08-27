@@ -14,13 +14,6 @@ interface RadioOption {
   value: string
 }
 
-// sts
-interface STSData {
-  AccessKeyId: string
-  AccessKeySecret: string
-  SecurityToken: string
-}
-
 // stats
 interface DomainStats {
   expiring: number
