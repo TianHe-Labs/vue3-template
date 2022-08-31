@@ -150,7 +150,7 @@ export function provideSearchResult(
       loadingBar.start()
       try {
         const { /* status, */ data } = await axios.get<AxiosResData>(
-          '/api/search',
+          `${import.meta.env.BASE_URL}api/search`,
           {
             params: {
               page: pagination.page,

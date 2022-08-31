@@ -35,7 +35,7 @@ export default defineStore('userAuth', () => {
     async signIn(authFormData: AuthFormData) {
       try {
         const { /* status,  */ data } = await axios.post<AxiosResData>(
-          '/mock/auth',
+          `${import.meta.env.BASE_URL}mock/auth`,
           {
             ...authFormData,
           }
@@ -64,7 +64,7 @@ export default defineStore('userAuth', () => {
     async refreshToken() {
       try {
         const { data } = await axios.post<AxiosResData>(
-          '/api/refresh',
+          `${import.meta.env.BASE_URL}api/refresh`,
           {},
           {
             headers: {
