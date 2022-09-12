@@ -50,9 +50,6 @@ export function createPlugins(metaEnv: ImportMetaEnv, isBuild: boolean) {
     }),
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
-      eslintrc: {
-        enabled: true,
-      },
       imports: [
         'vue',
         'vue-router',
