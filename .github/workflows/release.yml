@@ -84,7 +84,7 @@ jobs:
 
           # Upload the built website files in "dist" directory to remote "my-website/" prefix
           local-path: dist
-          remote-path: xxxx
+          remote-path: vue-template
 
           # Include HTML files only
           #include-regex: \.html$

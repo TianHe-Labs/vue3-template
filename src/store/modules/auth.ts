@@ -35,7 +35,7 @@ export default defineStore('userAuth', () => {
     async signIn(authFormData: AuthFormData) {
       try {
         const { /* status,  */ data } = await axios.post<AxiosResData>(
-          'mock/auth',
+          '/mock/auth',
           {
             ...authFormData,
           }
