@@ -1,7 +1,8 @@
 <template>
   <div
-    position="relative"
-    h="[236px]"
+    pos="relative"
+    h="64"
+    m="-b-16"
     bg="center cover no-repeat"
     before:content="[]"
     before:position="absolute inset-0"

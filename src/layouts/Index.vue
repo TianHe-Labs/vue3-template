@@ -17,21 +17,16 @@ provideSignature()
 </script>
 
 <template>
-  <n-layout>
+  <n-layout h="screen" :native-scrollbar="false">
     <Header />
-    <n-layout-content
-      min-h="screen"
-      pb="[50px]"
-      bg="!transparent"
-      class="layout__content"
-    >
+    <n-layout-content min-h="screen" p="b-12" class="layout__content">
       <Banner />
-      <div position="relative" container="~" m="-t-16 x-auto" p="x-8" z="10">
+      <div pos="relative" container="~" m="x-auto">
         <router-view v-slot="{ Component }">
           <transition :duration="200" name="fade-top" mode="out-in">
-            <!-- <keep-alive> -->
-            <component :is="Component" />
-            <!-- </keep-alive> -->
+            <keep-alive>
+              <component :is="Component" />
+            </keep-alive>
           </transition>
         </router-view>
       </div>
