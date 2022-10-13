@@ -79,12 +79,12 @@ jobs:
           # Or use STS Token
           # security-token: ${{ secrets.ALIYUN_SECURITY_TOKEN }}
 
-          bucket: tianhe-apps
-          endpoint: oss-cn-qingdao.aliyuncs.com
+          bucket: tianhe-apps # FIXME: set your own bucket name
+          endpoint: oss-cn-qingdao.aliyuncs.com # FIXME: set your own endpoint name
 
           # Upload the built website files in "dist" directory to remote "my-website/" prefix
           local-path: dist
-          remote-path: vue-template
+          remote-path: vue-template # FIXME: set your expected access path
 
           # Include HTML files only
           #include-regex: \.html$
