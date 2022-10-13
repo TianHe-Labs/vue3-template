@@ -12,7 +12,7 @@ const userOptions = [
 const { auth } = useStore()
 
 const router = useRouter()
-const message = useMessage()
+const messageCtx = useMessage()
 
 const handlers = {
   onSelect(key: string) {
@@ -20,7 +20,7 @@ const handlers = {
       case 'logout':
         auth.signOut()
         router.push({ name: 'Auth' })
-        message.success('已注销登录！')
+        messageCtx.success('已注销登录！')
         break
       default:
         return
