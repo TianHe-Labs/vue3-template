@@ -1,7 +1,4 @@
 import Mock from 'mockjs'
-import Base64 from 'crypto-js/enc-base64'
-import Utf8 from 'crypto-js/enc-utf8'
-import HmacSHA256 from 'crypto-js/hmac-sha256'
 
 export function responseSuccess(payload: Recordable, meta = {}) {
   return Mock.mock({
@@ -54,33 +51,4 @@ export function sortByTime<T extends Recordable>(
 
 export function genRandom(min: number, max: number) {
   return Math.trunc(Math.random() * (max - min) + min)
-}
-
-const secret = 'nslab321123balsn'
-
-function base64url(source: CryptoJS.lib.WordArray) {
-  // Encode in classical base64
-  let encodedSource = Base64.stringify(source)
-
-  // Remove padding equal characters
-  encodedSource = encodedSource.replace(/=+$/, '')
-
-  // Replace characters according to base64url specifications
-  encodedSource = encodedSource.replace(/\+/g, '-')
-  encodedSource = encodedSource.replace(/\//g, '_')
-
-  return encodedSource
-}
-
-export function jwtGenerator(payload: Recordable) {
-  const header = {
-    alg: 'HS256',
-    typ: 'JWT',
-  }
-  const encodedHeader = base64url(Utf8.parse(JSON.stringify(header)))
-  const encodedData = base64url(Utf8.parse(JSON.stringify(payload)))
-  const unsignedToken = `${encodedHeader}.${encodedData}`
-  const signature = base64url(HmacSHA256(unsignedToken, secret))
-
-  return `${unsignedToken}.${signature}`
 }

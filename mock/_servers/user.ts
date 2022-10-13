@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock'
-import { jwtGenerator, responseError, responseSuccess } from '../_utils'
+import { responseError, responseSuccess } from '../_utils'
 
 enum RoleGroupEnum {
   ADMIN = 'admin',
@@ -28,8 +28,10 @@ export default [
 
       if (foundItem) {
         const { permissions } = foundItem
-        const access_token = jwtGenerator({ username })
-        const refresh_token = jwtGenerator({ username })
+        const access_token =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo'
+        const refresh_token =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo'
         return responseSuccess({
           username,
           permissions,
@@ -40,38 +42,5 @@ export default [
         return responseError(901, '用户名或密码错误！')
       }
     },
-    /* rawResponse: async (req, res) => {
-      let reqBodyData = '';
-      await new Promise(resolve => {
-        req.on('data', chunk => {
-          reqBodyData += chunk;
-        });
-        req.on('end', () => resolve(undefined));
-      });
-      const { username, password } = JSON.parse(reqBodyData);
-      const foundItem = _users.find(
-        u => u.username === username && u.password === password,
-      );
-
-      if (foundItem) {
-        const { permissions } = foundItem;
-        const access_token = jwtGenerator({ username });
-        const refresh_token = jwtGenerator({ username });
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(
-          JSON.stringify(
-            responseSuccess({
-              username,
-              permissions,
-              access_token,
-              refresh_token,
-            }),
-          ),
-        );
-      } else {
-        res.writeHead(401, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(responseError(901, '用户名或密码错误！')));
-      }
-    },*/
   },
 ] as MockMethod[]

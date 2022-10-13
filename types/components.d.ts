@@ -7,8 +7,12 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AvatarMenu: typeof import('./../src/components/header/AvatarMenu.vue')['default']
+    IconBiMoonStarsFill: typeof import('~icons/bi/moon-stars-fill')['default']
+    IconBiSunFill: typeof import('~icons/bi/sun-fill')['default']
     IconClaritySearchLine: typeof import('~icons/clarity/search-line')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
+    NavMenu: typeof import('./../src/components/header/NavMenu.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDropdown: typeof import('naive-ui')['NDropdown']
@@ -21,9 +25,11 @@ declare module '@vue/runtime-core' {
     NLayoutFooter: typeof import('naive-ui')['NLayoutFooter']
     NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
+    NMenu: typeof import('naive-ui')['NMenu']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchInput: typeof import('./../src/components/header/SearchInput.vue')['default']
+    User: typeof import('./../src/components/header/User.vue')['default']
   }
-
 }
