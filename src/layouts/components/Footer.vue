@@ -1,15 +1,19 @@
+<script lang="ts" setup>
+import { useAppMeta } from '@/lib/providers'
+
+const { appCopr } = useAppMeta()
+</script>
+
 <template>
   <n-layout-footer
+    pos="relative"
+    h="12"
+    m="-t-12"
     flex="~"
     justify="center"
     align="items-center"
-    h="[50px]"
-    m="-t-[50px]"
-    bg="transparent"
+    bg="!transparent"
   >
-    <p>
-      &copy; {{ new Date().getFullYear() }} 哈尔滨工业大学(威海)
-      网络与信息安全技术研究中心
-    </p>
+    <p text="sm">&copy; {{ new Date().getFullYear() }} {{ appCopr }}</p>
   </n-layout-footer>
 </template>
