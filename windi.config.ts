@@ -5,6 +5,7 @@ function range(size, startAt = 1) {
 }
 
 export default defineConfig({
+  darkMode: 'class',
   attributify: true,
   safelist: [
     'text-primary text-success text-warning text-danger',
@@ -58,7 +59,7 @@ export default defineConfig({
         // success
         // warning
         // error
-        // info = dark/light
+        // info = gray 中性色
 
         success: {
           DEFAULT: '#22c55e', // 600
@@ -100,39 +101,42 @@ export default defineConfig({
           100: '#fff2f0',
         },
 
-        // title
-        // primary text // p
-        // secondary text // meta、caption
-        // readonly/disabled
-        // border
-        // divider
-        // background
-        // table header
-
+        // 中性色
+        // title 85
+        // primary text // p 80
+        // secondary text // meta、caption 60
+        // placeholder 45
+        // readonly/disabled 25/30
+        // border 15/20
+        // divider 6/12
+        // background/overlay 4/8
+        // table header 2/4
+        // 浅色主题下
         // black: 'black',
         dark: {
-          900: '#212121',
-          800: '#495057',
-          700: '#6c757d',
-          600: '#9e9e9e',
-          500: '#bdbdbd',
-          400: '#ced4ea',
-          300: '#dee2e6',
-          200: '#f5f5f5',
-          100: '#f8f9fa',
+          900: 'rgba(0, 0, 0, 0.85)', // 85%
+          800: 'rgba(0, 0, 0, 0.80)', // 80%
+          700: 'rgba(0, 0, 0, 0.60)', // 60%
+          600: 'rgba(0, 0, 0, 0.45)', // 45%
+          500: 'rgba(0, 0, 0, 0.25)', // 25%
+          400: 'rgba(0, 0, 0, 0.15)', // 15%
+          300: 'rgba(0, 0, 0, 0.06)', // 6%
+          200: 'rgba(0, 0, 0, 0.04)', // 4%
+          100: 'rgba(0, 0, 0, 0.02)', // 2%
         },
 
+        // 深色主题下
         // white: 'white',
         light: {
-          900: '#d9d9d9',
-          800: '#cccccc',
-          700: '#8f8f8f',
-          600: '#666666',
-          500: '#474747',
-          400: '#2e2e2e',
-          300: '#1f1f1f',
-          200: '#141414',
-          100: '#0a0a0a',
+          900: 'rgba(255, 255, 255, 0.85)', // 85%
+          800: 'rgba(255, 255, 255, 0.80)', // 80%
+          700: 'rgba(255, 255, 255, 0.60)', // 60%
+          600: 'rgba(255, 255, 255, 0.45)', // 45%
+          500: 'rgba(255, 255, 255, 0.30)', // 30%
+          400: 'rgba(255, 255, 255, 0.20)', // 20%
+          300: 'rgba(255, 255, 255, 0.12)', // 12%
+          200: 'rgba(255, 255, 255, 0.08)', // 8%
+          100: 'rgba(255, 255, 255, 0.04)', // 4%
         },
 
         // transparent: 'transparent',

@@ -85,80 +85,75 @@ const handlers = {
 </script>
 
 <template>
-  <div class="animation">
-    <n-layout>
-      <n-layout-content
-        h="screen"
-        p="b-[50px]"
-        bg="transparent"
-        :content-style="{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }"
-        class="layout__content"
+  <n-layout overflow="hidden">
+    <n-layout-content
+      h="screen"
+      p="b-12"
+      bg="transparent"
+      :content-style="{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }"
+      class="layout__content"
+    >
+      <div
+        w="full md:3/4 min-90 max-120"
+        p="8 md:12"
+        bg="white opacity-90 dark:dark-400"
+        filter="~ drop-shadow-md"
+        border="rounded-sm"
       >
-        <div
-          w="[480px]"
-          p="12"
-          bg="white"
-          border="reounded-sm"
-          z="10"
-          class="custom-shadow"
-        >
-          <div flex="~" align="items-center" p="b-12">
-            <img
-              src="~@/assets/logo-dark.svg"
-              width="48"
-              height="48"
-              :alt="appName"
-            />
-            <div m="l-4">
-              <p text="md" font="tracking-wide">{{ appDesc }}</p>
-              <h1 text="xl">{{ appName }}</h1>
-            </div>
-          </div>
-          <n-form
-            :show-label="false"
-            :model="authFormData"
-            :rules="authFormRules"
-            ref="authFormRef"
-          >
-            <n-form-item path="username">
-              <n-input
-                size="large"
-                v-model:value="authFormData.username"
-                placeholder="请输入用户名"
-              />
-            </n-form-item>
-            <n-form-item path="password">
-              <n-input
-                type="password"
-                size="large"
-                show-password-on="click"
-                v-model:value="authFormData.password"
-                placeholder="请输入密码"
-                :input-props="{
-                  onKeyup: handlers.onAuthInputEnterKeyup,
-                }"
-              />
-            </n-form-item>
-          </n-form>
-          <div flex="~" justify="between" align="items-center" p="t-4">
-            <p text="white">忘记密码？联系管理员！</p>
-            <n-button
-              size="large"
-              color="#0078D4"
-              :loading="authFormState.btnLoading"
-              min-w="[84px]"
-              @click="handlers.authLogin"
-            >
-              {{ authFormState.btnText }}
-            </n-button>
+        <div flex="~ gap-4" align="items-center" p="b-12">
+          <img
+            src="~@/assets/logo-dark.svg"
+            width="48"
+            height="48"
+            :alt="appName"
+          />
+          <div>
+            <p text="md" font="tracking-wide">{{ appDesc }}</p>
+            <h1 text="xl">{{ appName }}</h1>
           </div>
         </div>
-      </n-layout-content>
-      <Footer />
-    </n-layout>
-  </div>
+        <n-form
+          :show-label="false"
+          :model="authFormData"
+          :rules="authFormRules"
+          ref="authFormRef"
+        >
+          <n-form-item path="username">
+            <n-input
+              size="large"
+              v-model:value="authFormData.username"
+              placeholder="请输入用户名"
+            />
+          </n-form-item>
+          <n-form-item path="password">
+            <n-input
+              type="password"
+              size="large"
+              show-password-on="click"
+              v-model:value="authFormData.password"
+              placeholder="请输入密码"
+              :input-props="{
+                onKeyup: handlers.onAuthInputEnterKeyup,
+              }"
+            />
+          </n-form-item>
+        </n-form>
+        <div flex="~" justify="between" align="items-center" p="t-4">
+          <p text="dakr-700 dark:light-700">忘记密码？联系管理员！</p>
+          <n-button
+            type="primary"
+            :loading="authFormState.btnLoading"
+            @click="handlers.authLogin"
+          >
+            {{ authFormState.btnText }}
+          </n-button>
+        </div>
+      </div>
+    </n-layout-content>
+    <Footer />
+  </n-layout>
 </template>
