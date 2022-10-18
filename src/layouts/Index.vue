@@ -21,7 +21,7 @@ provideSignature()
     <Header />
     <n-layout-content min-h="screen" p="b-12" class="layout__content">
       <Banner />
-      <div pos="relative" container="~" m="x-auto">
+      <div pos="relative" container="~" m="x-auto" overflow="hidden">
         <router-view v-slot="{ Component }">
           <transition :duration="200" name="fade-top" mode="out-in">
             <keep-alive>
