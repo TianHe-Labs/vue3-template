@@ -14,3 +14,27 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+
+## CI/CD Based On Github Actions
+
+1. Preview on Cloud Server
+
+The CI/CD config is `.github/workflows/preview.yml`, you should add some secrets used by the CI/CD config, in Github repo settings
+
+
+```
+REMOTE_HOST: ip address of the remote server
+REMOTE_USER: user access to the remote server
+REMOTE_PWD: pwd access to the remote server with password (not recommended)
+PRIVATE_KEY: private key access to the remote server with pubkey authentication (recommended)
+REMOTE_PATH: your expected target path used by nginx
+```
+
+Only choose one of password and public key!
+
+2. Deloyed on OSS
+
+```
+OSS_ACCESS_KEY_ID:
+OSS_ACCESS_KEY_SECRET: 
+```

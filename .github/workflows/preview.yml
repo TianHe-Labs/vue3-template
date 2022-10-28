@@ -82,15 +82,15 @@ jobs:
           # Username
           username: ${{ secrets.REMOTE_USER }}
           # Password
-          # password: # optional
+          # password: ${{ secrets.REMOTE_PWD }} # optional
           # Private key
           private_key: ${{ secrets.PRIVATE_KEY }}
           # Before script
           before_script: |
-            if [ ! -d /var/www/vue-template ];then mkdir /var/www/vue-template;elif [[ -n $(ls /var/www/vue-template) ]];then rm -r /var/www/vue-template/*;fi
+            if [ ! -d /var/www/${{ secrets.REMOTE_PATH }} ];then mkdir /var/www/${{ secrets.REMOTE_PATH }};elif [[ -n $(ls /var/www/${{ secrets.REMOTE_PATH }}) ]];then rm -r /var/www/${{ secrets.REMOTE_PATH }}/*;fi
           # After script
           after_script: nginx -s reload
           # After script
           scp_source: ./dist/*
           # After script
-          scp_target: /var/www/vue-template/
+          scp_target: /var/www/${{ secrets.REMOTE_PATH }}/
