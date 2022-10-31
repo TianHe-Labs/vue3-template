@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build Vue3/Vite2 App and Deploy to Aliyun
+name: Build and Deploy to Server
 
 # Controls when the workflow will run
 on:
@@ -78,7 +78,7 @@ jobs:
           # Host
           host: ${{ secrets.REMOTE_HOST }}
           # Port
-          port: 22
+          port: ${{ secrets.REMOTE_PORT }}
           # Username
           username: ${{ secrets.REMOTE_USER }}
           # Password
@@ -86,11 +86,12 @@ jobs:
           # Private key
           private_key: ${{ secrets.PRIVATE_KEY }}
           # Before script
+          # if [ ! -d ${{ secrets.REMOTE_PATH }} ];then mkdir ${{ secrets.REMOTE_PATH }};el
           before_script: |
-            if [ ! -d /var/www/${{ secrets.REMOTE_PATH }} ];then mkdir /var/www/${{ secrets.REMOTE_PATH }};elif [[ -n $(ls /var/www/${{ secrets.REMOTE_PATH }}) ]];then rm -r /var/www/${{ secrets.REMOTE_PATH }}/*;fi
+            if [[ -n $(ls ${{ secrets.REMOTE_PATH }}) ]];then rm -r ${{ secrets.REMOTE_PATH }}/*;fi
           # After script
           after_script: nginx -s reload
           # After script
           scp_source: ./dist/*
           # After script
-          scp_target: /var/www/${{ secrets.REMOTE_PATH }}/
+          scp_target: ${{ secrets.REMOTE_PATH }} # /var/www/html/
