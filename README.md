@@ -21,7 +21,6 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 
 The CI/CD config is `.github/workflows/preview.yml`, you should add some secrets used by the CI/CD config, in Github repo settings
 
-
 ```
 REMOTE_HOST: ip address of the remote server
 REMOTE_USER: user access to the remote server
@@ -36,5 +35,5 @@ Only choose one of password and public key!
 
 ```
 OSS_ACCESS_KEY_ID:
-OSS_ACCESS_KEY_SECRET: 
+OSS_ACCESS_KEY_SECRET:
 ```
