@@ -147,13 +147,6 @@ interface CollectedMeta {
   collected_timestamp: string
 }
 
-interface Domain {
-  domain: string
-  domain_status: string
-  icp: DomainICP
-  whois: DomainWhois
-  snapshot: DomainSnapshot & CollectedMeta
-  associated_chinese: string[]
-  create_timestamp: string
-  update_timestamp: string
+interface XXX {
+  xxx: string
 }

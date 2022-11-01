@@ -9,9 +9,9 @@ import {
   provideSignature,
 } from '@/lib/providers'
 
-const { queryKeyword, selectedStatus, selectedCate } = provideSearchCondition()
+const { queryKeyword } = provideSearchCondition()
 
-provideSearchResult(queryKeyword, selectedStatus, selectedCate)
+provideSearchResult(queryKeyword)
 
 provideSignature()
 </script>
