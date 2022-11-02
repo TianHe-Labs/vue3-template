@@ -88,10 +88,10 @@ jobs:
           # Before script
           # if [ ! -d ${{ secrets.REMOTE_PATH }} ];then mkdir ${{ secrets.REMOTE_PATH }};el
           before_script: |
-            if [[ -n $(ls ${{ secrets.REMOTE_PATH }}) ]];then rm -r ${{ secrets.REMOTE_PATH }}/*;fi
+            if [[ -n $(ls ${{ secrets.REMOTE_PATH }}) ]];then rm -r ${{ secrets.REMOTE_PATH }};fi
           # After script
           after_script: nginx -s reload
           # After script
-          scp_source: ./dist/*
+          scp_source: dist # dist/ # ./dist
           # After script
-          scp_target: ${{ secrets.REMOTE_PATH }} # /var/www/html/
+          scp_target: ${{ secrets.REMOTE_PATH }} # /var/www/{{ target_path }}
