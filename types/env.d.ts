@@ -1,18 +1,16 @@
 /// <reference types="vite/client" />
 
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
+
 interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
   readonly VITE_APP_DESC: string
-  readonly VITE_APP_COPR: string
-  readonly VITE_APP_PORT: number
-  readonly VITE_APP_BASE: string
-  readonly VITE_APP_PROXY: [string, string][]
 }
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
-
-declare type ProxyEnv = [string, string][]
-
-declare type ProxyTarget = Record<string, string | import('vite').ProxyOptions>

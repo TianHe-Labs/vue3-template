@@ -1,30 +1,46 @@
 import type { Router } from 'vue-router'
-import { useStore } from '@/store'
+import { useUserStore, useRouteStore } from '@/store'
+import { getToken } from '@/utils/token'
+import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
 export function createAccessGuard(router: Router) {
-  const { auth, dynRoute } = useStore()
-  router.beforeEach(async (to, from, next) => {
-    const token = auth.userToken?.access_token
+  router.beforeEach(async (to, _, next) => {
+    const { userInfo, getUserInfo, signOut } = useUserStore()
+    const { generateRoutes } = useRouteStore()
+    const token = getToken()
     if (token) {
-      if (dynRoute.isGeneratedRoutes) {
-        if (to.name === 'Auth') return
+      if (userInfo.roles && userInfo.roles?.length) {
+        if (to.name === 'Auth') next({ name: DEFAULT_ROUTE_NAME })
         else next()
       } else {
-        // 根据用户权限，动态生成路由
-        const userPermissions = auth.userInfo?.permissions as string[]
-        const filteredRoutes = dynRoute.generatedRoutes(userPermissions)
-        // 将生成的需要权限认证的路由，添加到路由表中
-        filteredRoutes.forEach((filteredRoute) =>
-          router.addRoute(filteredRoute)
-        )
-        // 设置动态路由已经生成的标识
-        dynRoute.setFlag4GenRoutes(true)
-        // 路由表更新后，跳转目标路由
-        next({ ...to, replace: true }) //  生成了新的路由列表，因此需要 replace
+        try {
+          // 获取用户信息（role）
+          await getUserInfo()
+          // 根据用户权限，动态生成路由
+          const addRoutes = generateRoutes(userInfo.roles as string[])
+          // 将生成的需要权限认证的路由，添加到路由表中
+          addRoutes.forEach((route) => router.addRoute(route))
+          // 路由表更新后，跳转目标路由
+          // 生成了新的路由列表，因此需要 replace
+          next({ ...to, replace: true })
+        } catch (err) {
+          // getUserInfo 等存在异常，退出登录
+          await signOut()
+          next({
+            name: 'Auth',
+            query: { redirect: to.path, ...to.query },
+          })
+        }
       }
     } else {
-      if (to.name === 'Auth') next()
-      else next({ name: 'Auth', query: { redirect: to.path } })
+      if (to.name === 'Auth') {
+        next()
+      } else {
+        next({
+          name: 'Auth',
+          query: { redirect: to.path, ...to.query },
+        })
+      }
     }
   })
 }

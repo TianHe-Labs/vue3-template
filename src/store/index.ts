@@ -1,17 +1,8 @@
-import type { App } from 'vue'
-import useAuthStore from './modules/auth'
-import useRouteStore from './modules/route'
-
-export const store = createPinia()
+export * from './modules/app'
+export * from './modules/user'
+export * from './modules/route'
 
 // pinia 需要先挂载，才能使用
-// （分模块 install，不进行全局 install）
+const store = createPinia()
 
-export function setupStore(app: App) {
-  app.use(store)
-}
-
-export const useStore = () => ({
-  auth: useAuthStore(),
-  dynRoute: useRouteStore(),
-})
+export default store

@@ -1,19 +1,12 @@
 <script lang="ts" setup>
-import Header from './components/Header.vue'
-import Banner from './components/Banner.vue'
-import Footer from './components/Footer.vue'
+import Header from './components/header.vue'
+import Banner from './components/banner.vue'
 
-import {
-  provideSearchCondition,
-  provideSearchResult,
-  provideSignature,
-} from '@/lib/providers'
+import { provideSearchCondition } from '@/components/top-search/searchCondition'
+import { provideSearchResult } from '@/components/top-search/searchResult'
 
 const { queryKeyword } = provideSearchCondition()
-
 provideSearchResult(queryKeyword)
-
-provideSignature()
 </script>
 
 <template>

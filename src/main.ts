@@ -1,17 +1,13 @@
 import App from './App.vue'
-import { setupStore } from './store'
-import { setupRouter } from './router'
+import store from './store'
+import router from './router'
 
+import './plugins/axios'
 import './styles'
 
-function bootstrap() {
-  const app = createApp(App)
+const app = createApp(App)
 
-  setupStore(app)
+app.use(store)
+app.use(router)
 
-  setupRouter(app)
-
-  app.mount('#app')
-}
-
-bootstrap()
+app.mount('#app')

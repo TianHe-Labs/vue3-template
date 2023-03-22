@@ -1,20 +1,14 @@
-import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { constRoutes } from './routes'
-import { setupRouterGuards } from './guards'
+import setupRouterGuards from './guards'
 
-export const router = createRouter({
-  scrollBehavior: () => ({ left: 0, top: 0 }),
+const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: constRoutes,
+  scrollBehavior: () => ({ left: 0, top: 0 }),
 })
 
-// createNaviGuards(router)
-
-export function setupRouter(app: App) {
-  app.use(router)
-  setupRouterGuards(router)
-}
+setupRouterGuards(router)
 
 // https://github.com/vuejs/router/issues/1237#issuecomment-990748872
 // https://router.vuejs.org/guide/advanced/dynamic-routing.html#removing-routes
@@ -22,7 +16,7 @@ export function setupRouter(app: App) {
 export function resetRouter() {
   const routes = router.getRoutes()
   routes.forEach((routeItem) => {
-    if (routeItem.meta.permissions && routeItem.meta.permissions.length) {
+    if (routeItem.meta.roles && routeItem.meta.roles.length) {
       if (routeItem.name) router.removeRoute(routeItem.name)
       else {
         // Note that addRoute() returns a method to remove that route
@@ -32,3 +26,5 @@ export function resetRouter() {
     }
   })
 }
+
+export default router

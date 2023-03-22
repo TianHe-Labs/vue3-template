@@ -1,17 +1,16 @@
 <script lang="ts" setup>
-import { provideAppMeta, provideAppTheme } from '@/lib/providers'
+import { provideTheme } from './hooks'
 
-provideAppMeta()
-const { appTheme, themeOverrides, zhCN, dateZhCN } = provideAppTheme()
+const { theme, themeOverrides, zhCN, dateZhCN } = provideTheme()
 </script>
 
 <template>
   <n-config-provider
     :theme-overrides="themeOverrides"
-    :theme="appTheme"
+    :theme="theme"
     :locale="zhCN"
     :date-locale="dateZhCN"
-    :class="{ dark: appTheme }"
+    :class="{ dark: theme }"
   >
     <n-loading-bar-provider>
       <n-message-provider placement="bottom" :max="1">

@@ -9,14 +9,15 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
+    // "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "node", "ali-oss", "unplugin-icons/types/vue"],
+    "types": ["vite/client", "node", "unplugin-icons/types/vue"],
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["types/*"]
@@ -26,8 +27,8 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "src/**/*.json",
     "src/**/*.vue",
-    "build/**/*.ts",
     "mock/**/*.ts",
     "types/**/*.d.ts"
   ],
