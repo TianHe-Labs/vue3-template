@@ -49,7 +49,7 @@ jobs:
 
       # Build with npm
       - name: Build vue3.x app
-        run: npm run build -- --base=$BASE_URL
+        run: npm run build -- --base=${{ env.BASE_URL }}
 
       # SSH deploy to server
       - name: SSH deploy to server
@@ -62,18 +62,18 @@ jobs:
           # Port
           port: ${{ secrets.REMOTE_PORT }} # configure in Github Actions secret
           # Username
-          username: $REMOTE_USER
+          username: ${{ env.REMOTE_USER }}
           # Password
           # password: ${{ secrets.REMOTE_PWD }} # optional
           # Private key
           private_key: ${{ secrets.PRIVATE_KEY }} # configure in Github Actions secret
           # Before script
-          # if [ ! -d $REMOTE_PATH ];then mkdir $REMOTE_PATH;el
+          # if [ ! -d ${{ env.REMOTE_PATH }} ];then mkdir ${{ env.REMOTE_PATH }};el
           before_script: |
-            if [[ -n $(ls $REMOTE_PATH) ]];then rm -r $REMOTE_PATH;fi
+            if [[ -n $(ls ${{ env.REMOTE_PATH }}) ]];then rm -r ${{ env.REMOTE_PATH }};fi
           # After script
           after_script: nginx -s reload
           # After script
           scp_source: dist
           # After script
-          scp_target: $REMOTE_PATH
+          scp_target: ${{ env.REMOTE_PATH }}
