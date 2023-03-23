@@ -1,44 +1,21 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/store'
-import { useTheme } from '@/hooks'
 
-const { name: appName, desc: appDesc, sideMenu, topSearch } = useAppStore()
-const { theme } = useTheme()
+const { sideMenu, topSearch } = useAppStore()
 </script>
 
 <template>
   <n-layout-header
     pos="fixed"
-    h="14"
-    bg="light-200 opacity-80 dark:dark-200 dark:opacity-80"
-    backdrop="~ blur-md"
-    filter="~ drop-shadow-md"
+    bg="white opacity-90 dark:dark-200 dark:opacity-90"
+    backdrop="~ blur-sm"
     z="10"
   >
-    <!-- container="~" m="x-auto" -->
-    <div grid="~ cols-3" align="items-center">
-      <div flex="~" align="items-center">
-        <router-link :to="{ name: 'Layout' }">
-          <img
-            v-if="theme"
-            w="14"
-            h="14"
-            src="~@/assets/logo-dark.svg"
-            :alt="appName"
-          />
-          <img
-            v-else
-            w="14"
-            h="14"
-            src="~@/assets/logo-light.svg"
-            :alt="appName"
-          />
-        </router-link>
-        <div p="x-2">
-          <h1 text="md" font="bold">{{ appName }}</h1>
-          <p text="xs">{{ appDesc }}</p>
-        </div>
-      </div>
+    <!-- container="~" -->
+    <div h="full" m="x-2" grid="~ cols-3" align="items-center">
+      <router-link :to="{ name: 'Layout' }">
+        <TitleBar />
+      </router-link>
       <div flex="~" justify="center">
         <template v-if="sideMenu || topSearch">
           <TopSearch />

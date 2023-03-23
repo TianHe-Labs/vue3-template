@@ -27,7 +27,6 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.json",
     "src/**/*.vue",
     "mock/**/*.ts",
     "types/**/*.d.ts"

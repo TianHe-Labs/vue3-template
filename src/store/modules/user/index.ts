@@ -53,7 +53,7 @@ export const useUserStore = defineStore('user', {
         throw err
       }
     },
-    // 注销
+    // 退出登录
     signOut() {
       this.resetUserInfo()
       clearToken()

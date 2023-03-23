@@ -42,6 +42,11 @@ export default defineConfig({
         },
       },
       colors: {
+        // link = primary
+        // success
+        // warning
+        // error
+        // info = gray 中性色
         primary: {
           DEFAULT: '#6366f1', // 600
           900: '#363885',
@@ -54,12 +59,6 @@ export default defineConfig({
           200: '#dadafc',
           100: '#f7f7fe',
         },
-
-        // link = primary
-        // success
-        // warning
-        // error
-        // info = gray 中性色
 
         success: {
           DEFAULT: '#22c55e', // 600
@@ -102,44 +101,24 @@ export default defineConfig({
         },
 
         // 中性色
-        // title 85
-        // primary text // p 80
-        // secondary text // meta、caption 60
-        // placeholder 45
-        // readonly/disabled 25/30
-        // border 15/20
-        // divider 6/12
-        // background/overlay 4/8
-        // table header 2/4
+
         // 浅色主题下
         // black: 'black',
-        dark: {
-          900: 'rgba(0, 0, 0, 0.85)', // 85%
-          800: 'rgba(0, 0, 0, 0.80)', // 80%
-          700: 'rgba(0, 0, 0, 0.60)', // 60%
-          600: 'rgba(0, 0, 0, 0.45)', // 45%
-          500: 'rgba(0, 0, 0, 0.25)', // 25%
-          400: 'rgba(0, 0, 0, 0.15)', // 15%
-          300: 'rgba(0, 0, 0, 0.06)', // 6%
-          200: 'rgba(0, 0, 0, 0.04)', // 4%
-          100: 'rgba(0, 0, 0, 0.02)', // 2%
-        },
+        // dark [100~900]
 
         // 深色主题下
         // white: 'white',
-        light: {
-          900: 'rgba(255, 255, 255, 0.85)', // 85%
-          800: 'rgba(255, 255, 255, 0.80)', // 80%
-          700: 'rgba(255, 255, 255, 0.60)', // 60%
-          600: 'rgba(255, 255, 255, 0.45)', // 45%
-          500: 'rgba(255, 255, 255, 0.30)', // 30%
-          400: 'rgba(255, 255, 255, 0.20)', // 20%
-          300: 'rgba(255, 255, 255, 0.12)', // 12%
-          200: 'rgba(255, 255, 255, 0.08)', // 8%
-          100: 'rgba(255, 255, 255, 0.04)', // 4%
-        },
+        // light [100~900]
 
-        // transparent: 'transparent',
+        // title 900
+        // primary text // p 800
+        // secondary text // meta、caption 700
+        // placeholder 600
+        // readonly/disabled 500
+        // border 400
+        // divider 300
+        // background/overlay 200
+        // table header 100
 
         // shadow
       },

@@ -4,7 +4,7 @@ import { getToken } from '@/utils/token'
 import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
 export function createAccessGuard(router: Router) {
-  router.beforeEach(async (to, _, next) => {
+  router.beforeResolve(async (to, _, next) => {
     const { userInfo, getUserInfo, signOut } = useUserStore()
     const { generateRoutes } = useRouteStore()
     const token = getToken()
@@ -19,10 +19,15 @@ export function createAccessGuard(router: Router) {
           // 根据用户权限，动态生成路由
           const addRoutes = generateRoutes(userInfo.roles as string[])
           // 将生成的需要权限认证的路由，添加到路由表中
-          addRoutes.forEach((route) => router.addRoute(route))
+          addRoutes.forEach((route) => {
+            router.addRoute(route)
+          })
           // 路由表更新后，跳转目标路由
-          // 生成了新的路由列表，因此需要 replace
+          // 生成了新的路由列表
+          // https://router.vuejs.org/zh/guide/advanced/dynamic-routing.html
+
           next({ ...to, replace: true })
+          return to.fullPath
         } catch (err) {
           // getUserInfo 等存在异常，退出登录
           await signOut()

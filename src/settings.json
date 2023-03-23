@@ -1,5 +1,6 @@
 {
   "copyright": "哈尔滨工业大学(威海)网络与信息安全技术研究中心",
-  "topSearch": false,
-  "sideMenu": false
+  "topSearch": true,
+  "sideMenu": true,
+  "sideCollapse": true
 }

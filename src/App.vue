@@ -10,10 +10,10 @@ const { theme, themeOverrides, zhCN, dateZhCN } = provideTheme()
     :theme="theme"
     :locale="zhCN"
     :date-locale="dateZhCN"
-    :class="{ dark: theme }"
+    :class="[{ dark: theme }, 'w-screen h-screen overflow-hidden']"
   >
     <n-loading-bar-provider>
-      <n-message-provider placement="bottom" :max="1">
+      <n-message-provider placement="top" :max="2">
         <router-view v-slot="{ Component }">
           <transition :duration="200" name="fade-top" mode="out-in">
             <component :is="Component" />
@@ -26,6 +26,7 @@ const { theme, themeOverrides, zhCN, dateZhCN } = provideTheme()
 
 <style lang="sass">
 #app
+  position: relative
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale

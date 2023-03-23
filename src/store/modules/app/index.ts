@@ -6,5 +6,10 @@ export const useAppStore = defineStore('app', {
     return { ...defaultSettings, name, desc }
   },
 
-  actions: {},
+  actions: {
+    // 更新
+    updateSettings(parital: Partial<AppState>) {
+      this.$patch(parital)
+    },
+  },
 })

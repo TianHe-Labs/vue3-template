@@ -4,4 +4,5 @@ interface AppState {
   copyright: string
   topSearch: boolean
   sideMenu: boolean
+  sideCollapse: boolean
 }

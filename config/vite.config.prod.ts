@@ -1,6 +1,6 @@
 import { mergeConfig } from 'vite'
 import viteCompression from 'vite-plugin-compression'
-import basConfig from './vite.config.base'
+import baseConfig from './vite.config.base'
 import visualizerPlugin from './plugins/visualizer'
 import htmlPlugin from './plugins/html'
 
@@ -26,5 +26,5 @@ export default mergeConfig(
       chunkSizeWarningLimit: 2000,
     },
   },
-  basConfig
+  baseConfig
 )

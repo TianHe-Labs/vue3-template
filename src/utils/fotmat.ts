@@ -7,7 +7,7 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isToday from 'dayjs/plugin/isToday'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import 'dayjs/locale/zh-cn'
-import { isUndefined, isNumber, isBoolean, isEmpty } from 'lodash-es'
+import { isUndefined } from 'lodash-es'
 
 const relativeConfig = {
   thresholds: [

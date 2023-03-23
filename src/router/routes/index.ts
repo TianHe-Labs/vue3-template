@@ -4,16 +4,38 @@ import MainLayout from '@/layouts/index.vue'
 
 export const constRoutes: RouteRecordRaw[] = [
   {
+    path: '/redirect',
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/pages/redirect/index.vue'),
+      },
+    ],
+  },
+  {
     path: '/auth',
     name: 'Auth',
     component: () => import('@/pages/auth/index.vue'),
     meta: { title: '登录认证', hideInMenu: true },
   },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: () => import('@/pages/not-found/index.vue'),
+    meta: { title: '404 Not Found', hideInMenu: true },
+  },
+  // 必须保证通配符路由位于最后一项
+  {
+    path: '/path-match(.*)*',
+    name: 'PathMatch',
+    redirect: '/404',
+    meta: { hideInMenu: true },
+  },
 ]
 
 export const asyncRoutes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '',
     name: 'Layout',
     component: MainLayout,
     redirect: { name: 'Index' },
@@ -22,11 +44,64 @@ export const asyncRoutes: RouteRecordRaw[] = [
         path: '/index',
         name: 'Index',
         component: () =>
-          import(/* webpackChunkName: "index" */ '@/pages/index.vue'),
+          import(
+            /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
+          ),
         meta: {
-          title: '首页',
-          // icon: 'bx:home-alt',
+          title: '仪表盘',
+          icon: 'bx:home-alt',
           // roles: ['admin'],
+        },
+        children: [
+          {
+            path: 'search',
+            name: 'SearchX',
+            component: () =>
+              import(
+                /* webpackChunkName: "search" */ '@/pages/search/index.vue'
+              ),
+            meta: {
+              title: '数据检索',
+              // roles: ['admin'],
+            },
+          },
+          {
+            path: 'searchy',
+            name: 'SearchY',
+            component: () =>
+              import(
+                /* webpackChunkName: "search" */ '@/pages/search/index.vue'
+              ),
+            meta: {
+              title: '数据检索',
+              // roles: ['admin'],
+            },
+          },
+        ],
+      },
+      {
+        path: '/search',
+        name: 'Search',
+        component: () =>
+          import(/* webpackChunkName: "search" */ '@/pages/search/index.vue'),
+        meta: {
+          title: '数据检索',
+          icon: 'bx:search-alt',
+          // roles: ['admin'],
+        },
+      },
+      {
+        path: '/profile',
+        name: 'Profile',
+        component: () =>
+          import(
+            /* webpackChunkName: "profile" */ '@/pages/user-profile/index.vue'
+          ),
+        meta: {
+          title: '用户中心',
+          icon: 'bx:user',
+          // roles: ['admin'],
+          hideInMenu: true,
         },
       },
     ],

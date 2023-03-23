@@ -13,7 +13,7 @@ export function useSign() {
     routeStore.resetRoutes()
     resetRouter()
     router.push({ name: 'Auth' })
-    messageCtx.success('已注销登录！')
+    messageCtx.success('已退出登录！')
   }
 
   return {

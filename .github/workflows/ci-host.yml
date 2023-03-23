@@ -13,6 +13,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  REMOTE_USER: root # FIXME: user of remote host
+  REMOTE_PATH: /var/www/vue-template # FIXME: path of built dist on remote host
+  BASE_URL: /vue-template/ # FIXME: deploy in sub path (https://cn.vitejs.dev/config/shared-options.html#base)
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -36,38 +41,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          # cache: 'npm' # use pnpm instead of npm
+          cache: 'npm'
 
-      # Install pnpm
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.1
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
-      # Cache
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-
-      # Cache
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      # Install dependencies with pnpm
+      # Install dependencies with npm
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
-      # Build with pnpm
+      # Build with npm
       - name: Build vue3.x app
-        run: pnpm run build # -- --base=
+        run: npm run build -- --base=$BASE_URL
 
       # SSH deploy to server
       - name: SSH deploy to server
@@ -76,22 +58,22 @@ jobs:
         uses: kostya-ten/ssh-server-deploy@v4
         with:
           # Host
-          host: ${{ secrets.REMOTE_HOST }}
+          host: ${{ secrets.REMOTE_HOST }} # configure in Github Actions secret
           # Port
-          port: ${{ secrets.REMOTE_PORT }}
+          port: ${{ secrets.REMOTE_PORT }} # configure in Github Actions secret
           # Username
-          username: ${{ secrets.REMOTE_USER }}
+          username: $REMOTE_USER
           # Password
           # password: ${{ secrets.REMOTE_PWD }} # optional
           # Private key
-          private_key: ${{ secrets.PRIVATE_KEY }}
+          private_key: ${{ secrets.PRIVATE_KEY }} # configure in Github Actions secret
           # Before script
-          # if [ ! -d ${{ secrets.REMOTE_PATH }} ];then mkdir ${{ secrets.REMOTE_PATH }};el
+          # if [ ! -d $REMOTE_PATH ];then mkdir $REMOTE_PATH;el
           before_script: |
-            if [[ -n $(ls ${{ secrets.REMOTE_PATH }}) ]];then rm -r ${{ secrets.REMOTE_PATH }};fi
+            if [[ -n $(ls $REMOTE_PATH) ]];then rm -r $REMOTE_PATH;fi
           # After script
           after_script: nginx -s reload
           # After script
-          scp_source: dist # dist/ # ./dist
+          scp_source: dist
           # After script
-          scp_target: ${{ secrets.REMOTE_PATH }} # /var/www/{{ target_path }}
+          scp_target: $REMOTE_PATH

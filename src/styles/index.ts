@@ -8,7 +8,6 @@ import './animations.sass'
 import './transitions.sass'
 
 // Custom
-import './custom-naiveui.sass'
 
 // WindiCSS
 import 'virtual:windi.css'

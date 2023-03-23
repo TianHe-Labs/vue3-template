@@ -1,22 +1,31 @@
 <script lang="ts" setup>
 import { Icon } from '@iconify/vue'
+import { MenuOption } from 'naive-ui'
 import { RouteRecordRaw, RouterLink } from 'vue-router'
 import { useAppStore, useRouteStore } from '@/store'
-// import HomeIcon from '~icons/bx:home-alt'
 
-const activeMenu = ref('')
+defineProps({
+  collapsed: {
+    type: Boolean,
+  },
+})
+
+const route = useRoute()
+
+const activeMenu = computed(() => route.name as string)
 
 const { sideMenu } = useAppStore()
+
 const menuMode = computed(() => (sideMenu ? 'vertical' : 'horizontal'))
 
 const { routes } = useRouteStore()
 
 const menuOptions = computed(() => {
   // 路由转菜单项
-  function transformMenu(_route: RouteRecordRaw) {
-    const { name, meta } = _route
+  function transformMenu(_route: any) {
+    const { name, meta, children } = _route
     if (!name || !meta) return null
-    return {
+    let menuItem: MenuOption = {
       key: name as string,
       label: () =>
         h(
@@ -25,12 +34,16 @@ const menuOptions = computed(() => {
             to: {
               name: name as string,
             },
-            class: '!text-base !align-bottom',
+            class: '!inline-block !text-base !leading-loose',
           },
           { default: () => meta?.title }
         ),
-      icon: meta?.icon ? () => h(Icon, { icon: meta?.icon }) : null,
+      icon: meta?.icon ? () => h(Icon, { icon: meta?.icon }) : undefined,
     }
+    if (children && children.length) {
+      menuItem = { ...menuItem, children }
+    }
+    return menuItem
   }
   // 导航菜单收集（根据已经生成的路由）
   function menuCollector(_routes: RouteRecordRaw[]) {
@@ -45,7 +58,7 @@ const menuOptions = computed(() => {
 
       // 如果没有子路由，或者设置了隐藏子路由
       if (!item.children || item.meta?.hideChildrenInMenu) {
-        item.children = []
+        item.children = undefined
         return transformMenu(item)
       }
 
@@ -72,10 +85,14 @@ const menuOptions = computed(() => {
   // cmputed
   return menuCollector(flatRoutes)
 })
-
-console.log(menuOptions.value)
 </script>
 
 <template>
-  <n-menu v-model:value="activeMenu" :mode="menuMode" :options="menuOptions" />
+  <n-menu
+    accordion
+    :value="activeMenu"
+    :collapsed="collapsed"
+    :mode="menuMode"
+    :options="menuOptions"
+  />
 </template>
