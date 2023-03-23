@@ -15,7 +15,7 @@ on:
 
 env:
   REMOTE_USER: root # FIXME: user of remote host
-  REMOTE_PATH: /var/www/vue-template # FIXME: path of built dist on remote host
+  REMOTE_PATH: /var/www/vue-template # FIXME: nginx root path of built dist on remote host
   BASE_URL: /vue-template/ # FIXME: deploy in sub path (https://cn.vitejs.dev/config/shared-options.html#base)
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -63,8 +63,6 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }} # configure in Github Actions secret
           # Username
           username: ${{ env.REMOTE_USER }}
-          # Password
-          # password: ${{ secrets.REMOTE_PWD }} # optional
           # Private key
           private_key: ${{ secrets.PRIVATE_KEY }} # configure in Github Actions secret
           # Before script

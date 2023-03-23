@@ -55,7 +55,10 @@ export default defineConfig({
         }, */
     }),
     // https://github.com/pengzhanbo/vite-plugin-mock-dev-server
-    mockDevServerPlugin(),
+    mockDevServerPlugin({
+      reload: true,
+      build: true,
+    }),
   ],
   resolve: {
     alias: [

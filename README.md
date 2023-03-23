@@ -17,23 +17,33 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 
 ## CI/CD Based On Github Actions
 
-1. Preview on Cloud Server
+1. CI Host
 
-The CI/CD config is `.github/workflows/preview.yml`, you should add some secrets used by the CI/CD config, in Github repo settings
+The CI/CD config is `.github/workflows/ci-host.yml`, you should add some secrets used by the CI/CD config, in Github repo settings
 
+```yml
+REMOTE_HOST: # ip address of the remote server
+
+REMOTE_USER: # user access to the remote server
+
+PRIVATE_KEY: # private key access to the remote server with pubkey authentication
 ```
-REMOTE_HOST: ip address of the remote server
-REMOTE_USER: user access to the remote server
-REMOTE_PWD: pwd access to the remote server with password (not recommended)
-PRIVATE_KEY: private key access to the remote server with pubkey authentication (recommended)
-REMOTE_PATH: your expected target path used by nginx
+
+What's more, you also need to modify the top `env` variables to your own configs in the ci config file
+
+```yml
+env:
+  REMOTE_USER: root # user of remote host
+
+  REMOTE_PATH: /var/www/xxxx # your expected target path used by nginx
+
+  BASE_URL: # when deploying in sub path (https://cn.vitejs.dev/config/shared-options.html#base)
 ```
 
-Only choose one of password and public key!
+2. CI AliOSS
 
-2. Deloyed on OSS
-
-```
+```yml
 OSS_ACCESS_KEY_ID:
+
 OSS_ACCESS_KEY_SECRET:
 ```
