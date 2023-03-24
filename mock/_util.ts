@@ -6,9 +6,9 @@ export function responseSuccess(payload: any, meta = {}) {
   }
 }
 
-export function responseFailure(state = 900, msg = '错误') {
+export function responseFailure(state = 900, message = '错误') {
   return {
     state,
-    msg,
+    message,
   }
 }

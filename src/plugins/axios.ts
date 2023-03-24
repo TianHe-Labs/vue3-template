@@ -12,7 +12,7 @@ interface HttpResponse {
   meta?: any
   payload?: any
   state?: number
-  msg?: string
+  message?: string
 }
 
 // 脱离 setup 上下文使用 message
@@ -47,11 +47,16 @@ axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 // 拦截 response，处理 auth 问题
 axios.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
+    const { state, message } = response.data
+    if (state && message && state >= 900) {
+      messageCtx.error(`[${state}]${message}`)
+      return Promise.reject({ state, message })
+    }
     return response
   },
   async (error: AxiosError<HttpResponse>) => {
     const { signOut, refreshToken } = useUserStore()
-    if (error && error.response?.status === 401) {
+    if (error.response?.status === 401) {
       const { state } = error.response.data
       messageCtx.error('身份验证未通过，请登录后重试！')
       if (state === 900) {
@@ -63,7 +68,7 @@ axios.interceptors.response.use(
         signOut()
         return
       }
-    } else if (error && error.response?.status === 403) {
+    } else if (error.response?.status === 403) {
       const { state } = error.response.data
       if (state === 902) {
         // Access Token is Expired
@@ -78,7 +83,9 @@ axios.interceptors.response.use(
         messageCtx.error('身份验证过期，请重新登录！')
         return
       }
+    } else {
+      messageCtx.error(`[${error.response?.status}]${error.message}`)
+      return Promise.reject(error)
     }
-    return Promise.reject(error)
   }
 )

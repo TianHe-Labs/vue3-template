@@ -4,7 +4,7 @@ import { getToken } from '@/utils/token'
 import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
 export function createAccessGuard(router: Router) {
-  router.beforeResolve(async (to, _, next) => {
+  router.beforeEach(async (to, _, next) => {
     const { userInfo, getUserInfo, signOut } = useUserStore()
     const { generateRoutes } = useRouteStore()
     const token = getToken()
@@ -27,7 +27,6 @@ export function createAccessGuard(router: Router) {
           // https://router.vuejs.org/zh/guide/advanced/dynamic-routing.html
 
           next({ ...to, replace: true })
-          return to.fullPath
         } catch (err) {
           // getUserInfo 等存在异常，退出登录
           await signOut()

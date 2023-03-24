@@ -1,10 +1,5 @@
 import type { Ref, VNodeChild } from 'vue'
-import {
-  DataTableColumns,
-  PaginationInfo,
-  useMessage,
-  useLoadingBar,
-} from 'naive-ui'
+import { DataTableColumns, PaginationInfo, useLoadingBar } from 'naive-ui'
 
 interface Pagination {
   page: number
@@ -54,7 +49,6 @@ export function provideSearchResult<T>(
   })
 
   const router = useRouter()
-  const messageCtx = useMessage()
   const loadingBar = useLoadingBar()
 
   const handlers = {
@@ -62,28 +56,28 @@ export function provideSearchResult<T>(
       loading.value = true
       loadingBar.start()
       try {
-        const { /* status, */ data } = await axios.get('api/search', {
-          params: {
-            page: pagination.page,
-            rows: pagination.pageSize,
+        const { data } = await axios.post(
+          'api/search',
+          {
             keyword: queryKeyword.value,
           },
-        })
-        const { state, meta, payload } = data
-        if (state === 800) {
-          pagination.itemCount = meta?.total
-          renderData.value = payload
-        }
+          {
+            params: {
+              page: pagination.page,
+              rows: pagination.pageSize,
+            },
+          }
+        )
+        const { meta, payload } = data
+        pagination.itemCount = meta?.total
+        renderData.value = payload
         loadingBar.finish()
       } catch (err) {
-        if (axios.isAxiosError(err)) {
-          messageCtx.error(`[${err.response?.status}]${err.message}`)
-        } else {
-          messageCtx.error('[908]应用服务异常，请联系管理员！')
-        }
+        // pass
         loadingBar.error()
+      } finally {
+        loading.value = false
       }
-      loading.value = false
     },
     async onInputEnterKeyup(event: KeyboardEvent): Promise<void> {
       // 拦截回车事件

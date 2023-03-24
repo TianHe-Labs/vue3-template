@@ -57,7 +57,7 @@ export default defineConfig({
     // https://github.com/pengzhanbo/vite-plugin-mock-dev-server
     mockDevServerPlugin({
       reload: true,
-      build: true,
+      build: process.env.NODE_ENV === 'production',
     }),
   ],
   resolve: {

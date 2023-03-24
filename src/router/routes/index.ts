@@ -4,13 +4,10 @@ import MainLayout from '@/layouts/index.vue'
 
 export const constRoutes: RouteRecordRaw[] = [
   {
-    path: '/redirect',
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/pages/redirect/index.vue'),
-      },
-    ],
+    path: '/redirect/:path(.*)',
+    name: 'Redirect',
+    component: () => import('@/pages/redirect/index.vue'),
+    meta: { title: '跳转中...', hideInMenu: true },
   },
   {
     path: '/auth',
@@ -22,20 +19,19 @@ export const constRoutes: RouteRecordRaw[] = [
     path: '/404',
     name: 'NotFound',
     component: () => import('@/pages/not-found/index.vue'),
-    meta: { title: '404 Not Found', hideInMenu: true },
+    meta: { title: '404 页面未找到', hideInMenu: true },
   },
   // 必须保证通配符路由位于最后一项
-  {
-    path: '/path-match(.*)*',
-    name: 'PathMatch',
+  /* {
+    path: '/:match(.*)',
     redirect: '/404',
     meta: { hideInMenu: true },
-  },
+  }, */
 ]
 
 export const asyncRoutes: RouteRecordRaw[] = [
   {
-    path: '',
+    path: '/',
     name: 'Layout',
     component: MainLayout,
     redirect: { name: 'Index' },

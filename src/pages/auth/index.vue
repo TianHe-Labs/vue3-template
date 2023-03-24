@@ -52,20 +52,14 @@ const handlers = {
           router
             .push({
               path:
-                (redirect as string) || `/redirect${DEFAULT_ROUTE.fullPath}`,
+                (redirect as string) || `/redirect/${DEFAULT_ROUTE.fullPath}`,
               query: {
                 ...othersQuery,
               },
             })
             .catch()
-        } catch (err: any) {
-          if (axios.isAxiosError(err)) {
-            messageCtx.error(`[${err.response?.status}]${err.message}`)
-          } else {
-            messageCtx.error(
-              `[908]${err?.message || '应用服务异常，请联系管理员！'}`
-            )
-          }
+        } catch (err) {
+          // pass
         } finally {
           authFormState.btnLoading = false
           authFormState.btnText = '登 录'
