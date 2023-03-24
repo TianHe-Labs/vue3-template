@@ -1,6 +1,12 @@
+enum RoleEnum {
+  SUPER = 'super',
+  ADMIN = 'admin',
+  COMMON = 'common',
+}
+
 interface UserState {
   username?: string
-  roles?: string[]
+  roles?: RoleEnum[]
 }
 
 interface AuthFormData {

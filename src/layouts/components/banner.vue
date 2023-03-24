@@ -2,7 +2,7 @@
   <div
     pos="relative"
     h="64"
-    m="-b-22"
+    m="-b-20"
     bg="center cover no-repeat"
     before:position="absolute inset-0"
     class="layout__banner"

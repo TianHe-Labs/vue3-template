@@ -4,12 +4,6 @@ import { MenuOption } from 'naive-ui'
 import { RouteRecordRaw, RouterLink } from 'vue-router'
 import { useAppStore, useRouteStore } from '@/store'
 
-defineProps({
-  collapsed: {
-    type: Boolean,
-  },
-})
-
 const route = useRoute()
 
 const activeMenu = computed(() => route.name as string)
@@ -91,7 +85,6 @@ const menuOptions = computed(() => {
   <n-menu
     accordion
     :value="activeMenu"
-    :collapsed="collapsed"
     :mode="menuMode"
     :options="menuOptions"
   />

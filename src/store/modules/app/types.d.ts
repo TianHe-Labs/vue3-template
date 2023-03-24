@@ -1,8 +1,12 @@
 interface AppState {
+  sideMenu: boolean
+  topSearch: boolean
+  topBanner: boolean
+  sideCollapse: boolean
+}
+
+interface AppMeta {
   name: string
   desc: string
-  copyright: string
-  topSearch: boolean
-  sideMenu: boolean
-  sideCollapse: boolean
+  copr: string
 }

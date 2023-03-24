@@ -2,17 +2,17 @@
 import { defineMock } from 'vite-plugin-mock-dev-server'
 import { responseSuccess, responseFailure } from './_util'
 
-enum RoleGroupEnum {
+enum RoleEnum {
+  SUPER = 'super',
   ADMIN = 'admin',
-  EDITOR = 'editor',
-  VISITOR = 'visitor',
+  COMMON = 'common',
 }
 
 const _users = [
   {
     username: 'nist',
     password: 'nslab321',
-    roles: [RoleGroupEnum.ADMIN],
+    roles: [RoleEnum.ADMIN],
   },
 ]
 

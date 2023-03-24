@@ -100,3 +100,19 @@ export function formatExpired(timeStr: string | undefined): string {
     return '有效期内'
   }
 }
+
+enum RoleEnum {
+  SUPER = 'super',
+  ADMIN = 'admin',
+  COMMON = 'common',
+}
+
+export function formatRole(roles: RoleEnum[] | undefined): string {
+  if (roles?.includes(RoleEnum.SUPER)) {
+    return '欢迎您，超级管理员'
+  }
+  if (roles?.includes(RoleEnum.ADMIN)) {
+    return '欢迎您，管理员'
+  }
+  return '欢迎使用系统'
+}

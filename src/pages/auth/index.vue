@@ -6,8 +6,8 @@ import { useUserStore } from '@/store'
 const authFormRef = ref<Nullable<FormInst>>()
 
 const authFormData = reactive<AuthFormData>({
-  username: '',
-  password: '',
+  username: 'nist',
+  password: 'nslab321',
 })
 
 const authFormRules: FormRules = {

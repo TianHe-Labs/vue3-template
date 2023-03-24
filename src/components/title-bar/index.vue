@@ -20,17 +20,22 @@ defineProps({
   },
 })
 
-const { name: appName, desc: appDesc } = useAppStore()
+const { appMeta } = useAppStore()
 const { theme } = useTheme()
 </script>
 
 <template>
   <div flex="~ gap-2" align="items-center" overflow="hidden">
-    <img v-if="theme" h="full" src="~@/assets/logo-dark.svg" :alt="appName" />
-    <img v-else h="full" src="~@/assets/logo-light.svg" :alt="appName" />
+    <img
+      v-if="theme"
+      h="full"
+      src="~@/assets/logo-dark.svg"
+      :alt="appMeta.name"
+    />
+    <img v-else h="full" src="~@/assets/logo-light.svg" :alt="appMeta.name" />
     <div>
-      <h1 font="bold" :style="titleStyle">{{ appName }}</h1>
-      <p :style="descStyle">{{ appDesc }}</p>
+      <h1 font="bold" :style="titleStyle">{{ appMeta.name }}</h1>
+      <p :style="descStyle">{{ appMeta.desc }}</p>
     </div>
   </div>
 </template>

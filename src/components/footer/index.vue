@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/store'
 
-const { copyright } = useAppStore()
+const { appMeta } = useAppStore()
 </script>
 
 <template>
   <n-layout-footer flex="~" justify="center" align="items-center">
     <p p="y-4" text="sm">
-      &copy; {{ new Date().getFullYear() }} {{ copyright }}
+      &copy; {{ new Date().getFullYear() }} {{ appMeta.copr }}
     </p>
   </n-layout-footer>
 </template>

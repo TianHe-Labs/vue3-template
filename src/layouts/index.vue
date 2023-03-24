@@ -8,13 +8,13 @@ import Header from './components/header.vue'
 import Banner from './components/banner.vue'
 
 // 侧边栏导航 OR 顶栏导航
-const { sideMenu, sideCollapse, updateSettings } = useAppStore()
+const appStore = useAppStore()
 
-const collapsed = ref<boolean>(sideCollapse)
+const sideMenuVisible = computed(() => appStore.sideMenu)
+const topBannerVisible = computed(() => appStore.topBanner)
 
 const onUpdateCollapsed = (collapse: boolean) => {
-  collapsed.value = collapse
-  updateSettings({ sideCollapse: collapse })
+  appStore.updateSettings({ sideCollapse: collapse })
 }
 
 // 顶栏检索
@@ -24,17 +24,19 @@ provideSearchResult(queryKeyword)
 
 <template>
   <n-layout position="absolute">
-    <Header :bordered="sideMenu" style="height: var(--header-height)" />
+    <Header :bordered="sideMenuVisible" style="height: var(--header-height)" />
     <n-layout
-      :has-sider="sideMenu"
+      :has-sider="sideMenuVisible"
       position="absolute"
-      :style="{ top: sideMenu ? 'var(--header-height)' : 0 }"
+      :style="{
+        top: sideMenuVisible || !topBannerVisible ? 'var(--header-height)' : 0,
+      }"
       content-style="height: 100%;background: #fafafa"
       class="layout__main"
     >
       <n-layout-sider
-        v-if="sideMenu"
-        :collapsed="collapsed"
+        v-if="sideMenuVisible"
+        :default-collapsed="appStore.sideCollapse"
         bordered
         width="240"
         show-trigger="bar"
@@ -44,7 +46,7 @@ provideSearchResult(queryKeyword)
         filter="~ drop-shadow-md"
         @update:collapsed="onUpdateCollapsed"
       >
-        <NavMenu :collapsed="collapsed" />
+        <NavMenu />
       </n-layout-sider>
       <n-layout
         :native-scrollbar="false"
@@ -52,8 +54,13 @@ provideSearchResult(queryKeyword)
         content-style="height: 100%; display: flex; flex-direction: column"
       >
         <div class="flex-auto">
-          <Banner v-if="!sideMenu" />
-          <div pos="relative" :container="sideMenu ? '' : '~'" m="x-auto" p="4">
+          <Banner v-if="!sideMenuVisible && topBannerVisible" />
+          <div
+            pos="relative"
+            :container="sideMenuVisible ? '' : '~'"
+            m="x-auto"
+            p="4"
+          >
             <router-view v-slot="{ Component }">
               <transition :duration="200" name="fade-top" mode="out-in">
                 <keep-alive>
