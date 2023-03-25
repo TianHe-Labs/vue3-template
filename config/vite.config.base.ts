@@ -7,7 +7,7 @@ import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
-import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
+import mockServer from 'vite-plugin-mock-server'
 
 export default defineConfig({
   plugins: [
@@ -54,11 +54,8 @@ export default defineConfig({
           ),
         }, */
     }),
-    // https://github.com/pengzhanbo/vite-plugin-mock-dev-server
-    mockDevServerPlugin({
-      reload: true,
-      build: process.env.NODE_ENV === 'production',
-    }),
+    // https://github.com/enjoycoding/vite-plugin-mock-server
+    mockServer(),
   ],
   resolve: {
     alias: [

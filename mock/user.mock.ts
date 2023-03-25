@@ -1,5 +1,4 @@
-// https://vite-plugin-mock-dev-server.netlify.app/
-import { defineMock } from 'vite-plugin-mock-dev-server'
+import { MockHandler } from 'vite-plugin-mock-server'
 import { responseSuccess, responseFailure } from './_util'
 
 enum RoleEnum {
@@ -23,35 +22,45 @@ const _tokens = {
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
 }
 
-export default defineMock([
+const userMocks: MockHandler[] = [
   {
     // enable: false,
-    url: '/api/auth',
+    pattern: '/api/auth',
     method: 'POST',
-    body: (req) => {
-      const { username, password } = req.body
+    handle: async (req, res) => {
+      let bodyRaw = ''
+      await new Promise((resolve) => {
+        req.on('data', (chunk) => {
+          bodyRaw += chunk
+        })
+        req.on('end', () => resolve(undefined))
+      })
+      const { username, password } = JSON.parse(bodyRaw)
       const foundItem = _users.find(
         (u) => u.username === username && u.password === password
       )
+      res.setHeader('Content-Type', 'application/json')
       if (foundItem) {
-        return responseSuccess(_tokens)
+        res.end(JSON.stringify(responseSuccess(_tokens)))
       } else {
-        return responseFailure(901, '用户名或密码错误！')
+        res.end(JSON.stringify(responseFailure(901, '用户名或密码错误！')))
       }
     },
   },
   {
     // enable: false,
-    url: '/api/user/info',
+    pattern: '/api/user/info',
     method: 'GET',
-    body: (req) => {
+    handle: (req, res) => {
       const { token } = req.headers
       if (token === _tokens.access_token) {
         const { username, roles } = _users[0]
-        return responseSuccess({ username, roles })
+        res.end(JSON.stringify(responseSuccess({ username, roles })))
       } else {
-        return responseFailure(901, '用户名或密码错误！')
+        res.end(JSON.stringify(responseFailure(901, '用户名或密码错误！')))
       }
     },
   },
-])
+]
+
+export default userMocks
