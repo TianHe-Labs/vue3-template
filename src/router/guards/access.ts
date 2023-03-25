@@ -17,7 +17,7 @@ export function createAccessGuard(router: Router) {
           // 获取用户信息（role）
           await getUserInfo()
           // 根据用户权限，动态生成路由
-          const addRoutes = generateRoutes(userInfo.roles as string[])
+          const addRoutes = generateRoutes(userInfo.roles as RoleEnum[])
           // 将生成的需要权限认证的路由，添加到路由表中
           addRoutes.forEach((route) => {
             router.addRoute(route)
