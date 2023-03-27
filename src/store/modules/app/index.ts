@@ -24,5 +24,9 @@ export const useAppStore = defineStore('app', {
     updateSettings(parital: Partial<AppState>) {
       this.$patch(parital)
     },
+    // 重置
+    resetSettings() {
+      this.$reset()
+    },
   },
 })
