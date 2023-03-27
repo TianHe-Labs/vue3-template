@@ -7,7 +7,6 @@ import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
-import mockServer from 'vite-plugin-mock-server'
 
 export default defineConfig({
   plugins: [
@@ -54,11 +53,13 @@ export default defineConfig({
           ),
         }, */
     }),
-    // https://github.com/enjoycoding/vite-plugin-mock-server
-    mockServer(),
   ],
   resolve: {
     alias: [
+      {
+        find: '~',
+        replacement: resolve(__dirname, '../'),
+      },
       {
         find: '@',
         replacement: resolve(__dirname, '../src'),

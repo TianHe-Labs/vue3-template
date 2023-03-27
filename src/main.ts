@@ -5,6 +5,8 @@ import router from './router'
 import './plugins/axios'
 import './styles'
 
+import '~/mock'
+
 const app = createApp(App)
 
 app.use(router)

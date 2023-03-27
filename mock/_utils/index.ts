@@ -1,3 +1,9 @@
+export function setupMock({ enable = true, setup }: SetupMock) {
+  if (enable) {
+    setup()
+  }
+}
+
 export function responseSuccess(payload: any, meta = {}) {
   return {
     state: 800,
