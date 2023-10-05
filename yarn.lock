@@ -46,6 +46,13 @@
   resolved "https://registry.npmmirror.com/@babel/parser/-/parser-7.21.2.tgz#dacafadfc6d7654c3051a66d6fe55b6cb2f2a0b3"
   integrity sha512-URpaIJQwEkEC2T9Kn+Ai6Xe/02iNaVCuT/PtoRz3GPVJVDpPd7mLo+VddTbhCRU9TXqW5mSrQfXZyi8kDKOVpQ==
 
+"@babel/runtime@^7.21.0":
+  version "7.23.1"
+  resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.23.1.tgz#72741dc4d413338a91dcb044a86f3c0bc402646d"
+  integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@commitlint/cli@^17.4.4":
   version "17.4.4"
   resolved "https://registry.npmmirror.com/@commitlint/cli/-/cli-17.4.4.tgz#36df08bfa31dbb9a2b6b1d7187a31e578f001a06"
@@ -226,12 +233,12 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@css-render/plugin-bem@^0.15.10":
+"@css-render/plugin-bem@^0.15.12":
   version "0.15.12"
   resolved "https://registry.npmmirror.com/@css-render/plugin-bem/-/plugin-bem-0.15.12.tgz#cd88e46a388e4786436bd622414da0aa6019af3b"
   integrity sha512-Lq2jSOZn+wYQtsyaFj6QRz2EzAnd3iW5fZeHO1WSXQdVYwvwGX0ZiH3X2JQgtgYLT1yeGtrwrqJdNdMEUD2xTw==
 
-"@css-render/vue3-ssr@^0.15.10":
+"@css-render/vue3-ssr@^0.15.10", "@css-render/vue3-ssr@^0.15.12":
   version "0.15.12"
   resolved "https://registry.npmmirror.com/@css-render/vue3-ssr/-/vue3-ssr-0.15.12.tgz#798d8dffadecd2bf8c80cbaab64e9df10be5626e"
   integrity sha512-AQLGhhaE0F+rwybRCkKUdzBdTEM/5PZBYy+fSYe1T9z9+yxMuV/k7ZRqa4M69X+EI1W8pa4kc9Iq2VjQkZx4rg==
@@ -541,10 +548,10 @@
   resolved "https://registry.npmmirror.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
 
-"@types/katex@^0.14.0":
-  version "0.14.0"
-  resolved "https://registry.npmmirror.com/@types/katex/-/katex-0.14.0.tgz#b84c0afc3218069a5ad64fe2a95321881021b5fe"
-  integrity sha512-+2FW2CcT0K3P+JMR8YG846bmDwplKUTsWgT2ENwdQ1UdVfRk3GQrh6Mi4sTopy30gI8Uau5CEqHTDZ6YvWIUPA==
+"@types/katex@^0.16.2":
+  version "0.16.3"
+  resolved "https://registry.npmmirror.com/@types/katex/-/katex-0.16.3.tgz#a341c89705145b7dd8e2a133b282a133eabe6076"
+  integrity sha512-CeVMX9EhVUW8MWnei05eIRks4D5Wscw/W9Byz1s3PA+yJvcdvq9SaDjiUKvRvEgjpdTyJMjQA43ae4KTwsvOPg==
 
 "@types/lodash-es@^4.17.6":
   version "4.17.6"
@@ -553,10 +560,22 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*", "@types/lodash@^4.14.181":
+"@types/lodash-es@^4.17.9":
+  version "4.17.9"
+  resolved "https://registry.npmmirror.com/@types/lodash-es/-/lodash-es-4.17.9.tgz#49dbe5112e23c54f2b387d860b7d03028ce170c2"
+  integrity sha512-ZTcmhiI3NNU7dEvWLZJkzG6ao49zOIjEgIE0RgV7wbPxU0f2xT3VSAHw2gmst8swH6V0YkLRGp4qPlX/6I90MQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
   version "4.14.191"
   resolved "https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.191.tgz#09511e7f7cba275acd8b419ddac8da9a6a79e2fa"
   integrity sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
+
+"@types/lodash@^4.14.198":
+  version "4.14.199"
+  resolved "https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.199.tgz#c3edb5650149d847a277a8961a7ad360c474e9bf"
+  integrity sha512-Vrjz5N5Ia4SEzWWgIVwnHNEnb1UE1XMkvY5DGXrAeOGE9imk0hgTHh5GyDjLDJi9OTCn9oo9dXH1uToK1VRfrg==
 
 "@types/minimist@^1.2.0":
   version "1.2.2"
@@ -985,7 +1004,7 @@ astral-regex@^2.0.0:
   resolved "https://registry.npmmirror.com/astral-regex/-/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
   integrity sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==
 
-async-validator@^4.0.7:
+async-validator@^4.2.5:
   version "4.2.5"
   resolved "https://registry.npmmirror.com/async-validator/-/async-validator-4.2.5.tgz#c96ea3332a521699d0afaaceed510a54656c6339"
   integrity sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==
@@ -1381,7 +1400,7 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-css-render@^0.15.10:
+css-render@^0.15.10, css-render@^0.15.12:
   version "0.15.12"
   resolved "https://registry.npmmirror.com/css-render/-/css-render-0.15.12.tgz#76be94066897bd3231a9b9412971ffc258ada66e"
   integrity sha512-eWzS66patiGkTTik+ipO9qNGZ+uNuGyTmnz6/+EJIiFg8+3yZRpnMwgFo8YdXhQRsiePzehnusrxVvugNjXzbw==
@@ -1439,15 +1458,17 @@ dargs@^7.0.0:
   resolved "https://registry.npmmirror.com/dargs/-/dargs-7.0.0.tgz#04015c41de0bcb69ec84050f3d9be0caf8d6d5cc"
   integrity sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==
 
-date-fns-tz@^1.3.3:
-  version "1.3.8"
-  resolved "https://registry.npmmirror.com/date-fns-tz/-/date-fns-tz-1.3.8.tgz#083e3a4e1f19b7857fa0c18deea6c2bc46ded7b9"
-  integrity sha512-qwNXUFtMHTTU6CFSFjoJ80W8Fzzp24LntbjFFBgL/faqds4e5mo9mftoRLgr3Vi1trISsg4awSpYVsOQCRnapQ==
+date-fns-tz@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmmirror.com/date-fns-tz/-/date-fns-tz-2.0.0.tgz#1b14c386cb8bc16fc56fe333d4fc34ae1d1099d5"
+  integrity sha512-OAtcLdB9vxSXTWHdT8b398ARImVwQMyjfYGkKD2zaGpHseG2UPHbHjXELReErZFxWdSLph3c2zOaaTyHfOhERQ==
 
-date-fns@^2.28.0:
-  version "2.29.3"
-  resolved "https://registry.npmmirror.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
-  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
+date-fns@^2.30.0:
+  version "2.30.0"
+  resolved "https://registry.npmmirror.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
+  integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
 
 dayjs@^1.11.3:
   version "1.11.7"
@@ -2175,10 +2196,10 @@ he@1.2.0, he@^1.2.0:
   resolved "https://registry.npmmirror.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
-highlight.js@^11.5.0:
-  version "11.7.0"
-  resolved "https://registry.npmmirror.com/highlight.js/-/highlight.js-11.7.0.tgz#3ff0165bc843f8c9bce1fd89e2fda9143d24b11e"
-  integrity sha512-1rRqesRFhMO/PRF+G86evnyJkCgaZFOI+Z6kdj15TA18funfoqJXvgPCLSf0SWq3SRfg1j3HlDs8o4s3EGq1oQ==
+highlight.js@^11.8.0:
+  version "11.8.0"
+  resolved "https://registry.npmmirror.com/highlight.js/-/highlight.js-11.8.0.tgz#966518ea83257bae2e7c9a48596231856555bb65"
+  integrity sha512-MedQhoqVdr0U6SSnWPzfiadUcDHfN/Wzq25AkXiQv9oiOO/sG0S7XkvpFIqWBl9Yq1UYyYOOVORs5UW2XlPyzg==
 
 homedir-polyfill@^1.0.1:
   version "1.0.3"
@@ -2852,29 +2873,29 @@ mute-stream@0.0.8:
   resolved "https://registry.npmmirror.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-naive-ui@^2.33.4:
-  version "2.34.3"
-  resolved "https://registry.npmmirror.com/naive-ui/-/naive-ui-2.34.3.tgz#96fb0717aedd22b6943b947efc7f5cd58e9d29df"
-  integrity sha512-fUMr0dzb/iGsOTWgoblPVobY5X5dihQ1eam5dA+H74oyLYAvgX4pL96xQFPBLIYqvyRFBAsN85kHN5pLqdtpxA==
+naive-ui@^2.35.0:
+  version "2.35.0"
+  resolved "https://registry.npmmirror.com/naive-ui/-/naive-ui-2.35.0.tgz#fe1fc2404694b4114486fa31e609e35714e8ed25"
+  integrity sha512-PdnLpOip1LQaKs5+rXLZoPDPQkTq26TnHWeABvUA2eOQjtHxE4+TQvj0Jq/W8clM2On/7jptoGmenLt48G3Bhg==
   dependencies:
-    "@css-render/plugin-bem" "^0.15.10"
-    "@css-render/vue3-ssr" "^0.15.10"
-    "@types/katex" "^0.14.0"
-    "@types/lodash" "^4.14.181"
-    "@types/lodash-es" "^4.17.6"
-    async-validator "^4.0.7"
-    css-render "^0.15.10"
-    date-fns "^2.28.0"
-    date-fns-tz "^1.3.3"
+    "@css-render/plugin-bem" "^0.15.12"
+    "@css-render/vue3-ssr" "^0.15.12"
+    "@types/katex" "^0.16.2"
+    "@types/lodash" "^4.14.198"
+    "@types/lodash-es" "^4.17.9"
+    async-validator "^4.2.5"
+    css-render "^0.15.12"
+    date-fns "^2.30.0"
+    date-fns-tz "^2.0.0"
     evtd "^0.2.4"
-    highlight.js "^11.5.0"
+    highlight.js "^11.8.0"
     lodash "^4.17.21"
     lodash-es "^4.17.21"
     seemly "^0.3.6"
     treemate "^0.3.11"
     vdirs "^0.1.8"
     vooks "^0.2.12"
-    vueuc "^0.4.47"
+    vueuc "^0.4.51"
 
 nanoid@^3.3.4:
   version "3.3.4"
@@ -3276,6 +3297,11 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+regenerator-runtime@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.npmmirror.com/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz#5e19d68eb12d486f797e15a3c6a918f7cec5eb45"
+  integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
 
 regexparam@^1.3.0:
   version "1.3.0"
@@ -4000,7 +4026,7 @@ vue@^3.2.40:
     "@vue/server-renderer" "3.2.47"
     "@vue/shared" "3.2.47"
 
-vueuc@^0.4.47:
+vueuc@^0.4.51:
   version "0.4.51"
   resolved "https://registry.npmmirror.com/vueuc/-/vueuc-0.4.51.tgz#35cd5364db4b71fc791a9823748711b91d910d49"
   integrity sha512-pLiMChM4f+W8czlIClGvGBYo656lc2Y0/mXFSCydcSmnCR1izlKPGMgiYBGjbY9FDkFG8a2HEVz7t0DNzBWbDw==
