@@ -1,6 +1,6 @@
 {
   "topSearch": true,
-  "sideMenu": true,
+  "sideMenu": false,
   "sideCollapse": true,
-  "topBanner": false
+  "topBanner": true
 }

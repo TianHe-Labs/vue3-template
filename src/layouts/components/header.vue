@@ -16,7 +16,7 @@ const topSearchVisible = computed(() => appStore.topSearch)
     z="10"
   >
     <!-- container="~" -->
-    <div h="full" m="x-2" grid="~ cols-3" align="items-center">
+    <div h="full" m="x-2" grid="~ cols-3" items="center">
       <router-link :to="{ name: 'Layout' }">
         <TitleBar />
       </router-link>

@@ -25,7 +25,7 @@ const { theme } = useTheme()
 </script>
 
 <template>
-  <div flex="~ gap-2" align="items-center" overflow="hidden">
+  <div flex="~ gap-2" items="center" overflow="hidden">
     <img
       v-if="theme"
       h="full"

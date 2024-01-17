@@ -1,14 +1,14 @@
-// BASE Style
-import './base.sass'
+// reset
+import '@unocss/reset/tailwind-compat.css'
 
-// Animations
+// UnoCSS
+import 'virtual:uno.css'
+
+// app
+import './app.sass'
+
+// animations
 import './animations.sass'
 
-// Transitions
+// transitions
 import './transitions.sass'
-
-// Custom
-
-// WindiCSS
-import 'virtual:windi.css'
-import 'virtual:windi-devtools'

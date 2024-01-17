@@ -35,7 +35,7 @@ const authFormState = reactive({
 const messageCtx = useMessage()
 // const route = useRoute()
 const router = useRouter()
-const { signIn } = useUserStore()
+const { login } = useUserStore()
 
 const handlers = {
   authLogin() {
@@ -45,7 +45,7 @@ const handlers = {
         authFormState.btnLoading = true
         authFormState.btnText = '登 录 中 ...'
         try {
-          await signIn(authFormData)
+          await login(authFormData)
           messageCtx.success('认证成功，正在跳转！')
 
           const { redirect, ...othersQuery } = router.currentRoute.value.query
@@ -83,10 +83,12 @@ const handlers = {
   <n-layout
     position="absolute"
     content-style="display: flex; flex-direction: column;"
-    class="bg-light-100 dark:bg-dark-100 layout__main"
+    bg="light-100 dark:dark-100"
+    class="layout__main"
   >
     <div
-      w="full md:3/4 min-100 max-140"
+      w="full md:3/4"
+      max-w="120"
       m="auto"
       p="8 md:12"
       bg="white dark:dark-200"

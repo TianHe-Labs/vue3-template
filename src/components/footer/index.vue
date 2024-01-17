@@ -5,7 +5,7 @@ const { appMeta } = useAppStore()
 </script>
 
 <template>
-  <n-layout-footer flex="~" justify="center" align="items-center">
+  <n-layout-footer flex="~" justify="center" items="center">
     <p p="y-4" text="sm">
       &copy; {{ new Date().getFullYear() }} {{ appMeta.copr }}
     </p>

@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     NAlert: typeof import('naive-ui')['NAlert']
     NavMenu: typeof import('./../src/components/nav-menu/index.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDrawer: typeof import('naive-ui')['NDrawer']
     NDrawerContent: typeof import('naive-ui')['NDrawerContent']

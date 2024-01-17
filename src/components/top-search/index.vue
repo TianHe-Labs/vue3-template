@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { useSearchCondition } from './searchCondition'
-import { useSearchResult } from './searchResult'
+import { useSearch } from '@/hooks'
 
-const { queryKeyword } = useSearchCondition()
-const { onInputEnterKeyup } = useSearchResult()
+const { queryKeyword, onInputKeyup } = useSearch()
 </script>
 
 <template>
@@ -14,7 +12,7 @@ const { onInputEnterKeyup } = useSearchResult()
     v-model:value="queryKeyword"
     placeholder="输入关键字回车以检索"
     :input-props="{
-      onKeyup: onInputEnterKeyup,
+      onKeyup: onInputKeyup,
     }"
   >
     <template #prefix>

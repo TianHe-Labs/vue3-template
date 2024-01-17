@@ -4,12 +4,8 @@ export function setupMock({ enable = true, setup }: SetupMock) {
   }
 }
 
-export function responseSuccess(payload: any, meta = {}) {
-  return {
-    state: 800,
-    payload,
-    meta,
-  }
+export function responseSuccess(data: any) {
+  return data
 }
 
 export function responseFailure(state = 900, message = '错误') {

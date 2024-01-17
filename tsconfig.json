@@ -17,7 +17,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "node", "unplugin-icons/types/vue"],
+    "types": ["node"],
     "paths": {
       "~/*": ["/*"],
       "@/*": ["src/*"],

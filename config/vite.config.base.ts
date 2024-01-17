@@ -1,7 +1,7 @@
 import { resolve } from 'pathe'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import WindiCSS from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
@@ -11,8 +11,8 @@ import IconsResolver from 'unplugin-icons/resolver'
 export default defineConfig({
   plugins: [
     vue(),
-    // https://github.com/antfu/vite-plugin-windicss
-    WindiCSS(),
+    // https://github.com/unocss/unocss
+    UnoCSS(),
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
       imports: [

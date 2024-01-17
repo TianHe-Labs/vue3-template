@@ -8,9 +8,8 @@ import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
 import { getToken } from '@/utils/token'
 
-interface HttpResponse {
-  meta?: any
-  payload?: any
+interface HttpResponse<T = any> {
+  data?: T
   state?: number
   message?: string
 }
@@ -55,17 +54,17 @@ axios.interceptors.response.use(
     return response
   },
   async (error: AxiosError<HttpResponse>) => {
-    const { signOut, refreshToken } = useUserStore()
+    const { logout, refreshToken } = useUserStore()
     if (error.response?.status === 401) {
       const { state } = error.response.data
       messageCtx.error('身份验证未通过，请登录后重试！')
       if (state === 900) {
         // No Token Exists
-        signOut()
+        logout()
         return
       } else {
         // Missing Authentication
-        signOut()
+        logout()
         return
       }
     } else if (error.response?.status === 403) {
@@ -79,7 +78,7 @@ axios.interceptors.response.use(
         return axios.request({ url, method, data })
       } else if (state === 903) {
         // Refresh Token is Expired
-        signOut()
+        logout()
         messageCtx.error('身份验证过期，请重新登录！')
         return
       }

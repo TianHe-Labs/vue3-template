@@ -5,7 +5,7 @@ import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
 export function createAccessGuard(router: Router) {
   router.beforeEach(async (to, _, next) => {
-    const { userInfo, getUserInfo, signOut } = useUserStore()
+    const { userInfo, getUserInfo, logout } = useUserStore()
     const { generateRoutes } = useRouteStore()
     const token = getToken()
     if (token) {
@@ -29,7 +29,7 @@ export function createAccessGuard(router: Router) {
           next({ ...to, replace: true })
         } catch (err) {
           // getUserInfo 等存在异常，退出登录
-          await signOut()
+          await logout()
           next({
             name: 'Auth',
             query: { redirect: to.path, ...to.query },

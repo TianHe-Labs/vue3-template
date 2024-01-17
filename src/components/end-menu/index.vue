@@ -58,7 +58,7 @@ const userOptions = [
 const router = useRouter()
 // const messageCtx = useMessage()
 const { theme, onSwitchTheme } = useTheme()
-const { signOut } = useSign()
+const { logout } = useSign()
 
 // 设置
 const settingsDrawerVisible = ref<boolean>(false)
@@ -73,7 +73,7 @@ const handlers = {
         router.push({ name: 'Profile' })
         break
       case 'logout':
-        signOut()
+        logout()
         break
       default:
         return
@@ -118,15 +118,15 @@ const handlers = {
 
   <n-drawer v-model:show="settingsDrawerVisible" :width="280">
     <n-drawer-content title="页面设置">
-      <div flex="~" justify="between" align="items-center" m="y-2">
+      <div flex="~" justify="between" items="center" m="y-2">
         <span>侧边导航</span>
         <SettingItem name="sideMenu" />
       </div>
-      <div flex="~" justify="between" align="items-center" m="y-2">
+      <div flex="~" justify="between" items="center" m="y-2">
         <span>顶部搜索</span>
         <SettingItem name="topSearch" />
       </div>
-      <div flex="~" justify="between" align="items-center" m="y-2">
+      <div flex="~" justify="between" items="center" m="y-2">
         <span>顶部横幅</span>
         <SettingItem name="topBanner" />
       </div>

@@ -28,13 +28,12 @@ export const useUserStore = defineStore('user', {
       this.$reset()
     },
     // 登录
-    async signIn(authFormData: AuthFormData) {
+    async login(authFormData: AuthFormData) {
       try {
         const { data } = await axios.post('/api/auth', {
           ...authFormData,
         })
-        const { payload } = data
-        const { access_token, refresh_token } = payload
+        const { access_token, refresh_token } = data
         setToken(access_token, JWT_ACS_TOKEN_KEY)
         setToken(refresh_token, JWT_RSH_TOKEN_KEY)
       } catch (err) {
@@ -46,15 +45,14 @@ export const useUserStore = defineStore('user', {
     async getUserInfo() {
       try {
         const { data } = await axios.get('/api/user/info')
-        const { payload } = data
-        this.setUserInfo(payload)
+        this.setUserInfo(data)
       } catch (err) {
         clearToken()
         throw err
       }
     },
     // 退出登录
-    signOut() {
+    logout() {
       this.resetUserInfo()
       clearToken()
     },
@@ -68,8 +66,7 @@ export const useUserStore = defineStore('user', {
             token: getToken(JWT_RSH_TOKEN_KEY),
           },
         })
-        const { payload } = data
-        setToken(payload.access_token)
+        setToken(data.access_token)
       } catch (err) {
         clearToken()
         throw err

@@ -9,8 +9,8 @@ export function useSign() {
   const routeStore = useRouteStore()
   const messageCtx = useMessage()
 
-  const signOut = () => {
-    userStore.signOut()
+  const logout = () => {
+    userStore.logout()
     appStore.resetSettings()
     routeStore.resetRoutes()
     resetRouter()
@@ -19,6 +19,6 @@ export function useSign() {
   }
 
   return {
-    signOut,
+    logout,
   }
 }

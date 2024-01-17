@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/store'
-
-import { provideSearchCondition } from '@/components/top-search/searchCondition'
-import { provideSearchResult } from '@/components/top-search/searchResult'
+import { provideSearch } from '@/hooks'
 
 import Header from './components/header.vue'
 import Banner from './components/banner.vue'
@@ -18,8 +16,7 @@ const onUpdateCollapsed = (collapse: boolean) => {
 }
 
 // 顶栏检索
-const { queryKeyword } = provideSearchCondition()
-provideSearchResult(queryKeyword)
+provideSearch()
 </script>
 
 <template>
@@ -57,9 +54,12 @@ provideSearchResult(queryKeyword)
           <Banner v-if="!sideMenuVisible && topBannerVisible" />
           <div
             pos="relative"
-            :container="sideMenuVisible ? '' : '~'"
-            m="x-auto"
-            p="4"
+            mx="auto"
+            px="4"
+            :class="[
+              { container: !sideMenuVisible },
+              { '-mt-14': !sideMenuVisible && topBannerVisible },
+            ]"
           >
             <router-view v-slot="{ Component }">
               <transition :duration="200" name="fade-top" mode="out-in">

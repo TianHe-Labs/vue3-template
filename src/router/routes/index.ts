@@ -61,18 +61,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
               // roles: [RoleEnum.ADMIN],
             },
           },
-          {
-            path: 'searchy',
-            name: 'SearchY',
-            component: () =>
-              import(
-                /* webpackChunkName: "search" */ '@/pages/search/index.vue'
-              ),
-            meta: {
-              title: '数据检索',
-              // roles: [RoleEnum.ADMIN],
-            },
-          },
         ],
       },
       {
