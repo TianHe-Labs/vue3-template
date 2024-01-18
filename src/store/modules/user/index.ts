@@ -16,6 +16,15 @@ export const useUserStore = defineStore('user', {
     userInfo(state: UserState): UserState {
       return { ...state }
     },
+    userRoleText(state: UserState) {
+      if (state.roles?.includes('super')) {
+        return '超级管理员'
+      }
+      if (state.roles?.includes('admin')) {
+        return '管理员'
+      }
+      return ''
+    },
   },
 
   actions: {

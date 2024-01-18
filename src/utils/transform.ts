@@ -1,3 +1,3 @@
-export function transformXXX() {
-  // pass
+export function transformX() {
+  return ''
 }

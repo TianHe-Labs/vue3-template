@@ -1,13 +1,6 @@
-import type { Ref, VNodeChild } from 'vue'
-import { DataTableColumns, PaginationInfo, useLoadingBar } from 'naive-ui'
-
-interface Pagination {
-  page: number
-  pageSize: number
-  itemCount: number
-  prefix: (info: PaginationInfo) => VNodeChild
-  onUpdatePage: (page: number) => void
-}
+import type { Ref } from 'vue'
+import type { DataTableColumns, PaginationInfo } from 'naive-ui'
+import { useLoadingBar } from 'naive-ui'
 
 interface SearchState<T> {
   loading: Ref<boolean>

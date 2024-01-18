@@ -1,8 +1,4 @@
-enum RoleEnum {
-  SUPER = 'super',
-  ADMIN = 'admin',
-  COMMON = 'common',
-}
+type RoleEnum = 'super' | 'admin' | 'common'
 
 interface UserState {
   username?: string

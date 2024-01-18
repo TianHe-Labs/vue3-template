@@ -15,9 +15,28 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
 
-## CI/CD Based On Github Actions
+## Installed Packages
 
-1. CI Host
+- [@vueuse/core](https://vueuse.org/)
+- [axios](https://axios-http.com)
+- [dayjs](https://day.js.org)
+- [lodash-es](https://lodash.com/custom-builds)
+- [naive-ui](https://www.naiveui.com)
+- [pinia](https://pinia.vuejs.org/)
+
+- [commitlint](https://commitlint.js.org/)
+- [eslint](https://eslint.org)
+- [husky](https://typicode.github.io/husky)
+- [lint-staged](https://github.com/lint-staged/lint-staged#readme)
+- [prettier](https://prettier.io)
+- [sass](https://sass-lang.com/dart-sass/)
+- [unocss](https://unocss.dev/)
+- [unplugin-auto-import](https://github.com/unplugin/unplugin-auto-import#readme)
+- [unplugin-icons](https://github.com/unplugin/unplugin-icons#readme)
+- [@iconify/json](https://iconify.design/icon-sets/)
+- [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components#readme)
+
+## CI/CD Based On Github Actions
 
 The CI/CD config is `.github/workflows/ci-host.yml`, you should add some secrets used by the CI/CD config, in Github repo settings
 
@@ -38,12 +57,4 @@ env:
   REMOTE_PATH: /var/www/xxxx # your expected target path used by nginx
 
   BASE_URL: # when deploying in sub path (https://cn.vitejs.dev/config/shared-options.html#base)
-```
-
-2. CI AliOSS
-
-```yml
-OSS_ACCESS_KEY_ID:
-
-OSS_ACCESS_KEY_SECRET:
 ```

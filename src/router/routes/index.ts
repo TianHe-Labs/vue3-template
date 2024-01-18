@@ -46,7 +46,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: '仪表盘',
           icon: 'bx:home-alt',
-          // roles: [RoleEnum.ADMIN],
+          // roles: ['admin'],
         },
         children: [
           {
@@ -58,7 +58,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
               ),
             meta: {
               title: '数据检索',
-              // roles: [RoleEnum.ADMIN],
+              // roles: ['admin'],
             },
           },
         ],
@@ -71,7 +71,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: '数据检索',
           icon: 'bx:search-alt',
-          // roles: [RoleEnum.ADMIN],
+          // roles: ['admin'],
         },
       },
       {
@@ -84,7 +84,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: '用户中心',
           icon: 'bx:user',
-          // roles: [RoleEnum.ADMIN],
+          // roles: ['admin'],
           hideInMenu: true,
         },
       },

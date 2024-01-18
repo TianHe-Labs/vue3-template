@@ -5,8 +5,8 @@ const renderData = ref()
 const fetchData = async () => {
   loading.value = true
   try {
-    const { data } = await axios.get('api/stats')
-    renderData.value = data
+    // const { data } = await axios.get('api/stats')
+    // renderData.value = data
   } catch (err) {
     //
   } finally {
@@ -34,7 +34,7 @@ fetchData()
       class="my-10 shadow-md"
     >
       {{ renderData }}
-      <p class="font-number">{{ renderData?.total }}</p>
+      <p class="font-number">2333</p>
     </n-card>
   </div>
 </template>

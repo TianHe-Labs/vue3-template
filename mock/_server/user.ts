@@ -2,17 +2,11 @@
 import Mock from 'better-mock'
 import { setupMock, responseSuccess, responseFailure } from '../_utils'
 
-enum RoleEnum {
-  SUPER = 'super',
-  ADMIN = 'admin',
-  COMMON = 'common',
-}
-
 const _users = [
   {
     username: 'nist',
     password: 'nslab321',
-    roles: [RoleEnum.ADMIN],
+    roles: ['admin'],
   },
 ]
 

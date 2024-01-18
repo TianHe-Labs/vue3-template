@@ -4,11 +4,10 @@ import { NAvatar, NText, useMessage } from 'naive-ui'
 import { useClipboard } from '@vueuse/core'
 import { Icon } from '@iconify/vue'
 import { useUserStore, useAppStore } from '@/store'
-import { useTheme, useSign } from '@/hooks'
-import { formatRole } from '@/utils'
+import { useTheme, useUserLogout } from '@/hooks'
 import SettingItem from './setting-item.vue'
 
-const { username, roles } = useUserStore()
+const { username, userRoleText } = useUserStore()
 
 const userOptions = [
   {
@@ -34,7 +33,7 @@ const userOptions = [
             h(
               NText,
               { tag: 'p', depth: 3, class: 'text-xs' },
-              { default: () => formatRole(roles) }
+              { default: () => `欢迎您！${userRoleText}` }
             ),
           ]),
         ]
@@ -58,7 +57,7 @@ const userOptions = [
 const router = useRouter()
 // const messageCtx = useMessage()
 const { theme, onSwitchTheme } = useTheme()
-const { logout } = useSign()
+const { logout } = useUserLogout()
 
 // 设置
 const settingsDrawerVisible = ref<boolean>(false)

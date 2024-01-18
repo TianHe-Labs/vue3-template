@@ -2,7 +2,7 @@ import { useMessage } from 'naive-ui'
 import { useRouteStore, useUserStore, useAppStore } from '@/store'
 import { resetRouter } from '@/router'
 
-export function useSign() {
+export function useUserLogout() {
   const router = useRouter()
   const userStore = useUserStore()
   const appStore = useAppStore()

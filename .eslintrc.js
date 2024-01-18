@@ -24,6 +24,7 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
     'vue/multi-word-component-names': 'off',
+    '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/ban-types': [
       'error',
       {
