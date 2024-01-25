@@ -8,9 +8,9 @@ export function responseSuccess(data: any) {
   return data
 }
 
-export function responseFailure(state = 900, message = '错误') {
+export function responseFailure(code = 900, message = '错误') {
   return {
-    state,
+    code,
     message,
   }
 }

@@ -10,7 +10,7 @@ import { getToken } from '@/utils/token'
 
 interface HttpResponse<T = any> {
   data?: T
-  state?: number
+  code?: number
   message?: string
 }
 
@@ -46,19 +46,19 @@ axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 // 拦截 response，处理 auth 问题
 axios.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
-    const { state, message } = response.data
-    if (state && message && state >= 900) {
-      messageCtx.error(`[${state}]${message}`)
-      return Promise.reject({ state, message })
+    const { code, message } = response.data
+    if (code && message && code >= 900) {
+      messageCtx.error(`[${code}]${message}`)
+      return Promise.reject({ code, message })
     }
     return response
   },
   async (error: AxiosError<HttpResponse>) => {
     const { logout, refreshToken } = useUserStore()
     if (error.response?.status === 401) {
-      const { state } = error.response.data
+      const { code } = error.response.data
       messageCtx.error('身份验证未通过，请登录后重试！')
-      if (state === 900) {
+      if (code === 900) {
         // No Token Exists
         logout()
         return
@@ -68,15 +68,15 @@ axios.interceptors.response.use(
         return
       }
     } else if (error.response?.status === 403) {
-      const { state } = error.response.data
-      if (state === 902) {
+      const { code } = error.response.data
+      if (code === 902) {
         // Access Token is Expired
         // 保存本次未成功的请求，在拿到新的 access token 后重发
         const { url, method, data } = error.config as InternalAxiosRequestConfig
         // 获取新的 access token，重发请求
         await refreshToken()
         return axios.request({ url, method, data })
-      } else if (state === 903) {
+      } else if (code === 903) {
         // Refresh Token is Expired
         logout()
         messageCtx.error('身份验证过期，请重新登录！')
