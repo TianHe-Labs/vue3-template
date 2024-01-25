@@ -10,8 +10,5 @@ interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
   readonly VITE_APP_DESC: string
   readonly VITE_APP_COPR: string
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv
+  readonly VITE_DEV_PROXY: string[][] // 必须使用双引号
 }
