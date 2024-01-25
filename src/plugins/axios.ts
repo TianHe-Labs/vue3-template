@@ -8,10 +8,11 @@ import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
 import { getToken } from '@/utils/token'
 
-interface HttpResponse<T = any> {
-  data?: T
-  code?: number
-  message?: string
+// api 返回结果不要进行多余的封装包裹
+// 要么直接返回结果，要么返回错误信息
+interface Statement {
+  code: number
+  message: string
 }
 
 // 脱离 setup 上下文使用 message
@@ -45,10 +46,10 @@ axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 // 拦截 response，处理 auth 问题
 axios.interceptors.response.use(
-  (response: AxiosResponse<HttpResponse>) => {
+  (response: AxiosResponse) => {
     return response
   },
-  async (error: AxiosError<HttpResponse>) => {
+  async (error: AxiosError<Statement>) => {
     const { logout, refreshToken } = useUserStore()
     if (error.response?.status === 401) {
       const { code } = error.response.data
