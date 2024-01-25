@@ -2,20 +2,26 @@ import defaultSettings from '@/settings.json'
 
 export const useAppStore = defineStore('app', {
   state: (): AppState => {
-    return { ...defaultSettings }
+    return {
+      ...defaultSettings,
+      name: import.meta.env.VITE_APP_NAME,
+      description: import.meta.env.VITE_APP_DESC,
+      copyright: import.meta.env.VITE_APP_COPR,
+    }
   },
 
   getters: {
     appSettings(state: AppState): AppState {
       return { ...state }
     },
-    appMeta(): AppMeta {
-      const {
-        VITE_APP_NAME: name,
-        VITE_APP_DESC: desc,
-        VITE_APP_COPR: copr,
-      } = import.meta.env
-      return { name, desc, copr }
+    appName(state: AppState) {
+      return state.name
+    },
+    appDesc(state: AppState) {
+      return state.description
+    },
+    appCopr(state: AppState) {
+      return state.copyright
     },
   },
 

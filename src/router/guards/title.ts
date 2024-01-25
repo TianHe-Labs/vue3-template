@@ -3,11 +3,11 @@ import { useAppStore } from '@/store'
 
 export function createTitleGuard(router: Router) {
   router.beforeEach(async (to) => {
-    const { appMeta } = useAppStore()
+    const appStore = useAppStore()
     // 更新 title
     const subtitle = to.meta.title
     if (subtitle) {
-      document.title = `${subtitle}丨${appMeta.name}`
+      document.title = `${subtitle}丨${appStore.name}`
     }
   })
 }
