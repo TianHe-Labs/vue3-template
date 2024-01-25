@@ -46,11 +46,6 @@ axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 // 拦截 response，处理 auth 问题
 axios.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
-    const { code, message } = response.data
-    if (code && message && code >= 900) {
-      messageCtx.error(`[${code}]${message}`)
-      return Promise.reject({ code, message })
-    }
     return response
   },
   async (error: AxiosError<HttpResponse>) => {
