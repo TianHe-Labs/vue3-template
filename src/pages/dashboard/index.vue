@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
+
 const loading = ref<boolean>(false)
 const renderData = ref()
 

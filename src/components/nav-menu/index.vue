@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, h } from 'vue'
 import { Icon } from '@iconify/vue'
 import { MenuOption } from 'naive-ui'
 import { RouteRecordRaw, RouterLink } from 'vue-router'

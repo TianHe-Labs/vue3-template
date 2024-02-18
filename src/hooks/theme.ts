@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import { inject, provide, type Ref } from 'vue'
 import type { GlobalTheme, GlobalThemeOverrides } from 'naive-ui'
 import { zhCN, dateZhCN, darkTheme } from 'naive-ui'
 import { StorageSerializers } from '@vueuse/core'

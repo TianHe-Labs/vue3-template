@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { h, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { NAvatar, NText, useMessage } from 'naive-ui'
 import { useClipboard } from '@vueuse/core'
