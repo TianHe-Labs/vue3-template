@@ -1,5 +1,5 @@
 import { mergeConfig } from 'vite'
-import basConfig from './vite.config.base'
+import baseConfig from './vite.config.base'
 import htmlPlugin from './plugins/html'
 import { createProxy } from './utils'
 
@@ -12,5 +12,5 @@ export default mergeConfig(
       proxy: createProxy(),
     },
   },
-  basConfig
+  baseConfig
 )
