@@ -1,0 +1,13 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: node
+  commands:
+  - npm install
+  - npm build
+
+trigger:
+  branch:
+  - main

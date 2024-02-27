@@ -126,10 +126,6 @@ const handlers = {
         <span>顶部搜索</span>
         <SettingItem name="topSearch" />
       </div>
-      <div flex="~" justify="between" items="center" m="y-2">
-        <span>顶部横幅</span>
-        <SettingItem name="topBanner" />
-      </div>
       <!-- 腰部：说明 -->
       <n-alert title="说明" type="info" :show-icon="false" :bordered="false">
         更新配置仅临时生效，若要实际应用于项目，点击下方的

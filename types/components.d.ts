@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     EndMenu: typeof import('./../src/components/end-menu/index.vue')['default']
     Footer: typeof import('./../src/components/footer/index.vue')['default']
+    Header: typeof import('./../src/components/header/index.vue')['default']
     'IconAntDesign:settingOutlined': typeof import('~icons/ant-design/setting-outlined')['default']
     'IconBi:moonStarsFill': typeof import('~icons/bi/moon-stars-fill')['default']
     'IconBi:sunFill': typeof import('~icons/bi/sun-fill')['default']
@@ -28,6 +29,7 @@ declare module '@vue/runtime-core' {
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NLayout: typeof import('naive-ui')['NLayout']
+    NLayoutContent: typeof import('naive-ui')['NLayoutContent']
     NLayoutFooter: typeof import('naive-ui')['NLayoutFooter']
     NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']

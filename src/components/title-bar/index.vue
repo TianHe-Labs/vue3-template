@@ -35,7 +35,9 @@ const { theme } = useTheme()
     <img v-else h="full" src="~@/assets/logo-light.svg" :alt="appStore.name" />
     <div>
       <h1 font="bold" :style="titleStyle">{{ appStore.name }}</h1>
-      <p :style="descStyle">{{ appStore.description }}</p>
+      <p v-if="appStore.description" :style="descStyle">
+        {{ appStore.description }}
+      </p>
     </div>
   </div>
 </template>

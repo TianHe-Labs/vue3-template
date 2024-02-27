@@ -87,6 +87,8 @@ const menuOptions = computed(() => {
     accordion
     :value="activeMenu"
     :mode="menuMode"
+    :collapsed-width="60"
     :options="menuOptions"
+    class="justify-end"
   />
 </template>

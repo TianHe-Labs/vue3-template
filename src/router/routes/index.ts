@@ -48,20 +48,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'bx:home-alt',
           // roles: ['admin'],
         },
-        children: [
-          {
-            path: 'search',
-            name: 'SearchX',
-            component: () =>
-              import(
-                /* webpackChunkName: "search" */ '@/pages/search/index.vue'
-              ),
-            meta: {
-              title: '数据检索',
-              // roles: ['admin'],
-            },
-          },
-        ],
       },
       {
         path: '/search',
