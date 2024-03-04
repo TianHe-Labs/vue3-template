@@ -23,10 +23,10 @@ export function provideTheme(): themeCtx {
 
   const themeOverrides: GlobalThemeOverrides = {
     common: {
-      primaryColor: '#6366f1',
-      primaryColorHover: '#8183f4',
-      primaryColorPressed: '#5457cd',
-      primaryColorSuppl: '#8183f4',
+      primaryColor: '#2080f0',
+      primaryColorHover: '#4098fc',
+      primaryColorPressed: '#1060c9',
+      primaryColorSuppl: '#4098fc',
       // infoColor: '#2080f0',
       // infoColorHover: '#4098fc',
       // infoColorPressed: '#1060c9',
