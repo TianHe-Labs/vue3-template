@@ -46,7 +46,7 @@ jobs:
         run: pnpm install
 
       - name: Build app
-        run: pnpm run build -- --base=/${{ vars.APP_NAME }}
+        run: pnpm run build --base=/${{ vars.APP_NAME }}
 
       - name: Deploy app
         uses: kostya-ten/ssh-server-deploy@v4
