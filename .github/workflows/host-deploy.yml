@@ -1,0 +1,62 @@
+name: host deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: |
+            ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-${{ env.cache-name }}-
+            ${{ runner.os }}-pnpm-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build app
+        run: pnpm run build -- --base=/${{ vars.APP_NAME }}
+
+      - name: Deploy app
+        uses: kostya-ten/ssh-server-deploy@v4
+        with:
+          # Host
+          host: ${{ secrets.REMOTE_HOST }} # configure in secret
+          # Port
+          port: ${{ secrets.REMOTE_PORT }} # configure in secret
+          # Username
+          username: root
+          # Private key
+          private_key: ${{ secrets.PRIVATE_KEY }} # configure in secret
+          # Before script
+          #
+          before_script: |
+            if [ ! -d /var/www/${{ vars.APP_NAME }} ];then mkdir /var/www/${{ vars.APP_NAME }};elif [[ -n $(ls /var/www/${{ vars.APP_NAME }}) ]];then rm -r /var/www/${{ vars.APP_NAME }}/*;fi
+          # After script
+          after_script: nginx -s reload
+          # After script
+          scp_source: dist/*
+          # After script
+          scp_target: /var/www/${{ vars.APP_NAME }}
