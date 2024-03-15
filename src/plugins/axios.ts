@@ -7,6 +7,7 @@ import {
 import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
 import { getToken } from '@/utils/token'
+import router from '@/router'
 
 // api 返回结果不要进行多余的封装包裹
 // 要么直接返回结果，要么返回错误信息
@@ -37,7 +38,7 @@ axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 })
 
 /**
- * 业务状态码：
+ * 状态码：
  * 401｜900：token 不存在或无效不合法
  * 401｜901：用户名或密码错误
  * 403｜902：access_token 过期
@@ -52,35 +53,22 @@ axios.interceptors.response.use(
   async (error: AxiosError<Statement>) => {
     const { logout, refreshToken } = useUserStore()
     if (error.response?.status === 401) {
-      const { code } = error.response.data
       messageCtx.error('身份验证未通过，请登录后重试！')
-      if (code === 900) {
-        // No Token Exists
-        logout()
-        return
-      } else {
-        // Missing Authentication
-        logout()
-        return
-      }
-    } else if (error.response?.status === 403) {
-      const { code } = error.response.data
-      if (code === 902) {
-        // Access Token is Expired
-        // 保存本次未成功的请求，在拿到新的 access token 后重发
-        const { url, method, data } = error.config as InternalAxiosRequestConfig
-        // 获取新的 access token，重发请求
-        await refreshToken()
-        return axios.request({ url, method, data })
-      } else if (code === 903) {
-        // Refresh Token is Expired
-        logout()
-        messageCtx.error('身份验证过期，请重新登录！')
-        return
-      }
-    } else {
-      messageCtx.error(`[${error.response?.status}]${error.message}`)
-      return Promise.reject(error)
+      logout()
+      router.push({ name: 'Login' })
+    } else if (error.response?.status === 461) {
+      // Access Token is Expired
+      // 保存本次未成功的请求，在拿到新的 access token 后重发
+      const { url, method, data } = error.config as InternalAxiosRequestConfig
+      // 获取新的 access token，重发请求
+      await refreshToken()
+      return axios.request({ url, method, data })
+    } else if (error.response?.status === 460) {
+      messageCtx.error('身份验证过期，请重新登录！')
+      logout()
+      router.push({ name: 'Login' })
     }
+    messageCtx.error(error.message)
+    return Promise.reject(error)
   }
 )
