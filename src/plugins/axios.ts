@@ -1,6 +1,5 @@
 import type {
   InternalAxiosRequestConfig,
-  AxiosRequestHeaders,
   AxiosResponse,
   AxiosError,
 } from 'axios'
@@ -30,11 +29,15 @@ if (import.meta.env.VITE_API_BASE) {
 // add request interceptors(Authorization)
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    if (config.headers.Authorization) {
+      return config
+    }
     const token = getUserToken()
     if (token) {
-      if (!config.headers) {
+      // v1.x版本 headers 必存在
+      /* if (!config.headers) {
         config.headers = {} as AxiosRequestHeaders
-      }
+      } */
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
