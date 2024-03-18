@@ -2,7 +2,7 @@ type RoleEnum = 'super' | 'admin' | 'common'
 
 interface UserState {
   username?: string
-  roles?: RoleEnum[]
+  role?: RoleEnum
 }
 
 interface AuthFormData {

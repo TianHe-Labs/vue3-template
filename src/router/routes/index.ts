@@ -34,43 +34,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/',
     name: 'Layout',
     component: MainLayout,
-    redirect: { name: 'Index' },
+    redirect: { name: 'User' },
     children: [
       {
-        path: '/index',
-        name: 'Index',
+        path: '/user',
+        name: 'User',
         component: () =>
-          import(
-            /* webpackChunkName: "dashboard" */ '@/pages/dashboard/index.vue'
-          ),
-        meta: {
-          title: '仪表盘',
-          icon: 'bx:home-alt',
-          // roles: ['admin'],
-        },
-      },
-      {
-        path: '/search',
-        name: 'Search',
-        component: () =>
-          import(/* webpackChunkName: "search" */ '@/pages/search/index.vue'),
-        meta: {
-          title: '数据检索',
-          icon: 'bx:search-alt',
-          // roles: ['admin'],
-        },
-      },
-      {
-        path: '/profile',
-        name: 'Profile',
-        component: () =>
-          import(
-            /* webpackChunkName: "profile" */ '@/pages/user-profile/index.vue'
-          ),
+          import(/* webpackChunkName: "user" */ '@/pages/user/index.vue'),
         meta: {
           title: '用户中心',
-          icon: 'bx:user',
-          // roles: ['admin'],
+          // icon: 'bx:user',
+          roles: ['*'],
           hideInMenu: true,
         },
       },

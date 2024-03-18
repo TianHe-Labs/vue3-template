@@ -21,10 +21,13 @@ const userOptions = [
           class: 'flex items-end gap-3 px-4 py-2',
         },
         [
-          h(NAvatar, {
-            round: true,
-            src: 'https://07akioni.oss-cn-beijing.aliyuncs.com/demo1.JPG',
-          }),
+          h(
+            NAvatar,
+            {
+              round: true,
+            },
+            { default: () => h(Icon, { icon: 'fa6-solid:user' }) }
+          ),
           h('div', null, [
             h(
               NText,
@@ -70,7 +73,7 @@ const handlers = {
   onSelect(key: string) {
     switch (key) {
       case 'profile':
-        router.push({ name: 'Profile' })
+        router.push({ name: 'User' })
         break
       case 'logout':
         logout()
@@ -88,16 +91,23 @@ const handlers = {
     messageCtx.info('复制成功，请粘贴到 src/settings.json 文件中')
   },
 }
+
+const isDev = import.meta.env.DEV
 </script>
 
 <template>
   <div flex="~ gap-5" justify="end" m="x-2">
-    <n-button text size="small" @click="onSwitchTheme">
-      <icon-bi:moon-stars-fill v-if="theme" />
-      <icon-bi:sun-fill v-else />
+    <n-button text class="opacity-60 hover:opacity-100" @click="onSwitchTheme">
+      <icon-ant-design:moon-filled v-if="theme" />
+      <icon-ant-design:sun-filled v-else />
     </n-button>
-    <n-button text @click="handlers.onOpenSettings">
-      <icon-ant-design:setting-outlined />
+    <n-button
+      v-if="isDev"
+      text
+      class="opacity-60 hover:opacity-100"
+      @click="handlers.onOpenSettings"
+    >
+      <icon-ant-design:setting-filled />
     </n-button>
     <n-dropdown
       trigger="hover"
@@ -107,16 +117,13 @@ const handlers = {
       placement="bottom-end"
       @select="handlers.onSelect"
     >
-      <n-avatar
-        round
-        size="small"
-        src="https://07akioni.oss-cn-beijing.aliyuncs.com/demo1.JPG"
-        class="cursor-pointer"
-      />
+      <n-avatar round size="small" class="cursor-pointer">
+        <Icon icon="fa6-solid:user" />
+      </n-avatar>
     </n-dropdown>
   </div>
 
-  <n-drawer v-model:show="settingsDrawerVisible" :width="280">
+  <n-drawer v-if="isDev" v-model:show="settingsDrawerVisible" :width="280">
     <n-drawer-content title="页面设置">
       <div flex="~" justify="between" items="center" m="y-2">
         <span>侧边导航</span>

@@ -1,15 +1,15 @@
 import {
-  getToken,
-  setToken,
-  clearToken,
-  JWT_ACS_TOKEN_KEY,
-  JWT_RSH_TOKEN_KEY,
-} from '@/utils/token'
+  getUserToken,
+  setUserToken,
+  clearUserToken,
+  ACS_TOKEN_KEY,
+  RSH_TOKEN_KEY,
+} from '@/utils/auth'
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     username: undefined,
-    roles: undefined,
+    role: undefined,
   }),
 
   getters: {
@@ -17,10 +17,10 @@ export const useUserStore = defineStore('user', {
       return { ...state }
     },
     userRoleText(state: UserState) {
-      if (state.roles?.includes('super')) {
+      if (state.role === 'super') {
         return '超级管理员'
       }
-      if (state.roles?.includes('admin')) {
+      if (state.role === 'admin') {
         return '管理员'
       }
       return ''
@@ -39,47 +39,51 @@ export const useUserStore = defineStore('user', {
     // 登录
     async login(authFormData: AuthFormData) {
       try {
-        const { data } = await axios.post('/api/auth', {
+        const { data } = await axios.post('/api/user/auth', {
           ...authFormData,
         })
-        const { access_token, refresh_token } = data
-        setToken(access_token, JWT_ACS_TOKEN_KEY)
-        setToken(refresh_token, JWT_RSH_TOKEN_KEY)
+        const { accessToken, refreshToken } = data
+        if (!accessToken || !refreshToken) {
+          throw new Error(data.message)
+        }
+        setUserToken(accessToken, ACS_TOKEN_KEY)
+        setUserToken(refreshToken, RSH_TOKEN_KEY)
       } catch (err) {
-        clearToken()
+        clearUserToken()
         throw err
       }
     },
     // 获取用户信息
-    async getUserInfo() {
+    async queryUserInfo() {
       try {
         const { data } = await axios.get('/api/user/info')
         this.setUserInfo(data)
       } catch (err) {
-        clearToken()
+        clearUserToken()
+        throw err
+      }
+    },
+    // 刷新令牌
+    async updateUserToken() {
+      const token = getUserToken(RSH_TOKEN_KEY)
+      try {
+        const { data } = await axios.request({
+          url: '/api/user/refresh',
+          method: 'get',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        setUserToken(data.accessToken)
+      } catch (err) {
+        clearUserToken()
         throw err
       }
     },
     // 退出登录
     logout() {
       this.resetUserInfo()
-      clearToken()
-    },
-    // 刷新 Token
-    async refreshToken() {
-      try {
-        const { data } = await axios.request({
-          url: '/api/refresh',
-          method: 'post',
-          headers: {
-            token: getToken(JWT_RSH_TOKEN_KEY),
-          },
-        })
-        setToken(data.access_token)
-      } catch (err) {
-        clearToken()
-        throw err
-      }
+      clearUserToken()
     },
   },
 })

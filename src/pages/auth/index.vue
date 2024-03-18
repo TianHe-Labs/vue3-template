@@ -59,8 +59,8 @@ const handlers = {
               },
             })
             .catch()
-        } catch (err) {
-          // pass
+        } catch (err: any) {
+          messageCtx.error(err?.message)
         } finally {
           authFormState.btnLoading = false
           authFormState.btnText = '登 录'

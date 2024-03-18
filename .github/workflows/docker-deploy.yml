@@ -1,10 +1,13 @@
-name: host deploy
+name: docker deploy
 
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches: [main]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
 
 jobs:
   build:
@@ -46,26 +49,26 @@ jobs:
         run: pnpm install
 
       - name: Build app
-        run: pnpm run build --base=/${{ vars.APP_NAME }}
+        run: pnpm run build
 
-      - name: Deploy app
-        uses: kostya-ten/ssh-server-deploy@v4
+      - name: Login to ghcr
+        uses: docker/login-action@v3
         with:
-          # Host
-          host: ${{ secrets.REMOTE_HOST }} # configure in secret
-          # Port
-          port: ${{ secrets.REMOTE_PORT }} # configure in secret
-          # Username
-          username: root
-          # Private key
-          private_key: ${{ secrets.PRIVATE_KEY }} # configure in secret
-          # Before script
-          #
-          before_script: |
-            if [ ! -d /var/www/${{ vars.APP_NAME }} ];then mkdir /var/www/${{ vars.APP_NAME }};elif [[ -n $(ls /var/www/${{ vars.APP_NAME }}) ]];then rm -r /var/www/${{ vars.APP_NAME }}/*;fi
-          # After script
-          after_script: nginx -s reload
-          # After script
-          scp_source: dist/*
-          # After script
-          scp_target: /var/www/${{ vars.APP_NAME }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase the repo name
+        run: echo "IMAGE=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Build docker and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Lite.Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE }}:latest
+
+      - name: Deploy to Coolify
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header  'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'

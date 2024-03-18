@@ -6,7 +6,7 @@ export const useAppStore = defineStore('app', {
       ...defaultSettings,
       name: import.meta.env.VITE_APP_NAME,
       description: import.meta.env.VITE_APP_DESC,
-      copyright: import.meta.env.VITE_APP_COPR,
+      copyright: import.meta.env.VITE_APP_COPR || '天合安全',
     }
   },
 

@@ -15,7 +15,7 @@ interface SearchState<T> {
 const searchSymbol = Symbol('SEARCH')
 
 export function provideSearch<T>(): SearchState<T> {
-  const resultTableColumns: DataTableColumns<T> = []
+  const renderTableColumns: DataTableColumns<T> = []
 
   const router = useRouter()
   const route = useRoute()
@@ -88,7 +88,7 @@ export function provideSearch<T>(): SearchState<T> {
   }
 
   provide(searchSymbol, {
-    resultTableColumns,
+    renderTableColumns,
     loading,
     renderData,
     pagination,

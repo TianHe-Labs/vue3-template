@@ -1,31 +1,37 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { constRoutes, asyncRoutes } from '@/router/routes'
 
-// 检查路由所需权限
-function hasPermission(userRoles: RoleEnum[], route: RouteRecordRaw): boolean {
+// 检查路由所需权限 roles = []
+/* function hasPermission(userRoles: RoleEnum[], route: RouteRecordRaw): boolean {
   if (route.meta && route.meta.roles)
     return (
       route.meta.roles.includes('*') ||
       userRoles.some((role) => route.meta?.roles?.includes(role))
     )
   return true
+} */
+
+function hasPermission(route: RouteRecordRaw, userRole?: RoleEnum): boolean {
+  if (userRole && route.meta && route.meta.roles) {
+    return (
+      route.meta.roles.includes('*') || route.meta?.roles?.includes(userRole)
+    )
+  }
+  return true
 }
 
 // 根据权限过滤动态路由
 function filterAsyncRoutes(
   asyncRoutes: RouteRecordRaw[],
-  userRoles: RoleEnum[]
+  userRole?: RoleEnum
 ): RouteRecordRaw[] {
   const filteredRoutes: RouteRecordRaw[] = []
 
   asyncRoutes.forEach((asyncRoute) => {
     const clonedRoute: RouteRecordRaw = { ...asyncRoute }
-    if (hasPermission(userRoles, clonedRoute)) {
+    if (hasPermission(clonedRoute, userRole)) {
       if (clonedRoute.children) {
-        clonedRoute.children = filterAsyncRoutes(
-          clonedRoute.children,
-          userRoles
-        )
+        clonedRoute.children = filterAsyncRoutes(clonedRoute.children, userRole)
       }
       filteredRoutes.push(clonedRoute)
     }
@@ -38,25 +44,18 @@ export const useRouteStore = defineStore('route', {
   state: (): RouteState => ({
     routes: constRoutes,
   }),
-
-  getters: {
-    /* routes(state: RouteState): RouteRecordRaw[] {
-      return [...state.routes]
-    }, */
-  },
-
   actions: {
     // 更新可访问路由
-    setRoutes(addRoutes: RouteRecordRaw[]) {
+    setUserRoutes(addRoutes: RouteRecordRaw[]) {
       this.$state.routes = this.$state.routes.concat(addRoutes)
     },
     // 重置
-    resetRoutes() {
+    resetUserRoutes() {
       this.$reset()
     },
-    generateRoutes(userRoles: RoleEnum[]) {
-      const addRoutes = filterAsyncRoutes(asyncRoutes, userRoles)
-      this.setRoutes(addRoutes)
+    generateRoutes(userRole?: RoleEnum) {
+      const addRoutes = filterAsyncRoutes(asyncRoutes, userRole)
+      this.setUserRoutes(addRoutes)
       return addRoutes
     },
   },

@@ -1,45 +1,44 @@
 // https://github.com/lavyun/better-mock
 import Mock from 'better-mock'
-import { setupMock, responseSuccess, responseFailure } from '../_utils'
+import { setupMock, successResponseWrap, failureResponseWrap } from '../_utils'
 
 const _users = [
   {
-    username: 'nist',
+    username: 'admin',
     password: 'nslab321',
-    roles: ['admin'],
+    role: 'admin',
   },
 ]
 
 const _tokens = {
-  access_token:
+  accessToken:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
-  refresh_token:
+  refreshToken:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
 }
 
 setupMock({
   setup() {
     // 登录认证
-    Mock.mock(new RegExp('/api/auth'), (req: MockRequest) => {
+    Mock.mock(new RegExp('/api/user/auth'), (req: MockRequest) => {
       const { username, password } = JSON.parse(req.body as string)
       const foundItem = _users.find(
         (u) => u.username === username && u.password === password
       )
       if (foundItem) {
-        return responseSuccess(_tokens)
+        return successResponseWrap(_tokens)
       } else {
-        return responseFailure(901, '用户名或密码错误！')
+        return failureResponseWrap(900, '用户名或密码错误！')
       }
     })
 
     // 用户信息
     Mock.mock(new RegExp('/api/user/info'), (req: MockRequest) => {
-      const { token } = req.headers as any
-      if (token === _tokens.access_token) {
-        const { username, roles } = _users[0]
-        return responseSuccess({ username, roles })
+      const token = (req.headers as any)?.Authorization.replace('Bearer ', '')
+      if (token === _tokens.accessToken) {
+        return successResponseWrap(_users[0])
       } else {
-        return responseFailure(901, '用户名或密码错误！')
+        return failureResponseWrap(900, '用户名或密码错误！')
       }
     })
   },

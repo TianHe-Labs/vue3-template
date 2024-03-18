@@ -12,7 +12,7 @@ export function useUserLogout() {
   const logout = () => {
     userStore.logout()
     appStore.resetSettings()
-    routeStore.resetRoutes()
+    routeStore.resetUserRoutes()
     resetRouter()
     router.push({ name: 'Auth' })
     messageCtx.success('已退出登录！')

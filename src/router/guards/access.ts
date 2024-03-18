@@ -1,23 +1,24 @@
 import type { Router } from 'vue-router'
 import { useUserStore, useRouteStore } from '@/store'
-import { getToken } from '@/utils/token'
+import { isLogin } from '@/utils/auth'
 import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
 export function createAccessGuard(router: Router) {
   router.beforeEach(async (to, _, next) => {
-    const { userInfo, getUserInfo, logout } = useUserStore()
-    const { generateRoutes } = useRouteStore()
-    const token = getToken()
-    if (token) {
-      if (userInfo.roles && userInfo.roles?.length) {
+    const userStore = useUserStore()
+    const routeStore = useRouteStore()
+    if (isLogin()) {
+      if (userStore.role) {
         if (to.name === 'Auth') next({ name: DEFAULT_ROUTE_NAME })
         else next()
       } else {
         try {
           // 获取用户信息（role）
-          await getUserInfo()
+          await userStore.queryUserInfo()
           // 根据用户权限，动态生成路由
-          const addRoutes = generateRoutes(userInfo.roles as RoleEnum[])
+          const addRoutes = routeStore.generateRoutes(
+            userStore.role as unknown as RoleEnum
+          )
           // 将生成的需要权限认证的路由，添加到路由表中
           addRoutes.forEach((route) => {
             router.addRoute(route)
@@ -28,8 +29,8 @@ export function createAccessGuard(router: Router) {
 
           next({ ...to, replace: true })
         } catch (err) {
-          // getUserInfo 等存在异常，退出登录
-          await logout()
+          // queryUserInfo 等存在异常，退出登录
+          await userStore.logout()
           next({
             name: 'Auth',
             query: { redirect: to.path, ...to.query },

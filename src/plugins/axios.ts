@@ -1,4 +1,4 @@
-import {
+import type {
   InternalAxiosRequestConfig,
   AxiosRequestHeaders,
   AxiosResponse,
@@ -6,7 +6,7 @@ import {
 } from 'axios'
 import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
-import { getToken } from '@/utils/token'
+import { getUserToken } from '@/utils/auth'
 import router from '@/router'
 
 // api 返回结果不要进行多余的封装包裹
@@ -19,56 +19,61 @@ interface Statement {
 // 脱离 setup 上下文使用 message
 const { message: messageCtx } = createDiscreteApi(['message'])
 
-// 生产环境子路径部署时需要为 API 请求添加相应前缀
-if (import.meta.env) {
+if (import.meta.env.VITE_API_BASE) {
+  // 自定义环境变量，手动指定 API Base
+  axios.defaults.baseURL = import.meta.env.VITE_API_BASE
+} else {
+  // vite 内置环境变量，子路径部署时用到
   axios.defaults.baseURL = import.meta.env.BASE_URL
 }
 
-// 拦截 request，添加 token 凭据
-axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = getToken()
-  if (!config?.headers.token && token) {
-    config.headers = {
-      ...config.headers,
-      token,
-    } as unknown as AxiosRequestHeaders
-    // config.headers = { ...config.headers, Authorization: `Bearer ${token}` }
+// add request interceptors(Authorization)
+axios.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const token = getUserToken()
+    if (token) {
+      if (!config.headers) {
+        config.headers = {} as AxiosRequestHeaders
+      }
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    // do something
+    return Promise.reject(error)
   }
-  return config
-})
+)
 
-/**
- * 状态码：
- * 401｜900：token 不存在或无效不合法
- * 401｜901：用户名或密码错误
- * 403｜902：access_token 过期
- * 403｜903：refresh_token 过期
- */
-
-// 拦截 response，处理 auth 问题
+// add response interceptors
 axios.interceptors.response.use(
   (response: AxiosResponse) => {
     return response
   },
   async (error: AxiosError<Statement>) => {
-    const { logout, refreshToken } = useUserStore()
-    if (error.response?.status === 401) {
+    const userStore = useUserStore()
+    const status = error.response?.status
+    if (status === 401) {
+      // 登录时用户名或密码错误，Token 无效或缺失
       messageCtx.error('身份验证未通过，请登录后重试！')
-      logout()
-      router.push({ name: 'Login' })
-    } else if (error.response?.status === 461) {
-      // Access Token is Expired
+      await userStore.logout()
+      router.push({ name: 'Auth' })
+    } else if (status === 460) {
+      // Access Token 过期
       // 保存本次未成功的请求，在拿到新的 access token 后重发
       const { url, method, data } = error.config as InternalAxiosRequestConfig
       // 获取新的 access token，重发请求
-      await refreshToken()
+      await userStore.updateUserToken()
       return axios.request({ url, method, data })
-    } else if (error.response?.status === 460) {
+    } else if (status === 461) {
+      // Refresh Token 过期
       messageCtx.error('身份验证过期，请重新登录！')
-      logout()
-      router.push({ name: 'Login' })
+      await userStore.logout()
+      router.push({ name: 'Auth' })
+      return
+    } else {
+      messageCtx.error(`[${status}]${error.message}`)
+      return Promise.reject(error)
     }
-    messageCtx.error(error.message)
-    return Promise.reject(error)
   }
 )

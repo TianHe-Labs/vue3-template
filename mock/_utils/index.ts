@@ -4,11 +4,11 @@ export function setupMock({ enable = true, setup }: SetupMock) {
   }
 }
 
-export function responseSuccess(data: any) {
+export function successResponseWrap(data: any) {
   return data
 }
 
-export function responseFailure(code = 900, message = '错误') {
+export function failureResponseWrap(code = 900, message = '错误') {
   return {
     code,
     message,

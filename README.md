@@ -34,27 +34,28 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 - [unplugin-auto-import](https://github.com/unplugin/unplugin-auto-import#readme)
 - [unplugin-icons](https://github.com/unplugin/unplugin-icons#readme)
 - [@iconify/json](https://iconify.design/icon-sets/)
+- [@iconify/vue](https://iconify.design/docs/icon-components/vue/)
 - [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components#readme)
 
-## CI/CD Based On Github Actions
+## CI/CD Based On Github Actions and Coolify
 
-The CI/CD config is `.github/workflows/ci-host.yml`, you should add some secrets used by the CI/CD config, in Github repo settings
+Dokcer ci/cd `.github/workflows/docker-deploy.yml`
+add some variables and secrets in repo settings
 
 ```yml
-REMOTE_HOST: # ip address of the remote server
-
-REMOTE_USER: # user access to the remote server
-
-PRIVATE_KEY: # private key access to the remote server with pubkey authentication
+# secrets
+COOLIFY_WEBHOOK: # coolify deploy webhook
+COOLIFY_TOKEN: # coolify auth token
 ```
 
-What's more, you also need to modify the top `env` variables to your own configs in the ci config file
+Host ci/cd `.github/workflows/host-deploy.yml`
+add some variables and secrets in repo settings
 
 ```yml
-env:
-  REMOTE_USER: root # user of remote host
-
-  REMOTE_PATH: /var/www/xxxx # your expected target path used by nginx
-
-  BASE_URL: # when deploying in sub path (https://cn.vitejs.dev/config/shared-options.html#base)
+# variables
+APP_NAME: # app name used to deployed subpath
+# secrets
+REMOTE_HOST: # ip address of the remote server
+REMOTE_USER: # user access to the remote server
+PRIVATE_KEY: # private key access to the remote server with pubkey authentication
 ```

@@ -18,14 +18,11 @@ provideSearch()
 
 <template>
   <n-layout position="absolute">
-    <Header :bordered="sideMenuVisible" style="height: var(--header-height)" />
+    <Header :bordered="sideMenuVisible" />
     <n-layout
       :has-sider="sideMenuVisible"
       position="absolute"
-      :style="{
-        top: sideMenuVisible ? 'var(--header-height)' : 0,
-      }"
-      class="layout__main"
+      class="!top-14 layout__main"
     >
       <n-layout-sider
         v-if="sideMenuVisible"
@@ -44,26 +41,17 @@ provideSearch()
       <n-layout
         :native-scrollbar="false"
         class="h-full"
-        content-style="height: 100%; display: flex; flex-direction: column"
+        content-class="h-full flex flex-col"
       >
-        <n-layout-content
-          :class="['flex-auto mx-auto', { container: !sideMenuVisible }]"
-        >
-          <router-view v-slot="{ Component }">
-            <transition :duration="200" name="fade-top" mode="out-in">
-              <keep-alive>
-                <component :is="Component" />
-              </keep-alive>
-            </transition>
-          </router-view>
-        </n-layout-content>
+        <router-view v-slot="{ Component }">
+          <transition :duration="200" name="fade-top" mode="out-in">
+            <keep-alive>
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
+        </router-view>
         <Footer />
       </n-layout>
     </n-layout>
   </n-layout>
 </template>
-
-<style lang="sass" scoped>
-.n-layout
-  --header-height: 56px
-</style>
