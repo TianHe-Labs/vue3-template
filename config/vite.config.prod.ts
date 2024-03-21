@@ -2,7 +2,6 @@ import { mergeConfig } from 'vite'
 import viteCompression from 'vite-plugin-compression'
 import baseConfig from './vite.config.base'
 import visualizerPlugin from './plugins/visualizer'
-import htmlPlugin from './plugins/html'
 
 export default mergeConfig(
   {
@@ -12,7 +11,6 @@ export default mergeConfig(
         deleteOriginFile: false,
       }),
       visualizerPlugin(),
-      htmlPlugin(),
     ],
     build: {
       rollupOptions: {
