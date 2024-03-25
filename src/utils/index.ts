@@ -21,16 +21,24 @@ export function loadFile(file: File) {
   })
 }
 
-export function polling(func: () => Promise<void>, interval = 3000) {
+export function polling(
+  func: () => Promise<void>,
+  opts?: {
+    interval?: number
+    stopIf?: () => boolean
+  }
+) {
+  const interval = opts?.interval || 3000
+  const stopIf = opts?.stopIf || (() => false)
   let timeoutId: any = -1
   // 控制停止
-  let shouldContinue = true
+  let shouldStop = false
   const stop = () => {
-    shouldContinue = false
+    shouldStop = true
   }
 
   const repeat = async () => {
-    if (!shouldContinue) {
+    if (shouldStop || stopIf()) {
       clearTimeout(timeoutId)
       return
     }
