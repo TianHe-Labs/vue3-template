@@ -6,7 +6,7 @@ import type {
 import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
 import { getUserToken } from '@/utils/auth'
-import router from '@/router'
+import { useUserLogout } from '@/hooks/useUserLogout'
 
 // api 返回结果不要进行多余的封装包裹
 // 要么直接返回结果，要么返回错误信息
@@ -55,12 +55,12 @@ axios.interceptors.response.use(
   },
   async (error: AxiosError<Statement>) => {
     const userStore = useUserStore()
+    const { logout } = useUserLogout()
     const status = error.response?.status
     if (status === 401) {
       // 登录时用户名或密码错误，Token 无效或缺失
       messageCtx.error('身份验证未通过，请登录后重试！')
-      await userStore.logout()
-      router.push({ name: 'Auth' })
+      logout()
     } else if (status === 460) {
       // Access Token 过期
       // 保存本次未成功的请求，在拿到新的 access token 后重发
@@ -71,8 +71,7 @@ axios.interceptors.response.use(
     } else if (status === 461) {
       // Refresh Token 过期
       messageCtx.error('身份验证过期，请重新登录！')
-      await userStore.logout()
-      router.push({ name: 'Auth' })
+      logout()
       return
     } else {
       messageCtx.error(`[${status}]${error.message}`)
