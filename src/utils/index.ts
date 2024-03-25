@@ -20,3 +20,25 @@ export function loadFile(file: File) {
     }
   })
 }
+
+export function polling(func: () => Promise<void>, interval = 3000) {
+  let timeoutId: any = -1
+  // 控制停止
+  let shouldContinue = true
+  const stop = () => {
+    shouldContinue = false
+  }
+
+  const repeat = async () => {
+    if (!shouldContinue) {
+      clearTimeout(timeoutId)
+      return
+    }
+    await func()
+    timeoutId = setTimeout(repeat, interval)
+  }
+  repeat() // 立即 func 一次
+  // setTimeout(repeat, interval);
+
+  return stop
+}
