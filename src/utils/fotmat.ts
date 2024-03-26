@@ -1,3 +1,5 @@
+// 工具函数·数据格式化类
+
 export function formatNumber(obj: number, separator = ','): string {
   if (typeof obj !== 'number') return 'Invalid Number'
   // separator 分隔符，默认逗号 ,

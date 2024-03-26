@@ -7,7 +7,9 @@ import { useAppStore, useRouteStore } from '@/store'
 
 const route = useRoute()
 
-const activeMenu = computed(() => route.name as string)
+const activeMenu = computed(
+  () => route.meta.activeMenu || (route.name as string)
+)
 
 const { sideMenu } = useAppStore()
 

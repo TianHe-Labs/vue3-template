@@ -3,6 +3,7 @@ export * from './has'
 export * from './fotmat'
 export * from './transform'
 
+// 工具函数·无明确分类
 export function loadFile(file: File) {
   return new Promise<FileReader>((resolve, reject) => {
     const reader = new FileReader()

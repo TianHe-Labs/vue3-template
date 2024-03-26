@@ -97,14 +97,14 @@ const isDev = import.meta.env.DEV
 
 <template>
   <div flex="~ gap-5" justify="end" m="x-2">
-    <n-button text class="opacity-60 hover:opacity-100" @click="onSwitchTheme">
+    <n-button text class="opacity-80 hover:opacity-100" @click="onSwitchTheme">
       <icon-ant-design:moon-filled v-if="theme" />
       <icon-ant-design:sun-filled v-else />
     </n-button>
     <n-button
       v-if="isDev"
       text
-      class="opacity-60 hover:opacity-100"
+      class="opacity-80 hover:opacity-100"
       @click="handlers.onOpenSettings"
     >
       <icon-ant-design:setting-filled />

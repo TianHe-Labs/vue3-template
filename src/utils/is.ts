@@ -1,5 +1,9 @@
+// 工具函数·数据判断类is X：形容词词性
 const opt = Object.prototype.toString
+export function isString(obj: any): obj is string {
+  return opt.call(obj) === '[object String]'
+}
 
-export function isFailCode(obj: any): boolean {
-  return opt.call(obj).startsWith('4') || opt.call(obj).startsWith('5')
+export function isX() {
+  return true
 }

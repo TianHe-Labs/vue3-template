@@ -9,6 +9,10 @@ interface Pagination {
   page: number
   pageSize: number
   itemCount: number
-  prefix: (info: any) => any
-  onUpdatePage: (page: number) => void
+  pageSizes?: number[]
+  showSizePicker?: boolean
+  prefix?: (info: any) => any
+  suffix?: (info: any) => any
+  onUpdatePage?: (page: number) => void
+  onUpdatePageSize?: (pageSize: number) => void
 }

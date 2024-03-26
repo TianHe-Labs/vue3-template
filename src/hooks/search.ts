@@ -8,7 +8,7 @@ interface SearchState<T> {
   renderData: Ref<T[]>
   pagination: Pagination
   fetchData: () => Promise<void>
-  onInputKeyup: (event: KeyboardEvent) => Promise<void>
+  onEnterSearch: () => Promise<void>
   resetPagination: () => void
 }
 
@@ -28,7 +28,7 @@ export function provideSearch<T>(): SearchState<T> {
   const renderData = ref([])
   const pagination = reactive<Pagination>({
     page: Number(route.query.page) || 1,
-    pageSize: 15,
+    pageSize: Number(route.query.pageSize) || 1,
     itemCount: 0,
     prefix: (info: PaginationInfo) => {
       return h(
@@ -36,12 +36,17 @@ export function provideSearch<T>(): SearchState<T> {
         {},
         `共 ${info.itemCount} 条记录 - 当前页 ${renderData.value.length} 条`
       )
-      // 解决 naiveui 带来的问题：只有一条记录时，endIndedx=1(startIndex=0)
     },
     onUpdatePage: async (page: number) => {
       pagination.page = page
       await fetchData()
-      router.push({ query: { page } })
+      router.push({ query: { ...route.query, page } })
+    },
+    onUpdatePageSize: async (pageSize: number) => {
+      pagination.page = 1
+      pagination.pageSize = pageSize
+      await fetchData()
+      router.push({ query: { ...route.query, page: 1, pageSize } })
     },
   })
 
@@ -70,21 +75,16 @@ export function provideSearch<T>(): SearchState<T> {
       loading.value = false
     }
   }
-  const onInputKeyup = async (event: KeyboardEvent) => {
-    // 拦截回车事件
-    if (event.target !== event.currentTarget) return
-    if (event.shiftKey || event.key !== 'Enter') return
-    event.stopPropagation()
-    event.preventDefault()
-    // 回车事件处理
+
+  const onEnterSearch = async () => {
     router.push({ name: 'Search' })
     resetPagination()
     await fetchData()
   }
   // 重置分页信息，如更改检索条件时，页码重置
   const resetPagination = () => {
-    // router.push({ name: 'Search', query: undefined })
     pagination.page = 1
+    router.push({ query: { ...route.query, page: 1 } })
   }
 
   provide(searchSymbol, {
@@ -93,7 +93,7 @@ export function provideSearch<T>(): SearchState<T> {
     renderData,
     pagination,
     fetchData,
-    onInputKeyup,
+    onEnterSearch,
     resetPagination,
   })
 
@@ -103,7 +103,7 @@ export function provideSearch<T>(): SearchState<T> {
     renderData,
     pagination,
     fetchData,
-    onInputKeyup,
+    onEnterSearch,
     resetPagination,
   }
 }

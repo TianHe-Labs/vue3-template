@@ -55,3 +55,9 @@ provideSearch()
     </n-layout>
   </n-layout>
 </template>
+
+<style>
+.n-page-header-header {
+  margin-bottom: 12px !important;
+}
+</style>

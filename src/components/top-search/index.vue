@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useSearch } from '@/hooks'
 
-const { queryKeyword, onInputKeyup } = useSearch()
+const { queryKeyword, onEnterSearch } = useSearch()
 </script>
 
 <template>
@@ -11,9 +11,7 @@ const { queryKeyword, onInputKeyup } = useSearch()
     clearable
     v-model:value="queryKeyword"
     placeholder="输入关键字回车以检索"
-    :input-props="{
-      onKeyup: onInputKeyup,
-    }"
+    @keydown.enter="onEnterSearch"
   >
     <template #prefix>
       <n-icon>
