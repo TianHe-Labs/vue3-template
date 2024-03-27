@@ -57,7 +57,7 @@ provideSearch()
 </template>
 
 <style>
-.n-page-header-header {
-  margin-bottom: 12px !important;
+.n-data-table {
+  background-color: var(--n-color);
 }
 </style>

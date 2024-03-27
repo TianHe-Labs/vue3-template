@@ -56,10 +56,11 @@ export function provideTheme(): themeCtx {
       // iconColorDisabled: 'rgba(209, 209, 209, 1)',
       // dividerColor: 'rgb(239, 239, 245)',
       // borderColor: 'rgb(224, 224, 230)',
-      // tableHeaderColor: 'rgb(250, 250, 252)',
+      tableHeaderColor: 'rgba(250, 250, 252, 0)',
     },
     DataTable: {
       paginationMargin: '16px 12px',
+      thFontWeight: 500,
       peers: {
         Pagination: {},
       },
