@@ -49,5 +49,5 @@ export function polling(
   repeat() // 立即 func 一次
   // setTimeout(repeat, interval);
 
-  return stop
+  return { stop }
 }
