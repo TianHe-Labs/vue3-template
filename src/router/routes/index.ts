@@ -39,8 +39,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
       {
         path: '/user',
         name: 'User',
-        component: () =>
-          import(/* webpackChunkName: "user" */ '@/pages/user/index.vue'),
+        component: () => import('@/pages/user/index.vue'),
         meta: {
           title: '用户中心',
           // icon: 'bx:user',
