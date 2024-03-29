@@ -52,8 +52,7 @@ const handlers = {
           const { redirect, ...othersQuery } = router.currentRoute.value.query
           router
             .push({
-              path:
-                (redirect as string) || `/redirect/${DEFAULT_ROUTE.fullPath}`,
+              path: (redirect as string) || DEFAULT_ROUTE.fullPath,
               query: {
                 ...othersQuery,
               },
@@ -83,8 +82,7 @@ const handlers = {
 <template>
   <n-layout
     position="absolute"
-    content-style="display: flex; flex-direction: column;"
-    bg="light-100 dark:dark-100"
+    content-class="flex flex-col"
     class="layout__main"
   >
     <div
