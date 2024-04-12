@@ -47,6 +47,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
           hideInMenu: true,
         },
       },
+      {
+        path: '/search',
+        name: 'Search',
+        component: () => import('@/pages/search/index.vue'),
+        meta: {
+          title: '数据检索',
+          // icon: 'bx:search',
+          roles: ['*'],
+          // hideInMenu: true,
+        },
+      },
     ],
   },
 ]

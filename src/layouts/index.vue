@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useAppStore } from '@/store'
-import { provideSearch } from '@/hooks'
+import { provideSearch } from '@/pages/search/hooks/search'
 
 // 侧边栏导航 OR 顶栏导航
 const appStore = useAppStore()

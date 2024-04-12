@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useAppStore } from '@/store'
+import SearchBar from '@/pages/search/components/search-bar.vue'
 
 const appStore = useAppStore()
 
@@ -17,7 +18,7 @@ const topSearchVisible = computed(() => appStore.topSearch)
       </router-link>
       <div flex="~" justify="center">
         <template v-if="topSearchVisible">
-          <TopSearch class="hidden md:block" />
+          <SearchBar class="hidden md:block" />
         </template>
         <template v-else-if="!sideMenuVisible">
           <NavMenu />

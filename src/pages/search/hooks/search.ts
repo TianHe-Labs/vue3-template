@@ -55,7 +55,7 @@ export function provideSearch<T>(): SearchState<T> {
     loadingBar.start()
     try {
       const { data } = await axios.post(
-        'api/search',
+        'api/data/search',
         {
           ...searchParams,
         },
@@ -76,9 +76,9 @@ export function provideSearch<T>(): SearchState<T> {
     }
   }
 
+  // 顶部搜索框回车检索
   const onEnterSearch = async () => {
-    router.push({ name: 'Search' })
-    resetPagination()
+    router.push({ name: 'Search', query: { ...route.query, page: 1 } })
     await fetchData()
   }
   // 重置分页信息，如更改检索条件时，页码重置

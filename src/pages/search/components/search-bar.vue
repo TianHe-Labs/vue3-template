@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useSearch } from '@/hooks'
+import { useSearch } from '../hooks/search'
 
 const { queryKeyword, onEnterSearch } = useSearch()
 </script>

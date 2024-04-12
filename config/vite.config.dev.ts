@@ -5,8 +5,6 @@ import { createProxy } from './utils'
 export default mergeConfig(
   {
     server: {
-      open: false,
-      host: true,
       proxy: createProxy(),
     },
   },

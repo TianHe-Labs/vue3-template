@@ -4,7 +4,7 @@ import { loadEnv } from 'vite'
 // 要使用 JSON.parse 解析，因此必须使用双引号
 export function createProxy() {
   const proxyRaw = loadEnv(process.env.NODE_ENV, process.cwd()).VITE_DEV_PROXY
-  const proxyArr = JSON.parse(proxyRaw)
+  const proxyArr = JSON.parse(proxyRaw || '[]')
   const proxyObj: Record<string, object> = {}
 
   proxyArr.forEach((item: string[]) => {

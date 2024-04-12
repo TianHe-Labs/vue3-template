@@ -7,15 +7,12 @@ const _users = [
     username: 'admin',
     password: 'nslab321',
     role: 'admin',
+    accessToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
+    refreshToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
   },
 ]
-
-const _tokens = {
-  accessToken:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
-  refreshToken:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
-}
 
 setupMock({
   setup() {
@@ -26,7 +23,8 @@ setupMock({
         (u) => u.username === username && u.password === password
       )
       if (foundItem) {
-        return successResponseWrap(_tokens)
+        const { accessToken, refreshToken } = foundItem
+        return successResponseWrap({ accessToken, refreshToken })
       } else {
         return failureResponseWrap(900, '用户名或密码错误！')
       }
@@ -35,8 +33,10 @@ setupMock({
     // 用户信息
     Mock.mock(new RegExp('/api/user/info'), (req: MockRequest) => {
       const token = (req.headers as any)?.Authorization.replace('Bearer ', '')
-      if (token === _tokens.accessToken) {
-        return successResponseWrap(_users[0])
+      const foundItem = _users.find((u) => u.accessToken === token)
+      if (foundItem) {
+        const { username, role } = foundItem
+        return successResponseWrap({ username, role })
       } else {
         return failureResponseWrap(900, '用户名或密码错误！')
       }
