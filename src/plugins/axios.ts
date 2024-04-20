@@ -11,8 +11,7 @@ import { useUserLogout } from '@/hooks/useUserLogout'
 // api 返回结果不要进行多余的封装包裹
 // 要么直接返回结果，要么返回错误信息
 interface Statement {
-  code: number
-  message: string
+  [key: string]: string | number
 }
 
 // 脱离 setup 上下文使用 message
@@ -57,9 +56,17 @@ axios.interceptors.response.use(
     const userStore = useUserStore()
     const { logout } = useUserLogout()
     const status = error.response?.status
-    if (status === 401) {
+    const data = error.response?.data
+    const message = data?.message || data?.msg
+    if (
+      !error.config?.url?.includes('/user/passwd/update') &&
+      !error.config?.url?.includes('/user/auth') &&
+      status === 401
+    ) {
       // 登录时用户名或密码错误，Token 无效或缺失
-      messageCtx.error('身份验证未通过，请登录后重试！')
+      messageCtx.error(
+        `[认证错误]${message || '身份验证未通过，请登录后重试！'}`
+      )
       logout()
     } else if (status === 460) {
       // Access Token 过期
@@ -70,12 +77,10 @@ axios.interceptors.response.use(
       return axios.request({ url, method, data })
     } else if (status === 461) {
       // Refresh Token 过期
-      messageCtx.error('身份验证过期，请重新登录！')
+      messageCtx.error(`[认证错误]${message || '身份验证过期，请重新登录！'}`)
       logout()
-      return
     } else {
-      messageCtx.error(`[${status}]${error.message}`)
-      return Promise.reject(error)
+      return Promise.reject({ message: message || error.message })
     }
   }
 )

@@ -1,23 +1,22 @@
-import { useMessage } from 'naive-ui'
+import { createDiscreteApi } from 'naive-ui'
 import { useRouteStore, useUserStore, useAppStore } from '@/store'
-import { resetRouter } from '@/router'
+import router, { resetRouter } from '@/router'
 
 export function useUserLogout() {
-  const router = useRouter()
   const userStore = useUserStore()
   const appStore = useAppStore()
   const routeStore = useRouteStore()
-  const messageCtx = useMessage()
+  // 脱离 setup 上下文使用 message
+  const { message: messageCtx } = createDiscreteApi(['message'])
 
   const logout = () => {
     userStore.logout()
     appStore.resetSettings()
     routeStore.resetUserRoutes()
     resetRouter()
-    router.push({ name: 'Auth' })
     messageCtx.success('已退出登录！')
+    router.push({ name: 'Auth' })
   }
-
   return {
     logout,
   }
