@@ -59,7 +59,7 @@ const handlers = {
             })
             .catch()
         } catch (err: any) {
-          messageCtx.error(err?.message)
+          messageCtx.error(`[登录失败]${err?.message}`)
         } finally {
           authFormState.btnLoading = false
           authFormState.btnText = '登 录'
