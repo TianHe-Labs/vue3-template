@@ -4,20 +4,30 @@ export * from './fotmat'
 export * from './transform'
 
 // 工具函数·无明确分类
-export function loadFile(file: File) {
-  return new Promise<FileReader>((resolve, reject) => {
+export function readFile(
+  file: File,
+  readMethod: 'ArrayBuffer' | 'DataURL' | 'Text' = 'Text'
+) {
+  return new Promise((resolve, reject) => {
     const reader = new FileReader()
-
-    reader.onload = (/* event: ProgressEvent */) => {
-      resolve(reader)
+    reader.onload = () => {
+      resolve(reader.result)
     }
-    reader.onabort = reject
-    reader.onerror = reject
 
-    if (!file.type || /^text\//i.test(file.type)) {
-      reader.readAsText(file)
-    } else {
-      reader.readAsDataURL(file)
+    reader.onerror = () => {
+      reject(reader.error)
+    }
+
+    switch (readMethod) {
+      case 'ArrayBuffer':
+        reader.readAsArrayBuffer(file)
+        break
+      case 'DataURL':
+        reader.readAsDataURL(file)
+        break
+      case 'Text':
+      default:
+        reader.readAsText(file)
     }
   })
 }

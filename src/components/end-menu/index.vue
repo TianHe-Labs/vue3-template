@@ -59,14 +59,13 @@ const userOptions = [
 ]
 
 const router = useRouter()
-// const messageCtx = useMessage()
+const messageCtx = useMessage()
 const { theme, onSwitchTheme } = useTheme()
 const { logout } = useUserLogout()
 
 // 设置
 const settingsDrawerVisible = ref<boolean>(false)
 const appStore = useAppStore()
-const messageCtx = useMessage()
 const { copy } = useClipboard()
 
 const handlers = {
@@ -77,6 +76,7 @@ const handlers = {
         break
       case 'logout':
         logout()
+        messageCtx.success('已退出登录！')
         break
       default:
         return
