@@ -1,15 +1,9 @@
-import {
-  getUserToken,
-  setUserToken,
-  clearUserToken,
-  ACS_TOKEN_KEY,
-  RSH_TOKEN_KEY,
-} from '@/utils/auth'
-
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     username: undefined,
     role: undefined,
+    accessToken: undefined,
+    refreshToken: undefined,
   }),
 
   getters: {
@@ -42,14 +36,12 @@ export const useUserStore = defineStore('user', {
         const { data } = await axios.post('/api/user/auth', {
           ...authFormData,
         })
-        const { accessToken, refreshToken } = data
-        if (!accessToken || !refreshToken) {
+        if (!data?.accessToken || !data?.refreshToken) {
           throw new Error(data.message)
         }
-        setUserToken(accessToken, ACS_TOKEN_KEY)
-        setUserToken(refreshToken, RSH_TOKEN_KEY)
+        this.setUserInfo(data)
       } catch (err) {
-        clearUserToken()
+        this.resetUserInfo()
         throw err
       }
     },
@@ -59,31 +51,38 @@ export const useUserStore = defineStore('user', {
         const { data } = await axios.get('/api/user/info')
         this.setUserInfo(data)
       } catch (err) {
-        clearUserToken()
+        this.resetUserInfo()
         throw err
       }
     },
     // 刷新令牌
     async updateUserToken() {
-      const token = getUserToken(RSH_TOKEN_KEY)
+      if (!this.$state?.refreshToken) {
+        this.resetUserInfo()
+        return
+      }
       try {
         const { data } = await axios.request({
           url: '/api/user/refresh',
           method: 'get',
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${this.$state?.refreshToken}`,
           },
         })
-        setUserToken(data.accessToken)
+        this.setUserInfo(data)
       } catch (err) {
-        clearUserToken()
+        this.resetUserInfo()
         throw err
       }
     },
     // 退出登录
     logout() {
       this.resetUserInfo()
-      clearUserToken()
     },
+  },
+
+  persist: {
+    key: '__th_ls_usr__',
+    paths: ['accessToken', 'refreshToken'],
   },
 })

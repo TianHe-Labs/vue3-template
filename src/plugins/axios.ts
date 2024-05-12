@@ -5,7 +5,6 @@ import type {
 } from 'axios'
 import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
-import { getUserToken } from '@/utils/auth'
 import { useUserLogout } from '@/hooks/useUserLogout'
 
 // api 返回结果不要进行多余的封装包裹
@@ -31,7 +30,9 @@ axios.interceptors.request.use(
     if (config.headers.Authorization) {
       return config
     }
-    const token = getUserToken()
+
+    const userStore = useUserStore()
+    const token = userStore.accessToken
     if (token) {
       // v1.x版本 headers 必存在
       /* if (!config.headers) {
@@ -55,6 +56,7 @@ axios.interceptors.response.use(
   async (error: AxiosError<Statement>) => {
     const userStore = useUserStore()
     const { logout } = useUserLogout()
+
     const status = error.response?.status
     const data = error.response?.data
     const message = data?.message || data?.msg

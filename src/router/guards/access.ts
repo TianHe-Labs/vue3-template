@@ -1,13 +1,12 @@
 import type { Router } from 'vue-router'
 import { useUserStore, useRouteStore } from '@/store'
-import { isLogin } from '@/utils/auth'
 import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
 export function createAccessGuard(router: Router) {
   router.beforeEach(async (to, _, next) => {
     const userStore = useUserStore()
     const routeStore = useRouteStore()
-    if (isLogin()) {
+    if (userStore.accessToken) {
       if (userStore.role) {
         if (to.name === 'Auth') next({ name: DEFAULT_ROUTE_NAME })
         else next()
