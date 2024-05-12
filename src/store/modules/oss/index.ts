@@ -60,7 +60,7 @@ export const useOssStore = defineStore('oss', {
         !this.$state.accessKeySecret ||
         !this.$state.securityToken
       ) {
-        return
+        return ''
       }
 
       options = options || {}
