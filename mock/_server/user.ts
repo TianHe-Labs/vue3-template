@@ -26,7 +26,7 @@ setupMock({
         const { accessToken, refreshToken } = foundItem
         return successResponseWrap({ accessToken, refreshToken })
       } else {
-        return failureResponseWrap(900, '用户名或密码错误！')
+        return failureResponseWrap('用户名或密码错误！')
       }
     })
 
@@ -38,7 +38,7 @@ setupMock({
         const { username, role } = foundItem
         return successResponseWrap({ username, role })
       } else {
-        return failureResponseWrap(900, '用户名或密码错误！')
+        return failureResponseWrap('用户名或密码错误！')
       }
     })
   },
