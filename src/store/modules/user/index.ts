@@ -39,20 +39,29 @@ export const useUserStore = defineStore('user', {
         if (!data?.accessToken || !data?.refreshToken) {
           throw new Error(data.message)
         }
-        this.setUserInfo(data)
+        this.setUserInfo({ username: authFormData.username, ...data })
       } catch (err) {
         this.resetUserInfo()
         throw err
       }
     },
     // 获取用户信息
+    // 有时候业务简单，单用户系统没有身份值等用户信息，甚至没有相关接口
+    // 为了保证业务可用，本地增加一个或者使用本地模拟接口
+    // 或者在路由守卫中不判断身份
     async queryUserInfo() {
       try {
         const { data } = await axios.get('/api/user/info')
-        this.setUserInfo(data)
-      } catch (err) {
-        this.resetUserInfo()
-        throw err
+        this.setUserInfo({ ...data, role: data?.role || 'admin' })
+      } catch (err: any) {
+        if (err?.isAxiosError) {
+          // axios 拦截统一处理了返回结果
+          // 如果该接口 404，则认为是单用户系统，没有用户信息
+          this.setUserInfo({ role: 'admin' })
+        } else {
+          this.resetUserInfo()
+          throw err
+        }
       }
     },
     // 刷新令牌

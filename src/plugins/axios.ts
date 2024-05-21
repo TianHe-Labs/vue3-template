@@ -21,6 +21,8 @@ if (import.meta.env.VITE_API_BASE) {
 // add request interceptors(Authorization)
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    // 如果发起请求时已经传入，则不再处理
+    // 例如 updateUserToken with refreshToken
     if (config.headers.Authorization) {
       return config
     }
@@ -79,6 +81,11 @@ axios.interceptors.response.use(
       // Refresh Token 过期
       messageCtx.error(`[认证错误]${message || '身份验证过期，请重新登录！'}`)
       logout()
+    } else if (status === 404 && error.config?.url?.includes('/user/info')) {
+      // 有时候业务简单，单用户系统没有身份值等用户信息，甚至没有相关接口
+      // 为了保证业务可用，本地增加一个或者使用本地模拟接口
+      // 或者在路由守卫中不判断身份
+      return Promise.reject(error)
     } else {
       return Promise.reject({ message: message || error.message })
     }
