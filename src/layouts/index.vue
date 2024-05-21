@@ -9,7 +9,7 @@ const appStore = useAppStore()
 const sideMenuVisible = computed(() => appStore.sideMenu)
 
 const onUpdateCollapsed = (collapse: boolean) => {
-  appStore.updateSettings({ sideCollapse: collapse })
+  appStore.setSettings({ sideCollapse: collapse })
 }
 
 // 顶栏检索

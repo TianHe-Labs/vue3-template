@@ -9,12 +9,12 @@ const props = defineProps({
   },
 })
 
-const { appSettings, updateSettings } = useAppStore()
+const { appSettings, setSettings } = useAppStore()
 
 const defaultValue = computed(() => (appSettings as any)?.[props.name])
 
 const onUpdateValue = (value: boolean) => {
-  updateSettings({ [props.name]: value })
+  setSettings({ [props.name]: value })
 }
 </script>
 
