@@ -56,8 +56,8 @@ axios.interceptors.response.use(
     const { logout } = useUserLogout()
 
     const status = error.response?.status
-    const data = error.response?.data
-    const message = data?.message || data?.msg
+    const respData = error.response?.data
+    const message = respData?.message || respData?.msg
     if (
       !error.config?.url?.includes('/user/passwd/update') &&
       !error.config?.url?.includes('/user/auth') &&
