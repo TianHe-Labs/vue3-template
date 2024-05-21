@@ -1,4 +1,4 @@
-type RoleEnum = 'super' | 'admin' | 'common'
+type RoleEnum = 'super' | 'admin' | 'user'
 
 interface UserState {
   username?: string
