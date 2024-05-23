@@ -12,13 +12,13 @@ const { username, userRoleText } = useUserStore()
 
 const userOptions = [
   {
-    key: 'profile',
+    key: 'header',
     type: 'render',
     render: () =>
       h(
         'div',
         {
-          class: 'flex items-end gap-3 px-4 py-2',
+          class: 'flex items-end gap-3 px-4 py-1',
         },
         [
           h(
@@ -48,7 +48,7 @@ const userOptions = [
   },
   {
     label: '用户中心',
-    key: 'profile',
+    key: 'user',
     icon: () => h(Icon, { icon: 'bx:user' }),
   },
   {
@@ -71,7 +71,7 @@ const { copy } = useClipboard()
 const handlers = {
   onSelect(key: string) {
     switch (key) {
-      case 'profile':
+      case 'user':
         router.push({ name: 'User' })
         break
       case 'logout':
@@ -96,7 +96,7 @@ const isDev = import.meta.env.DEV
 </script>
 
 <template>
-  <div flex="~ gap-5" justify="end" m="x-2">
+  <div flex="~ gap-x-6" items="center">
     <n-button text class="opacity-80 hover:opacity-100" @click="onSwitchTheme">
       <icon-ant-design:moon-filled v-if="theme" />
       <icon-ant-design:sun-filled v-else />
@@ -107,8 +107,9 @@ const isDev = import.meta.env.DEV
       class="opacity-80 hover:opacity-100"
       @click="handlers.onOpenSettings"
     >
-      <icon-ant-design:setting-filled />
+      <icon-ant-design:setting-filled class="text-sm" />
     </n-button>
+
     <n-dropdown
       trigger="hover"
       size="large"

@@ -4,6 +4,11 @@ import { useAppStore } from '@/store'
 import { useTheme } from '@/hooks'
 
 defineProps({
+  // 标题响应式等
+  titleClass: {
+    type: String,
+    default: '',
+  },
   titleStyle: {
     type: Object as PropType<CSSProperties>,
     default: () => ({
@@ -29,11 +34,18 @@ const { theme } = useTheme()
     <img
       v-if="theme"
       h="full"
+      max-h="12"
       src="~@/assets/logo-dark.svg"
       :alt="appStore.name"
     />
-    <img v-else h="full" src="~@/assets/logo-light.svg" :alt="appStore.name" />
-    <div>
+    <img
+      v-else
+      h="full"
+      max-h="12"
+      src="~@/assets/logo-light.svg"
+      :alt="appStore.name"
+    />
+    <div flex-1 whitespace-nowrap :class="titleClass">
       <h1 font="bold" :style="titleStyle">{{ appStore.name }}</h1>
       <p v-if="appStore.description" class="hidden md:block" :style="descStyle">
         {{ appStore.description }}

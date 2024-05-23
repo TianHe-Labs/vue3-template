@@ -13,7 +13,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <n-breadcrumb class="-mx-1 mt-8 mb-4">
+  <n-breadcrumb class="-mx-1">
     <n-breadcrumb-item clickable href="/">
       <router-link :to="{ name: 'Layout' }">
         <n-icon><icon-fluent:apps-24-filled /></n-icon>

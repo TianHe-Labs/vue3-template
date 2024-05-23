@@ -21,12 +21,6 @@ export const constRoutes: RouteRecordRaw[] = [
     component: () => import('@/pages/not-found/index.vue'),
     meta: { title: '404 页面未找到', hideInMenu: true },
   },
-  // 必须保证通配符路由位于最后一项
-  /* {
-    path: '/:match(.*)',
-    redirect: '/404',
-    meta: { hideInMenu: true },
-  }, */
 ]
 
 export const asyncRoutes: RouteRecordRaw[] = [
@@ -37,27 +31,32 @@ export const asyncRoutes: RouteRecordRaw[] = [
     redirect: { name: 'User' },
     children: [
       {
-        path: '/user',
-        name: 'User',
-        component: () => import('@/pages/user/index.vue'),
-        meta: {
-          title: '用户中心',
-          // icon: 'bx:user',
-          roles: ['*'],
-          hideInMenu: true,
-        },
-      },
-      {
         path: '/search',
         name: 'Search',
         component: () => import('@/pages/search/index.vue'),
         meta: {
           title: '数据检索',
-          // icon: 'bx:search',
+          icon: 'bx:search',
           roles: ['*'],
-          // hideInMenu: true,
+          hideInMenu: false,
+        },
+      },
+      {
+        path: '/user',
+        name: 'User',
+        component: () => import('@/pages/user/index.vue'),
+        meta: {
+          title: '用户中心',
+          icon: 'bx:user',
+          roles: ['*'],
         },
       },
     ],
   },
+  // 必须保证通配符路由位于最后一项
+  // {
+  //   path: '/:match(.*)',
+  //   redirect: '/404',
+  //   meta: { hideInMenu: true },
+  // },
 ]

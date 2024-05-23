@@ -35,3 +35,15 @@ export function formatByte(obj: number): string {
   const i = Math.floor(Math.log(obj) / Math.log(base))
   return `${(obj / Math.pow(base, i)).toFixed(1)} ${symbols[i]}`
 }
+
+// 时间格式化，不要对 dayjs 二次封装
+import dayjsExt from 'dayjs'
+import 'dayjs/locale/zh-cn'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+dayjsExt.locale('zh-cn')
+dayjsExt.extend(relativeTime)
+dayjsExt.extend(localizedFormat)
+
+export const dayjs = dayjsExt

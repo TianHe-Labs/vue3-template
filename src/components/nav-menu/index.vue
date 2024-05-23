@@ -1,9 +1,13 @@
 <script lang="ts" setup>
-import { computed, h } from 'vue'
+import { computed, h, inject } from 'vue'
 import { Icon } from '@iconify/vue'
 import { MenuOption } from 'naive-ui'
-import { RouteRecordRaw, RouterLink } from 'vue-router'
+import { type RouteRecordRaw, useRouter } from 'vue-router'
 import { useAppStore, useRouteStore } from '@/store'
+
+withDefaults(defineProps<{ mode?: 'vertical' | 'horizontal' }>(), {
+  mode: 'vertical',
+})
 
 const route = useRoute()
 
@@ -11,9 +15,7 @@ const activeMenu = computed(
   () => route.meta.activeMenu || (route.name as string)
 )
 
-const { sideMenu } = useAppStore()
-
-const menuMode = computed(() => (sideMenu ? 'vertical' : 'horizontal'))
+const appStore = useAppStore()
 
 const { routes } = useRouteStore()
 
@@ -24,17 +26,7 @@ const menuOptions = computed(() => {
     if (!name || !meta) return null
     let menuItem: MenuOption = {
       key: name as string,
-      label: () =>
-        h(
-          RouterLink,
-          {
-            to: {
-              name: name as string,
-            },
-            class: '!inline-block !text-base !leading-loose',
-          },
-          { default: () => meta?.title }
-        ),
+      label: meta?.title,
       icon: meta?.icon ? () => h(Icon, { icon: meta?.icon }) : undefined,
     }
     if (children && children.length) {
@@ -60,7 +52,7 @@ const menuOptions = computed(() => {
       }
 
       // 否则，遍历并递归判断子路由
-      item.children = item.children.filter(
+      item.children = item.children?.filter(
         (childItem) => !childItem.meta?.hideInMenu
       )
       item.children = menuCollector(item.children)
@@ -73,7 +65,7 @@ const menuOptions = computed(() => {
 
   // 路由 Layout 层为无效层级
   const flatRoutes = routes.flatMap((route) => {
-    if (!route.name || !route.meta || route.name === 'Layout') {
+    if (route.name === 'Layout' || !route.meta) {
       return route.children
     }
     return route
@@ -82,15 +74,30 @@ const menuOptions = computed(() => {
   // cmputed
   return menuCollector(flatRoutes)
 })
+
+const router = useRouter()
+// 移动端导航菜单
+const toggleMobileDrawerMenu = inject('toggleMobileDrawerMenu') as (
+  opts?: any
+) => void
+const onUpdateSelected = (key: string) => {
+  router.push({
+    name: key,
+  })
+  toggleMobileDrawerMenu({ isMenuClick: true })
+}
 </script>
 
 <template>
   <n-menu
     accordion
     :value="activeMenu"
-    :mode="menuMode"
+    :mode="mode"
+    :collapsed="appStore.sideCollapse"
     :collapsed-width="60"
+    :collapsed-icon-size="20"
     :options="menuOptions"
-    class="justify-end"
+    class="justify-center"
+    @update:value="onUpdateSelected"
   />
 </template>

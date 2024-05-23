@@ -6,12 +6,19 @@ export function useUserLogout() {
   const appStore = useAppStore()
   const routeStore = useRouteStore()
 
-  const logout = () => {
+  const logout = (logoutTo?: string) => {
     userStore.logout()
     appStore.resetSettings()
     routeStore.resetUserRoutes()
     resetRouter()
-    router.push({ name: 'Auth' })
+    const currentRoute = router.currentRoute.value
+    router.push({
+      name: logoutTo && typeof logoutTo === 'string' ? logoutTo : 'Auth',
+      query: {
+        ...currentRoute.query,
+        redirect: currentRoute.path as string,
+      },
+    })
   }
   return {
     logout,

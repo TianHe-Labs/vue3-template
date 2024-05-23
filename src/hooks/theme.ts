@@ -1,13 +1,19 @@
-import { inject, provide, type Ref } from 'vue'
-import type { GlobalTheme, GlobalThemeOverrides } from 'naive-ui'
-import { zhCN, dateZhCN, darkTheme } from 'naive-ui'
+import { inject, provide, computed, type Ref, ComputedRef } from 'vue'
+import {
+  zhCN,
+  dateZhCN,
+  darkTheme,
+  type GlobalTheme,
+  type GlobalThemeOverrides,
+} from 'naive-ui'
 import { StorageSerializers } from '@vueuse/core'
+import { merge } from 'lodash-es'
 
 const themeSymbol = Symbol('THEME')
 
 interface themeCtx {
   theme: Ref<Nullable<GlobalTheme>>
-  themeOverrides: GlobalThemeOverrides
+  themeOverrides: ComputedRef<GlobalThemeOverrides>
   zhCN: any
   dateZhCN: any
   onSwitchTheme: () => void
@@ -17,11 +23,12 @@ export function provideTheme(): themeCtx {
   const theme = useStorage<Nullable<GlobalTheme>>('theme', null, localStorage, {
     serializer: StorageSerializers.object,
   })
+
   /*
     Please note when you provide null as the default value, useStoragecan't assume the data type from it. In this case, you can provide a custom serializer or reuse the built-in ones explicitly.
   */
 
-  const themeOverrides: GlobalThemeOverrides = {
+  const commonThemeOverrides = {
     common: {
       primaryColor: '#2080f0',
       primaryColorHover: '#4098fc',
@@ -66,6 +73,27 @@ export function provideTheme(): themeCtx {
       },
     },
   }
+
+  const lightThemeOverrides = {
+    common: {
+      bodyColor: 'rgba(251, 251, 251, 0.95)',
+    },
+    // ...
+  }
+
+  const darkThemeOverrides = {
+    common: {
+      bodyColor: 'rgba(16, 16, 20, 0.95)',
+    },
+    // ...
+  }
+
+  const themeOverrides = computed<GlobalThemeOverrides>(() =>
+    merge(
+      commonThemeOverrides,
+      theme.value === null ? lightThemeOverrides : darkThemeOverrides
+    )
+  )
 
   const handlers = {
     onSwitchTheme() {

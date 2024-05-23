@@ -1,14 +1,21 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { FormInst, FormRules, useMessage } from 'naive-ui'
+import { useStorage } from '@vueuse/core'
 import { DEFAULT_ROUTE } from '@/router/constants'
 import { useUserStore } from '@/store'
 
 const authFormRef = ref<Nullable<FormInst>>()
 
-const authFormData = reactive<AuthFormData>({
+const authConfigData = useStorage('auth-config', {
   username: '',
   password: '',
+  rememberPassword: true,
+})
+
+const authFormData = reactive<AuthFormData>({
+  username: authConfigData.value.username,
+  password: authConfigData.value.password,
 })
 
 const authFormRules: FormRules = {
@@ -34,9 +41,8 @@ const authFormState = reactive({
 })
 
 const messageCtx = useMessage()
-// const route = useRoute()
 const router = useRouter()
-const { login } = useUserStore()
+const userStore = useUserStore()
 
 const handlers = {
   authLogin() {
@@ -46,19 +52,28 @@ const handlers = {
         authFormState.btnLoading = true
         authFormState.btnText = '登 录 中 ...'
         try {
-          await login(authFormData)
-          messageCtx.success('认证成功，正在跳转！')
+          await userStore.login(authFormData)
 
           const { redirect, ...othersQuery } = router.currentRoute.value.query
-          router
-            .push({
-              path: (redirect as string) || DEFAULT_ROUTE.fullPath,
-              query: {
-                ...othersQuery,
-              },
-            })
-            .catch()
+
+          router.push({
+            path: (redirect as string) || DEFAULT_ROUTE.fullPath,
+            query: {
+              ...othersQuery,
+            },
+          })
+          messageCtx.success('认证成功，正在跳转！')
+
+          const { rememberPassword } = authConfigData.value
+          // 实际生产环境需要进行加密存储。
+          authConfigData.value.username = rememberPassword
+            ? authFormData.username
+            : ''
+          authConfigData.value.password = rememberPassword
+            ? authFormData.password
+            : ''
         } catch (err: any) {
+          console.error(err)
           messageCtx.error(`[登录失败]${err?.message}`)
         } finally {
           authFormState.btnLoading = false
@@ -81,9 +96,7 @@ const handlers = {
 
 <template>
   <n-layout
-    position="absolute"
-    content-class="flex flex-col"
-    class="layout__main"
+    content-class="!h-screen flex flex-col overflow-hidden layout__main"
   >
     <div
       w="full md:3/4"
@@ -136,7 +149,13 @@ const handlers = {
           </n-input>
         </n-form-item>
       </n-form>
-      <p m="b-6" text="sm dark-700 dark:light-700">忘记密码？联系管理员！</p>
+
+      <div flex justify-between items-center m="b-6">
+        <n-checkbox v-model:checked="authConfigData.rememberPassword">
+          记住密码
+        </n-checkbox>
+        <p text="sm dark-700 dark:light-700">忘记密码？联系管理员！</p>
+      </div>
 
       <n-button
         block

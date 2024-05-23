@@ -6,7 +6,6 @@ const { queryKeyword, onEnterSearch } = useSearch()
 
 <template>
   <n-input
-    w="![420px]"
     size="large"
     clearable
     v-model:value="queryKeyword"
