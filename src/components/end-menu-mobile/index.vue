@@ -9,7 +9,7 @@ const { logout } = useUserLogout()
 
 <template>
   <div flex="~ gap-2" justify="center" items="center">
-    <n-button text class="opacity-80 hover:opacity-100" @click="onSwitchTheme">
+    <n-button text @click="onSwitchTheme">
       <template #icon>
         <icon-ant-design:moon-filled v-if="theme" />
         <icon-ant-design:sun-filled v-else />
