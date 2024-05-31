@@ -1,5 +1,6 @@
 import { loadEnv } from 'vite'
 
+// https://cn.vitejs.dev/config/server-options.html#server-proxy
 // VITE_DEV_PROXY=[["/api", "http://127.0.0.1:3000/api"]]
 // 要使用 JSON.parse 解析，因此必须使用双引号
 export function createProxy() {
