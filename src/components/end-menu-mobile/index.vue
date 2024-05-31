@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useMessage } from 'naive-ui'
-import { useTheme, useUserLogout } from '@/hooks'
+import { useTheme, useLogout } from '@/hooks'
 
 const messageCtx = useMessage()
 const { theme, onSwitchTheme } = useTheme()
-const { logout } = useUserLogout()
+const { logout } = useLogout()
 </script>
 
 <template>

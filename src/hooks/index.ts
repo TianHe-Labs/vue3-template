@@ -1,3 +1,3 @@
 // 全局hook
 export * from './theme'
-export * from './useUserLogout'
+export * from './useLogout'

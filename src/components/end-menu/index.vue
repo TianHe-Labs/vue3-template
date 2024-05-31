@@ -5,7 +5,7 @@ import { NAvatar, NText, useMessage } from 'naive-ui'
 import { useClipboard } from '@vueuse/core'
 import { Icon } from '@iconify/vue'
 import { useUserStore, useAppStore } from '@/store'
-import { useTheme, useUserLogout } from '@/hooks'
+import { useTheme, useLogout } from '@/hooks'
 import SettingItem from './setting-item.vue'
 
 const { username, userRoleText } = useUserStore()
@@ -61,7 +61,7 @@ const userOptions = [
 const router = useRouter()
 const messageCtx = useMessage()
 const { theme, onSwitchTheme } = useTheme()
-const { logout } = useUserLogout()
+const { logout } = useLogout()
 
 // 设置
 const settingsDrawerVisible = ref<boolean>(false)

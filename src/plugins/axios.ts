@@ -5,7 +5,7 @@ import type {
 } from 'axios'
 import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
-import { useUserLogout } from '@/hooks/useUserLogout'
+import { useLogout } from '@/hooks'
 
 // 脱离 setup 上下文使用 message
 const { message: messageCtx } = createDiscreteApi(['message'])
@@ -55,7 +55,7 @@ axios.interceptors.response.use(
     // api 返回结果不要进行多余的封装包裹
     // 要么直接返回结果，要么返回错误信息
     const userStore = useUserStore()
-    const { logout } = useUserLogout()
+    const { logout } = useLogout()
 
     const status = error.response?.status
     const respData = error.response?.data

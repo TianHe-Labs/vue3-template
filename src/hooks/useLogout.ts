@@ -1,7 +1,7 @@
 import { useRouteStore, useUserStore, useAppStore } from '@/store'
 import router, { resetRouter } from '@/router'
 
-export function useUserLogout() {
+export function useLogout() {
   const userStore = useUserStore()
   const appStore = useAppStore()
   const routeStore = useRouteStore()
