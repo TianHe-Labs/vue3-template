@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { h, ref } from 'vue'
+import { h, inject, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { NAvatar, NText, useMessage } from 'naive-ui'
 import { useClipboard } from '@vueuse/core'
@@ -7,6 +7,8 @@ import { Icon } from '@iconify/vue'
 import { useUserStore, useAppStore } from '@/store'
 import { useTheme, useLogout } from '@/hooks'
 import SettingItem from './setting-item.vue'
+
+const feedbackPanelVisible = inject('feedbackPanelVisible') as boolean
 
 const { username, userRoleText } = useUserStore()
 
@@ -101,6 +103,15 @@ const isDev = import.meta.env.DEV
       <icon-ant-design:moon-filled v-if="theme" />
       <icon-ant-design:sun-filled v-else />
     </n-button>
+
+    <n-button
+      text
+      class="opacity-80 hover:opacity-100"
+      @click="feedbackPanelVisible = !feedbackPanelVisible"
+    >
+      <icon-fluent:person-feedback-24-filled class="text-sm" />
+    </n-button>
+
     <n-button
       v-if="isDev"
       text

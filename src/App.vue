@@ -1,7 +1,13 @@
 <script lang="ts" setup>
+import { provide, ref } from 'vue'
 import { provideTheme } from './hooks'
+import Feedback from '@/components/feedback/index.vue'
 
 const { theme, themeOverrides, zhCN, dateZhCN } = provideTheme()
+
+// 反馈
+const feedbackPanelVisible = ref<boolean>(false)
+provide('feedbackPanelVisible', feedbackPanelVisible)
 </script>
 
 <template>
@@ -19,6 +25,8 @@ const { theme, themeOverrides, zhCN, dateZhCN } = provideTheme()
             <component :is="Component" />
           </transition>
         </router-view>
+
+        <Feedback />
       </n-message-provider>
     </n-loading-bar-provider>
   </n-config-provider>
