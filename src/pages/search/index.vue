@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { useSearch } from './hooks/search'
+import { useOssStore } from '@/store'
 
 const { renderData } = useSearch()
+
+const { signatureUrl } = useOssStore()
 </script>
 
 <template>
@@ -9,5 +12,14 @@ const { renderData } = useSearch()
     <Breadcrumb :items="['数据搜索']" />
     <div mt-4 text-xl>数据搜索</div>
     <div>{{ renderData }}</div>
+    阿里云STS测试
+    <img
+      :src="
+        signatureUrl(
+          'http://baihe-beijing.oss-cn-beijing.aliyuncs.com/screenshots/www.hnyongxun.cn/1633505615394.jpeg'
+        )
+      "
+      alt=""
+    />
   </div>
 </template>

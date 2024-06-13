@@ -23,8 +23,6 @@ function encoder(str: string, encoding = 'utf-8') {
 export const useOssStore = defineStore('oss', {
   state: (): OssState => {
     return {
-      region: 'oss-cn-beijing',
-      bucket: 'baihe-beijing',
       accessKeyId: undefined,
       accessKeySecret: undefined,
       securityToken: undefined,
@@ -46,7 +44,6 @@ export const useOssStore = defineStore('oss', {
     async queryOssToken() {
       try {
         const { data } = await axios.get('/sts')
-        console.log(data)
         this.setOssToken(data)
       } catch (err) {
         this.resetOssToken()
