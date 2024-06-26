@@ -18,6 +18,10 @@ provide('feedbackPanelVisible', feedbackPanelVisible)
     :date-locale="dateZhCN"
     :class="[{ dark: theme }]"
   >
+    <!-- unocss dark mode 与naiveui协同注入，
+      unocss 默认使用class="dark"，因此可以利用naiveui的接口动态改变class，
+      也可以在unocss.config.ts中改变默认配置，使用naiveui的选择器，但naiveui并没有显式地在DOM添加相关标记，即没有相关选择器，所以选择前一种方式
+    -->
     <n-loading-bar-provider>
       <n-message-provider placement="top" :max="2">
         <router-view v-slot="{ Component }">

@@ -4,10 +4,17 @@ import presetWebFonts from '@unocss/preset-web-fonts'
 
 export default defineConfig({
   presets: [
-    presetUno(),
-    presetAttributify({
-      /* preset options */
+    // https://unocss.dev/presets/mini#dark-mode
+    // unocss dark mode 与naiveui协同注入，
+    // unocss 默认使用class="dark"，因此可以利用naiveui的接口动态改变class，
+    // 也可以在unocss.config.ts中改变默认配置，使用naiveui的选择器（naiveui未提供）
+    presetUno({
+      // dark: {
+      //   // light: '.light',
+      //   dark: '.dark',
+      // },
     }),
+    presetAttributify(),
     presetWebFonts({
       provider: 'none',
       fonts: {
@@ -17,9 +24,7 @@ export default defineConfig({
         number: ['impact'],
       },
     }),
-    // ...
   ],
-  // ...UnoCSS options
   theme: {
     container: {
       padding: {
@@ -31,11 +36,9 @@ export default defineConfig({
       },
     },
     colors: {
-      // link = primary
-      // success
-      // warning
-      // error
-      // info = gray 中性色
+      // 与naiveui主题协同
+      // hooks/theme
+      // https://www.naiveui.com/zh-CN/os-theme/docs/theme
       primary: {
         DEFAULT: '#2080f0', // 600
         900: '#363885',
@@ -88,28 +91,6 @@ export default defineConfig({
         200: '#ffedeb',
         100: '#fff2f0',
       },
-
-      // 中性色
-
-      // 浅色主题下
-      // black: 'black',
-      // dark [100~900]
-
-      // 深色主题下
-      // white: 'white',
-      // light [100~900]
-
-      // title 900
-      // primary text // p 800
-      // secondary text // meta、caption 700
-      // placeholder 600
-      // readonly/disabled 500
-      // border 400
-      // divider 300
-      // background/overlay 200
-      // table header 100
-
-      // shadow
     },
   },
 })
