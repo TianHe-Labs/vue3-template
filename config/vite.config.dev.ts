@@ -6,6 +6,7 @@ export default mergeConfig(
   {
     server: {
       open: true,
+      host: true,
       fs: {
         strict: true,
       },

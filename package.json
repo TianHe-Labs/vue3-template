@@ -39,7 +39,6 @@
     "@types/node": "^18.15.3",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
-    "@unocss/preset-web-fonts": "^0.58.3",
     "@unocss/reset": "^0.58.3",
     "@vitejs/plugin-vue": "^4.1.0",
     "better-mock": "^0.3.6",

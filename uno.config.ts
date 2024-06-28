@@ -1,6 +1,10 @@
 // uno.config.ts
-import { defineConfig, presetUno, presetAttributify } from 'unocss'
-import presetWebFonts from '@unocss/preset-web-fonts'
+import {
+  defineConfig,
+  presetUno,
+  presetAttributify,
+  presetWebFonts,
+} from 'unocss'
 
 export default defineConfig({
   presets: [
