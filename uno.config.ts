@@ -36,60 +36,85 @@ export default defineConfig({
       },
     },
     colors: {
-      // 与naiveui主题协同
+      // 与naiveui主题实现协同
+      // 但是naiveui的黑暗和明亮模式下的颜色不是统一通过
+      // 全局的css变量控制，而是通过js写入
+      // 因此这里需要分别做light和dark的协同
       // hooks/theme
       // https://www.naiveui.com/zh-CN/os-theme/docs/theme
-      primary: {
-        DEFAULT: '#2080f0', // 600
-        900: '#363885',
-        800: '#1060c9',
-        700: '#5457cd',
-        600: '#2080f0',
-        500: '#4098fc',
-        400: '#9ea0f6',
-        300: '#bcbdf9',
-        200: '#dadafc',
-        100: '#f7f7fe',
-      },
+      light: {
+        // naiveui/es/_styles/common/light.mjs
+        primary: {
+          pressed: '#0c7a43',
+          default: '#18a058',
+          hover: '#36ad6a',
+          suppl: '#36ad6a',
+        },
 
-      success: {
-        DEFAULT: '#22c55e', // 600
-        900: '#025227',
-        800: '#15803d',
-        700: '#16a34a',
-        600: '#22c55e',
-        500: '#45d174',
-        400: '#6dde8f',
-        300: '#98ebae',
-        200: '#c8f7d3',
-        100: '#faf1d8',
-      },
+        info: {
+          pressed: '#1060c9',
+          default: '#2080f0',
+          hover: '#4098fc',
+          suppl: '#4098fc',
+        },
 
-      warning: {
-        DEFAULT: '#f59e0b', // 600
-        900: '#824500',
-        800: '#b45309',
-        700: '#d97706',
-        600: '#f59e0b',
-        500: '#ffbb33',
-        400: '#ffce5c',
-        300: '#ffde85',
-        200: '#ffecad',
-        100: '#fffae6',
-      },
+        success: {
+          pressed: '#0c7a43',
+          default: '#18a058',
+          hover: '#36ad6a',
+          suppl: '#36ad6a',
+        },
 
-      error: {
-        // danger
-        DEFAULT: '#ef4444', // 600
-        900: '#7d101b',
-        800: '#b91c1c',
-        700: '#dc2626',
-        600: '#ef4444',
-        500: '#fc746f',
-        400: '#ffa099',
-        300: '#ffc8c2',
-        200: '#ffedeb',
-        100: '#fff2f0',
+        warning: {
+          pressed: '#c97c10',
+          default: '#f0a020',
+          hover: '#fcb040',
+          suppl: '#fcb040',
+        },
+
+        error: {
+          pressed: '#ab1f3f',
+          default: '#d03050',
+          hover: '#de576d',
+          suppl: '#de576d',
+        },
+      },
+      dark: {
+        // naiveui/es/_styles/common/dark.mjs
+        primary: {
+          pressed: '#5acea7',
+          default: '#63e2b7',
+          hover: '#7fe7c4',
+          suppl: 'rgb(42, 148, 125)',
+        },
+
+        info: {
+          pressed: '#66afd3',
+          default: '#70c0e8',
+          hover: '#8acbec',
+          suppl: 'rgb(56, 137, 197)',
+        },
+
+        success: {
+          pressed: '#5acea7',
+          default: '#63e2b7',
+          hover: '#7fe7c4',
+          suppl: 'rgb(42, 148, 125)',
+        },
+
+        warning: {
+          pressed: '#e6c260',
+          default: '#f2c97d',
+          hover: '#f5d599',
+          suppl: 'rgb(240, 138, 0)',
+        },
+
+        error: {
+          pressed: '#e6c260',
+          default: '#f2c97d',
+          hover: '#f5d599',
+          suppl: 'rgb(208, 58, 82)',
+        },
       },
     },
   },

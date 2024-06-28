@@ -29,42 +29,6 @@ export function provideTheme(): themeCtx {
   */
 
   const commonThemeOverrides = {
-    common: {
-      primaryColor: '#2080f0',
-      primaryColorHover: '#4098fc',
-      primaryColorPressed: '#1060c9',
-      primaryColorSuppl: '#4098fc',
-      // infoColor: '#2080f0',
-      // infoColorHover: '#4098fc',
-      // infoColorPressed: '#1060c9',
-      // infoColorSuppl: '#4098fc',
-      successColor: '#22c55e',
-      successColorHover: '#45d174',
-      successColorPressed: '#16a34a',
-      successColorSuppl: '#45d174',
-      warningColor: '#f59e0b',
-      warningColorHover: '#ffbb33',
-      warningColorPressed: '#d97706',
-      warningColorSuppl: '#ffbb33',
-      errorColor: '#ef4444',
-      errorColorHover: '#fc746f',
-      errorColorPressed: '#dc2626',
-      errorColorSuppl: '#fc746f',
-      // textColorBase: '#000',
-      // textColor1: 'rgb(31, 34, 37)',
-      // textColor2: 'rgb(51, 54, 57)',
-      // textColor3: 'rgb(118, 124, 130)',
-      // textColorDisabled: 'rgba(194, 194, 194, 1)',
-      // placeholderColor: 'rgba(194, 194, 194, 1)',
-      // placeholderColorDisabled: 'rgba(209, 209, 209, 1)',
-      // iconColor: 'rgba(194, 194, 194, 1)',
-      // iconColorHover: 'rgba(146, 146, 146, 1)',
-      // iconColorPressed: 'rgba(175, 175, 175, 1)',
-      // iconColorDisabled: 'rgba(209, 209, 209, 1)',
-      // dividerColor: 'rgb(239, 239, 245)',
-      // borderColor: 'rgb(224, 224, 230)',
-      tableHeaderColor: 'rgba(250, 250, 252, 0)',
-    },
     DataTable: {
       paginationMargin: '16px 12px',
       thFontWeight: 500,
@@ -76,6 +40,11 @@ export function provideTheme(): themeCtx {
 
   const lightThemeOverrides = {
     common: {
+      primaryColor: '#165dff',
+      primaryColorHover: '#4080ff',
+      primaryColorPressed: '#0e42d2',
+      primaryColorSuppl: '#4080ff',
+      tableHeaderColor: 'rgba(250, 250, 252, 0)',
       bodyColor: 'rgba(251, 251, 251, 0.95)',
     },
     // ...
@@ -83,6 +52,11 @@ export function provideTheme(): themeCtx {
 
   const darkThemeOverrides = {
     common: {
+      primaryColor: '#3c7eff',
+      primaryColorHover: '#306fff',
+      primaryColorPressed: '#689fff',
+      primaryColorSuppl: '#1d4dd2',
+      tableHeaderColor: 'rgba(250, 250, 252, 0)',
       bodyColor: 'rgba(16, 16, 20, 0.95)',
     },
     // ...
