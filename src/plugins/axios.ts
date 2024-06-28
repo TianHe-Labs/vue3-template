@@ -6,6 +6,7 @@ import type {
 import { createDiscreteApi } from 'naive-ui'
 import { useUserStore } from '@/store'
 import { useLogout } from '@/hooks'
+import errors from '@/utils/errors'
 
 // 脱离 setup 上下文使用 message
 const { message: messageCtx } = createDiscreteApi(['message'])
@@ -57,7 +58,7 @@ axios.interceptors.response.use(
     const userStore = useUserStore()
     const { logout } = useLogout()
 
-    const status = error.response?.status
+    const status = error.response?.status as number
     const respData = error.response?.data
     const message = respData?.message || respData?.msg
     if (
@@ -66,9 +67,7 @@ axios.interceptors.response.use(
       status === 401
     ) {
       // 登录时用户名或密码错误，Token 无效或缺失
-      messageCtx.error(
-        `[认证错误]${message || '身份验证未通过，请登录后重试！'}`
-      )
+      messageCtx.error(`[认证错误]${message || errors[401]}`)
       logout()
     } else if (status === 460) {
       // Access Token 过期
@@ -79,7 +78,7 @@ axios.interceptors.response.use(
       return axios.request({ url, method, data })
     } else if (status === 461) {
       // Refresh Token 过期
-      messageCtx.error(`[认证错误]${message || '身份验证过期，请重新登录！'}`)
+      messageCtx.error(`[认证错误]${message || errors[461]}`)
       logout()
     } else if (status === 404 && error.config?.url?.includes('/user/info')) {
       // 有时候业务简单，单用户系统没有身份值等用户信息，甚至没有相关接口
@@ -87,7 +86,9 @@ axios.interceptors.response.use(
       // 或者在路由守卫中不判断身份
       return Promise.reject(error)
     } else {
-      return Promise.reject({ message: message || error.message })
+      return Promise.reject({
+        message: message || errors?.[status] || error.message,
+      })
     }
   }
 )
