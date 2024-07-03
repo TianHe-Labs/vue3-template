@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { provide, ref } from 'vue'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { provideTheme } from './hooks'
 import Feedback from '@/components/feedback/index.vue'
 
@@ -8,6 +9,10 @@ const { theme, themeOverrides, zhCN, dateZhCN } = provideTheme()
 // 反馈
 const feedbackPanelVisible = ref<boolean>(false)
 provide('feedbackPanelVisible', feedbackPanelVisible)
+
+// 响应式
+const breakpoints = useBreakpoints(breakpointsTailwind)
+provide('breakpoints', breakpoints)
 </script>
 
 <template>

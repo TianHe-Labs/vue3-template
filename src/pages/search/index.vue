@@ -1,16 +1,20 @@
 <script lang="ts" setup>
+import { inject } from 'vue'
 import { useSearch } from './hooks/search'
 import { useOssStore } from '@/store'
 
 const { renderData } = useSearch()
 
 const { signatureUrl } = useOssStore()
+
+const breakpoints = inject('breakpoints') as any
 </script>
 
 <template>
   <div flex-auto container mx-auto px-4 py-8>
     <Breadcrumb :items="['数据搜索']" />
     <div mt-4 text-xl>数据搜索</div>
+    {{ breakpoints }}
     <div class="dark:font-bold">{{ renderData.length }}</div>
     阿里云STS测试
     <img
