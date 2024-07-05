@@ -72,7 +72,7 @@
 
 - **.husky**: `pre-comment(lint-staged)`, `commit-msg`([Conventional Commits](https://www.conventionalcommits.org/zh-hans/v1.0.0/))
 
-- **config**: [Vite Config](https://cn.vitejs.dev/config/) (Current: Vite@^^5.2.13 installed)
+- **config**: [Vite Config](https://cn.vitejs.dev/config/) (Current: Vite@^^4.2.1 installed)
 
 - **mock**: mock data in development
 
