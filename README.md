@@ -13,6 +13,7 @@
 - **presetWebFonts**: [Web Fonts](https://unocss.dev/presets/web-fonts)
 
 - **presetIcons**: [Icons](https://unocss.dev/presets/icons), [Iconify](https://icon-sets.iconify.design/)
+
   ```html
   <!-- example -->
 
@@ -27,6 +28,7 @@
 - **User Permission**: router/guard, hooks/permission
 
 - **Rich icon library**: UnoCSS/Iconify
+
   ```html
   <!-- example -->
 
@@ -35,6 +37,7 @@
   ```
 
 - **Responsive**: CSS(UnoCSS Variants), JS(@vueuse/core useBreakpoints, provide in App.vue)
+
   ```js
   // App.vue
   const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -45,6 +48,7 @@
   ```
 
 - **Theme Mode**: light mode & dark mode, combining Arco Design with UnoCSS ensures consistency
+
   ```html
   <!-- [light:]<class name> -->
   <div text-primary></div>
@@ -58,7 +62,7 @@
 
 - **Mock Data**: mockjs
 
-- **Auto Lint**: hucky, lint-staged, *code lint*(eslint, prettier, stylelint), *commit lint*(commmitlint)
+- **Auto Lint**: hucky, lint-staged, _code lint_(eslint, prettier, stylelint), _commit lint_(commmitlint)
 
 - **CI/CD**: Github Actions
 
@@ -66,7 +70,7 @@
 
 - **.github/workflows**
 
-- **.husky**: ``pre-comment(lint-staged)``, ``commit-msg``([Conventional Commits](https://www.conventionalcommits.org/zh-hans/v1.0.0/))
+- **.husky**: `pre-comment(lint-staged)`, `commit-msg`([Conventional Commits](https://www.conventionalcommits.org/zh-hans/v1.0.0/))
 
 - **config**: [Vite Config](https://cn.vitejs.dev/config/) (Current: Vite@^^5.2.13 installed)
 
@@ -74,25 +78,25 @@
 
 - **src**
 
-  - **assets**: static files, eg: ``json``, ``image``, ``video``
+  - **assets**: static files, eg: `json`, `image`, `video`
 
   - **components**: common components, inclues some global components(index.ts)
 
-  - **hooks**: common hooks, eg: ``chart-option``, ``loading``, ``logout``, ``permission``
+  - **hooks**: common hooks, eg: `chart-option`, `loading`, `logout`, `permission`
 
   - **layouts**: common layout components
 
   - **pages**: Vue3 page
 
-  - **plugins**: eg: ``axios``, ``emitter``
+  - **plugins**: eg: `axios`, `emitter`
 
-  - **router**: ``routes``, ``global route guard``
+  - **router**: `routes`, `global route guard`
 
-  - **store**: global data store, eg: ``app``(theme, ...),  ``tab-bar``(multi page), ``user``(login, userinfo, ...), ``oss``(ali oss sts)
+  - **store**: global data store, eg: `app`(theme, ...), `tab-bar`(multi page), `user`(login, userinfo, ...), `oss`(ali oss sts)
 
-  - **utils**: tool function, eg: ``formatX``(preset dayjs), ``hasX``, ``isY``, ``canZ``, ``transformA``, ``index``(Unclassifiable fragmentary functions & Unified entry for various types of functions)
+  - **utils**: tool function, eg: `formatX`(preset dayjs), `hasX`, `isY`, `canZ`, `transformA`, `index`(Unclassifiable fragmentary functions & Unified entry for various types of functions)
 
-  - **styles**: ``css``, ``less``
+  - **styles**: `css`, `less`
 
   - **App.vue**: Vue3 entry
 
@@ -101,6 +105,7 @@
   - **settings.json**: app settings (only accessible in development)
 
 - **types**: global type definition, eg: env.d.ts
+
   ```ts
   // env.d.ts
   interface ImportMetaEnv {
@@ -112,7 +117,7 @@
   }
   ```
 
-- **.env**: common environment, .env.development only in development(*gitignore*), .env.production only in production(*gitignore*)
+- **.env**: common environment, .env.development only in development(_gitignore_), .env.production only in production(_gitignore_)
 
 - **.eslintignore**
 
