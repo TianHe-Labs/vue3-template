@@ -11,8 +11,8 @@ const { logout } = useLogout()
   <div flex="~ gap-2" justify="center" items="center">
     <n-button text @click="onSwitchTheme">
       <template #icon>
-        <icon-ant-design:moon-filled v-if="theme" />
-        <icon-ant-design:sun-filled v-else />
+        <n-icon class="i-ant-design:moon-filled" v-if="theme" />
+        <n-icon class="i-ant-design:sun-filled" v-else />
       </template>
       {{ theme ? '暗色主题' : '亮色主题' }}
     </n-button>
@@ -29,7 +29,7 @@ const { logout } = useLogout()
       "
     >
       <template #icon>
-        <icon-bx:log-out />
+        <n-icon class="i-bx:log-out" />
       </template>
       退出登录
     </n-button>

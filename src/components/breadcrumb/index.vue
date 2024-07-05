@@ -14,9 +14,9 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <n-breadcrumb class="-mx-1">
-    <n-breadcrumb-item clickable href="/">
+    <n-breadcrumb-item>
       <router-link :to="{ name: 'Layout' }">
-        <n-icon><icon-fluent:apps-24-filled /></n-icon>
+        <n-icon class="i-fluent:apps-24-filled" />
       </router-link>
     </n-breadcrumb-item>
     <n-breadcrumb-item v-for="(item, index) in items" :key="index">

@@ -1,41 +1,146 @@
-# Vue 3 + TypeScript + Vite
+# Vue 3 Template on NaiveUI & UnoCSS
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## NaiveUI
 
-## Recommended IDE Setup
+- **Doc**: [Naive UI](https://www.naiveui.com/zh-CN/os-theme/docs/introduction)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+## UnoCSS
 
-## Type Support For `.vue` Imports in TS
+- **presetUno**: [Uno](https://unocss.dev/presets/uno)
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+- **presetAttributify**: [Attributify](https://unocss.dev/presets/attributify)
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+- **presetWebFonts**: [Web Fonts](https://unocss.dev/presets/web-fonts)
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+- **presetIcons**: [Icons](https://unocss.dev/presets/icons), [Iconify](https://icon-sets.iconify.design/)
+  ```html
+  <!-- example -->
 
-## Installed Packages
+  <n-icon class="i-solar:box-bold-duotone  />
+  <!-- n-icon is naiveui built-in component, i- is prefix -->
+  ```
 
-- [@vueuse/core](https://vueuse.org/)
-- [axios](https://axios-http.com)
-- [dayjs](https://day.js.org)
-- [lodash-es](https://lodash.com/custom-builds)
-- [naive-ui](https://www.naiveui.com)
-- [pinia](https://pinia.vuejs.org/)
+## Features
 
-- [commitlint](https://commitlint.js.org/)
-- [eslint](https://eslint.org)
-- [husky](https://typicode.github.io/husky)
-- [lint-staged](https://github.com/lint-staged/lint-staged#readme)
-- [prettier](https://prettier.io)
-- [sass](https://sass-lang.com/dart-sass/)
-- [unocss](https://unocss.dev/)
-- [unplugin-auto-import](https://github.com/unplugin/unplugin-auto-import#readme)
-- [unplugin-icons](https://github.com/unplugin/unplugin-icons#readme)
-- [@iconify/json](https://iconify.design/icon-sets/)
-- [@iconify/vue](https://iconify.design/docs/icon-components/vue/)
-- [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components#readme)
+- **User Authentication**: api/user, store/user
+
+- **User Permission**: router/guard, hooks/permission
+
+- **Rich icon library**: UnoCSS/Iconify
+  ```html
+  <!-- example -->
+
+  <n-icon class="i-solar:box-bold-duotone  />
+  <!-- n-icon is naiveui built-in component, i- is prefix -->
+  ```
+
+- **Responsive**: CSS(UnoCSS Variants), JS(@vueuse/core useBreakpoints, provide in App.vue)
+  ```js
+  // App.vue
+  const breakpoints = useBreakpoints(breakpointsTailwind);
+  provide('breakpoints', breakpoints);
+
+  // child component
+  const breakpoints = inject('breakpoints') as any;
+  ```
+
+- **Theme Mode**: light mode & dark mode, combining Arco Design with UnoCSS ensures consistency
+  ```html
+  <!-- [light:]<class name> -->
+  <div text-primary></div>
+  <div light:text-primary></div>
+
+  <!-- dark:<class name> -->
+  <div dark:text-primary></div>
+  ```
+
+- **Instant On-demand Atomic CSS**: UnoCSS(Attributify supported)
+
+- **Mock Data**: mockjs
+
+- **Auto Lint**: hucky, lint-staged, *code lint*(eslint, prettier, stylelint), *commit lint*(commmitlint)
+
+- **CI/CD**: Github Actions
+
+## Folder Structure
+
+- **.github/workflows**
+
+- **.husky**: ``pre-comment(lint-staged)``, ``commit-msg``([Conventional Commits](https://www.conventionalcommits.org/zh-hans/v1.0.0/))
+
+- **config**: [Vite Config](https://cn.vitejs.dev/config/) (Current: Vite@^^5.2.13 installed)
+
+- **mock**: mock data in development
+
+- **src**
+
+  - **assets**: static files, eg: ``json``, ``image``, ``video``
+
+  - **components**: common components, inclues some global components(index.ts)
+
+  - **hooks**: common hooks, eg: ``chart-option``, ``loading``, ``logout``, ``permission``
+
+  - **layouts**: common layout components
+
+  - **pages**: Vue3 page
+
+  - **plugins**: eg: ``axios``, ``emitter``
+
+  - **router**: ``routes``, ``global route guard``
+
+  - **store**: global data store, eg: ``app``(theme, ...),  ``tab-bar``(multi page), ``user``(login, userinfo, ...), ``oss``(ali oss sts)
+
+  - **utils**: tool function, eg: ``formatX``(preset dayjs), ``hasX``, ``isY``, ``canZ``, ``transformA``, ``index``(Unclassifiable fragmentary functions & Unified entry for various types of functions)
+
+  - **styles**: ``css``, ``less``
+
+  - **App.vue**: Vue3 entry
+
+  - **main.ts**: entry
+
+  - **settings.json**: app settings (only accessible in development)
+
+- **types**: global type definition, eg: env.d.ts
+  ```ts
+  // env.d.ts
+  interface ImportMetaEnv {
+    readonly VITE_API_BASE: string
+    readonly VITE_APP_NAME: string
+    readonly VITE_APP_DESC: string
+    readonly VITE_APP_COPR: string
+    readonly VITE_DEV_PROXY: string[][]
+  }
+  ```
+
+- **.env**: common environment, .env.development only in development(*gitignore*), .env.production only in production(*gitignore*)
+
+- **.eslintignore**
+
+- **.eslintrc**: eslint config
+
+- **.gitignore**
+
+- **.prettierignore**
+
+- **.prettierrc.js**: prettier config
+
+- **commitlint.config.js**: commitlint config (husky/commit-msg)
+
+- **docker.nginx.template**
+
+- **Dockerfile**
+
+- **index.html**: entry
+
+- **package.json**: package
+
+- **package-lock.yaml**: pnpm
+
+- **tsconfig.json**: Typescript
+
+- **uno.config.ts**: UnoCSS
+
+- **vercel.json**: Vercel config
 
 ## CI/CD Based On Github Actions and Coolify
 

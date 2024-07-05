@@ -36,7 +36,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         component: () => import('@/pages/search/index.vue'),
         meta: {
           title: '数据检索',
-          icon: 'bx:search',
+          icon: 'clarity-search-line',
           roles: ['*'],
           hideInMenu: false,
         },

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, h, inject } from 'vue'
-import { Icon } from '@iconify/vue'
-import { MenuOption } from 'naive-ui'
+import { MenuOption, NIcon } from 'naive-ui'
 import { type RouteRecordRaw, useRouter } from 'vue-router'
 import { useAppStore, useRouteStore } from '@/store'
 
@@ -27,7 +26,9 @@ const menuOptions = computed(() => {
     let menuItem: MenuOption = {
       key: name as string,
       label: meta?.title,
-      icon: meta?.icon ? () => h(Icon, { icon: meta?.icon }) : undefined,
+      icon: meta?.icon
+        ? () => h(NIcon, { class: `i-${meta?.icon}` })
+        : undefined,
     }
     if (children && children.length) {
       menuItem = { ...menuItem, children }
@@ -64,7 +65,7 @@ const menuOptions = computed(() => {
   }
 
   // 路由 Layout 层为无效层级
-  const flatRoutes = routes.flatMap((route) => {
+  const flatRoutes = routes.flatMap((route: any) => {
     if (route.name === 'Layout' || !route.meta) {
       return route.children
     }

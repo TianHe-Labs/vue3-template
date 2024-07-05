@@ -9,7 +9,7 @@
       strong
       @click="feedbackPanelVisible = !feedbackPanelVisible"
     >
-      <icon-fluent:person-feedback-24-regular />
+      <n-icon class="i-fluent:person-feedback-24-regular" />
     </n-float-button>
   </div>
   <n-modal

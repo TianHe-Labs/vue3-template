@@ -14,7 +14,7 @@ const { queryKeyword, onEnterSearch } = useSearch()
   >
     <template #prefix>
       <n-icon>
-        <icon-clarity-search-line />
+        <n-icon class="i-clarity-search-line" />
       </n-icon>
     </template>
   </n-input>

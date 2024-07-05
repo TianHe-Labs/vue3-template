@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { h, inject, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { NAvatar, NText, useMessage } from 'naive-ui'
+import { NAvatar, NIcon, NText, useMessage } from 'naive-ui'
 import { useClipboard } from '@vueuse/core'
-import { Icon } from '@iconify/vue'
 import { useUserStore, useAppStore } from '@/store'
 import { useTheme, useLogout } from '@/hooks'
 import SettingItem from './setting-item.vue'
@@ -28,7 +27,7 @@ const userOptions = [
             {
               round: true,
             },
-            { default: () => h(Icon, { icon: 'fa6-solid:user' }) }
+            { default: () => h(NIcon, { size: 18, class: 'i-fa6-solid:user' }) }
           ),
           h('div', null, [
             h(
@@ -51,12 +50,12 @@ const userOptions = [
   {
     label: '用户中心',
     key: 'user',
-    icon: () => h(Icon, { icon: 'bx:user' }),
+    icon: () => h(NIcon, { class: 'i-bx:user' }),
   },
   {
     label: '退出登录',
     key: 'logout',
-    icon: () => h(Icon, { icon: 'bx:log-out' }),
+    icon: () => h(NIcon, { class: 'i-bx:log-out' }),
   },
 ]
 
@@ -100,8 +99,8 @@ const isDev = import.meta.env.DEV
 <template>
   <div flex="~ gap-x-6" items="center">
     <n-button text class="opacity-80 hover:opacity-100" @click="onSwitchTheme">
-      <icon-ant-design:moon-filled v-if="theme" />
-      <icon-ant-design:sun-filled v-else />
+      <n-icon class="i-ant-design:moon-filled" v-if="theme" />
+      <n-icon class="i-ant-design:sun-filled" v-else />
     </n-button>
 
     <n-button
@@ -109,7 +108,7 @@ const isDev = import.meta.env.DEV
       class="opacity-80 hover:opacity-100"
       @click="feedbackPanelVisible = !feedbackPanelVisible"
     >
-      <icon-fluent:person-feedback-24-filled class="text-sm" />
+      <n-icon class="i-fluent:person-feedback-24-filled" />
     </n-button>
 
     <n-button
@@ -118,7 +117,7 @@ const isDev = import.meta.env.DEV
       class="opacity-80 hover:opacity-100"
       @click="handlers.onOpenSettings"
     >
-      <icon-ant-design:setting-filled class="text-sm" />
+      <n-icon class="i-ant-design:setting-filled" />
     </n-button>
 
     <n-dropdown
@@ -130,7 +129,7 @@ const isDev = import.meta.env.DEV
       @select="handlers.onSelect"
     >
       <n-avatar round size="small" class="cursor-pointer">
-        <Icon icon="fa6-solid:user" />
+        <n-icon :size="18" class="i-fa6-solid:user" />
       </n-avatar>
     </n-dropdown>
   </div>

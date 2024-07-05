@@ -127,7 +127,7 @@ const handlers = {
             placeholder="请输入用户名"
           >
             <template #prefix>
-              <icon-bx-user class="mr-2 opacity-80" />
+              <n-icon class="i-bx-user mr-2 opacity-80" />
             </template>
           </n-input>
         </n-form-item>
@@ -144,7 +144,7 @@ const handlers = {
             }"
           >
             <template #prefix>
-              <icon-bx-lock class="mr-2 opacity-80" />
+              <n-icon class="i-bx-lock mr-2 opacity-80" />
             </template>
           </n-input>
         </n-form-item>

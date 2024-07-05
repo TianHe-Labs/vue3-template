@@ -61,7 +61,7 @@ const toggleMobileDrawerMenu = inject('toggleMobileDrawerMenu') as () => void
         class="text-xl md:hidden"
         @click.stop="toggleMobileDrawerMenu"
       >
-        <icon-bx:menu />
+        <n-icon class="i-bx:menu" />
       </n-button>
     </div>
   </n-layout-header>
