@@ -1,4 +1,5 @@
 import defaultSettings from '@/settings.json'
+import { AppState } from './types'
 
 export const useAppStore = defineStore('app', {
   state: (): AppState => {

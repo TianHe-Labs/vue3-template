@@ -1,12 +1,13 @@
 // https://github.com/lavyun/better-mock
 import Mock from 'better-mock'
 import { setupMock, successResponseWrap, failureResponseWrap } from '../_utils'
+import { USERROLE } from '@/store/modules/user/types'
 
 const _users = [
   {
     username: 'admin',
     password: 'nslab321',
-    role: 'admin',
+    role: USERROLE.ADMIN,
     accessToken:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc3QifQ.95aGaCg7ovpUWSpoZdCoam6Mvr-vE374VjMfthTpKPo',
     refreshToken:

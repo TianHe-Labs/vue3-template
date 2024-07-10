@@ -1,6 +1,7 @@
 import type { PiniaPluginContext } from 'pinia'
 import hmacSha1 from 'crypto-js/hmac-sha1'
 import Base64 from 'crypto-js/enc-base64'
+import { OssState } from './types'
 
 // utf-8 -> latin1
 function encoder(str: string, encoding = 'utf-8') {

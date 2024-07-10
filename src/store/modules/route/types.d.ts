@@ -1,3 +1,0 @@
-interface RouteState {
-  routes: RouteRecordRaw[]
-}

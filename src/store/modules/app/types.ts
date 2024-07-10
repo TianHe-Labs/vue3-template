@@ -1,4 +1,4 @@
-interface AppState {
+export interface AppState {
   name: string
   description: string
   copyright: string

@@ -1,3 +1,5 @@
+import { AuthFormData, USERROLE, UserState } from './types'
+
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     username: undefined,
@@ -11,10 +13,10 @@ export const useUserStore = defineStore('user', {
       return { ...state }
     },
     userRoleText(state: UserState) {
-      if (state.role === 'super') {
+      if (state.role === USERROLE.SUPER) {
         return '超级管理员'
       }
-      if (state.role === 'admin') {
+      if (state.role === USERROLE.ADMIN) {
         return '管理员'
       }
       return ''
@@ -52,12 +54,12 @@ export const useUserStore = defineStore('user', {
     async queryUserInfo() {
       try {
         const { data } = await axios.get('/api/user/info')
-        this.setUserInfo({ ...data, role: data?.role || 'admin' })
+        this.setUserInfo({ ...data, role: data?.role || USERROLE.ADMIN })
       } catch (err: any) {
         if (err?.isAxiosError) {
           // axios 拦截统一处理了返回结果
           // 如果该接口 404，则认为是单用户系统，没有用户信息
-          this.setUserInfo({ role: 'admin' })
+          this.setUserInfo({ role: USERROLE.ADMIN })
         } else {
           this.resetUserInfo()
           throw err

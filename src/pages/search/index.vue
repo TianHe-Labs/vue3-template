@@ -14,7 +14,7 @@ const breakpoints = inject('breakpoints') as any
   <div flex-auto container mx-auto px-4 py-8>
     <Breadcrumb :items="['数据搜索']" />
     <div mt-4 text-xl>数据搜索</div>
-    {{ breakpoints }}
+    {{ breakpoints.value }}
     <div class="dark:font-bold">{{ renderData.length }}</div>
     阿里云STS测试
     <img

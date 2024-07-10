@@ -1,6 +1,7 @@
 import type { Router } from 'vue-router'
 import { useUserStore, useRouteStore } from '@/store'
 import { DEFAULT_ROUTE_NAME } from '@/router/constants'
+import { USERROLE } from '@/store/modules/user/types'
 
 export function createAccessGuard(router: Router) {
   router.beforeEach(async (to, _, next) => {
@@ -16,7 +17,7 @@ export function createAccessGuard(router: Router) {
           await userStore.queryUserInfo()
           // 根据用户权限，动态生成路由
           const addRoutes = routeStore.generateRoutes(
-            userStore.role as unknown as RoleEnum
+            userStore.role as unknown as USERROLE
           )
           // 将生成的需要权限认证的路由，添加到路由表中
           addRoutes.forEach((route) => {

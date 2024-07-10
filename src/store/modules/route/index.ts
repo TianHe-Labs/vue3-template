@@ -1,8 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { constRoutes, asyncRoutes } from '@/router/routes'
+import { USERROLE } from '../user/types'
+import { RouteState } from './types'
 
 // 检查路由所需权限 roles = []
-/* function hasPermission(userRoles: RoleEnum[], route: RouteRecordRaw): boolean {
+/* function hasPermission(userRoles: USERROLE[], route: RouteRecordRaw): boolean {
   if (route.meta && route.meta.roles)
     return (
       route.meta.roles.includes('*') ||
@@ -11,7 +13,7 @@ import { constRoutes, asyncRoutes } from '@/router/routes'
   return true
 } */
 
-function hasPermission(route: RouteRecordRaw, userRole?: RoleEnum): boolean {
+function hasPermission(route: RouteRecordRaw, userRole?: USERROLE): boolean {
   if (userRole && route.meta && route.meta.roles) {
     return (
       route.meta.roles.includes('*') || route.meta?.roles?.includes(userRole)
@@ -23,7 +25,7 @@ function hasPermission(route: RouteRecordRaw, userRole?: RoleEnum): boolean {
 // 根据权限过滤动态路由
 function filterAsyncRoutes(
   asyncRoutes: RouteRecordRaw[],
-  userRole?: RoleEnum
+  userRole?: USERROLE
 ): RouteRecordRaw[] {
   const filteredRoutes: RouteRecordRaw[] = []
 
@@ -53,7 +55,7 @@ export const useRouteStore = defineStore('route', {
     resetUserRoutes() {
       this.$reset()
     },
-    generateRoutes(userRole?: RoleEnum) {
+    generateRoutes(userRole?: USERROLE) {
       const addRoutes = filterAsyncRoutes(asyncRoutes, userRole)
       this.setUserRoutes(addRoutes)
       return addRoutes
