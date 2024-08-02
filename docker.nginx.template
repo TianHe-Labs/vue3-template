@@ -25,4 +25,12 @@ server {
     location /api {
         proxy_pass ${API_URL}/api;
     }
+
+    location /sts {
+        proxy_pass ${STS_URL}/sts;
+    }
+
+    location /media/ {
+        proxy_pass ${MEDIA_URL}/;
+    }
 }

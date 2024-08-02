@@ -1,6 +1,7 @@
-import type { PiniaPluginContext } from 'pinia'
+import { defineStore, type PiniaPluginContext } from 'pinia'
 import hmacSha1 from 'crypto-js/hmac-sha1'
 import Base64 from 'crypto-js/enc-base64'
+import axios from 'axios'
 import { OssState } from './types'
 
 // utf-8 -> latin1
@@ -21,7 +22,7 @@ function encoder(str: string, encoding = 'utf-8') {
   return latin1String
 }
 
-export const useOssStore = defineStore('oss', {
+const useOssStore = defineStore('oss', {
   state: (): OssState => {
     return {
       accessKeyId: undefined,
@@ -46,9 +47,9 @@ export const useOssStore = defineStore('oss', {
       try {
         const { data } = await axios.get('/sts')
         this.setOssToken(data)
-      } catch (err) {
+      } catch (error) {
         this.resetOssToken()
-        throw err
+        throw error
       }
     },
 
@@ -65,7 +66,7 @@ export const useOssStore = defineStore('oss', {
       const method = options.method || 'GET'
       const expires = Math.floor(Date.now() / 1000 + (options.expires || 1800))
 
-      const { hostname, pathname } = new URL(url)
+      const { /* origin, */ hostname, pathname } = new URL(url)
       const bucket = hostname.split('.')?.[0]
       const object = pathname.replace(/^\/+/, '')
       const resource = `/${bucket}/${encoder(object)}`
@@ -79,7 +80,11 @@ export const useOssStore = defineStore('oss', {
       )
 
       // 构造完整的URL
-      const signedUrl = `/media${pathname}?OSSAccessKeyId=${
+      // ${origin}
+      // ${import.meta.env.BASE_URL}media
+      const signedUrl = `${
+        import.meta.env.BASE_URL
+      }media${pathname}?OSSAccessKeyId=${
         this.$state.accessKeyId
       }&Expires=${expires}&Signature=${encodeURIComponent(
         signature
@@ -102,3 +107,5 @@ export const useOssStore = defineStore('oss', {
     },
   },
 })
+
+export default useOssStore
