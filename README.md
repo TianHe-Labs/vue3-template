@@ -17,7 +17,7 @@
   ```html
   <!-- example -->
 
-  <n-icon class="i-solar:box-bold-duotone"  />
+  <n-icon class="i-solar:box-bold-duotone" />
   <!-- n-icon is naiveui built-in component, i- is prefix -->
   ```
 
@@ -32,7 +32,7 @@
   ```html
   <!-- example -->
 
-  <n-icon class="i-solar:box-bold-duotone"  />
+  <n-icon class="i-solar:box-bold-duotone" />
   <!-- n-icon is naiveui built-in component, i- is prefix -->
   ```
 
