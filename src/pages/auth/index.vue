@@ -4,6 +4,7 @@ import { FormInst, FormRules, useMessage } from 'naive-ui'
 import { useStorage } from '@vueuse/core'
 import { DEFAULT_ROUTE } from '@/router/constants'
 import { useUserStore } from '@/store'
+import { AuthFormData } from '@/store/modules/user/types'
 
 const authFormRef = ref<Nullable<FormInst>>()
 

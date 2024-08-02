@@ -22,7 +22,7 @@ function encoder(str: string, encoding = 'utf-8') {
   return latin1String
 }
 
-const useOssStore = defineStore('oss', {
+export const useOssStore = defineStore('oss', {
   state: (): OssState => {
     return {
       accessKeyId: undefined,
@@ -107,5 +107,3 @@ const useOssStore = defineStore('oss', {
     },
   },
 })
-
-export default useOssStore
