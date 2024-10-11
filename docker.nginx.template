@@ -24,6 +24,26 @@ server {
 
     location /api {
         proxy_pass ${API_URL}/api;
+
+        # 传递客户端信息，便于后端日志记录，默认情况下会隐藏如客户端IP等信息
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-Port $server_port;
+
+        # 修改客户端请求体最大大小，默认1M，如果上传文件大小超过1M，需要修改此配置
+        client_max_body_size 1024M;
+
+        # 禁用代理缓冲和请求缓冲，适合处理大文件或二进制数据
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_buffering off;
+        proxy_request_buffering off;
+        proxy_set_header Content-Type "application/octet-stream";
     }
 
     location /sts {
